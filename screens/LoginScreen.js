@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     height: 150,
   },
 });
-const Login = () => {
+const Login = ({navigation}) => {
   const [fontLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });
@@ -72,6 +72,7 @@ const Login = () => {
           <Button
             title="ENTRAR"
             style={{ backgroundColor: "#0072b7", marginTop: 30, width: 130 }}
+            onPress={() => {navigation.navigate("Inicio")}}
           ></Button>
         </View>
       </Box>
