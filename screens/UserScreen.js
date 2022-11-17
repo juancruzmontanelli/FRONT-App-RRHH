@@ -2,7 +2,11 @@ import react from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
 import { useFonts } from "expo-font";
+import { useSelector } from "react-redux";
+
 const User = () => {
+  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+  console.log(usuario, "USUARIO EN USER");
   const [fontLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });
@@ -20,11 +24,14 @@ const User = () => {
       />
       <ScrollView>
         <Box>
-          <ListItem title="Apellido y nombres" meta="Diego Armando Maradona" />
-          <ListItem title="Domicilio" meta="Segurola y habana 4310" />
-          <ListItem title="Documento" meta="42976323" />
-          <ListItem title="Telefono" meta="2226 432123" />
-          <ListItem title="Fecha de nacimiento" meta="30/10/1960" />
+          <ListItem title="Apellido y nombres" meta={`${usuario.nombre}`} />
+          <ListItem title="Domicilio" meta={`${usuario.domicilio}`} />
+          <ListItem title="Documento" meta={`${usuario.documento}`} />
+          <ListItem title="Telefono" meta={`${usuario.telefono}`} />
+          <ListItem
+            title="Fecha de nacimiento"
+            meta={`${usuario.fechaDeNacimiento}`}
+          />
           <Text
             style={{
               fontFamily: "Arimo",
@@ -36,13 +43,19 @@ const User = () => {
           >
             DATOS LABORALES
           </Text>
-          <ListItem title="Fecha Ingreso" meta="12/6/2010" />
-          <ListItem title="Puesto" meta="Seguridad" />
-          <ListItem title="Equipo" meta="Boca Juniors" />
-          <ListItem title="Oficina" meta="La bombonera" />
-          <ListItem title="Turno" meta="Tarde Y noche" />
-          <ListItem title="Dias Horarios Laborales" meta="De lunes a viernes" />
-          <ListItem title="Observaciones" meta="Juega bien al fulbo" />
+          <ListItem title="Fecha Ingreso" meta={`${usuario.fechaDeIngreso}`} />
+          <ListItem title="Puesto" meta={`${usuario.puesto}`} />
+          <ListItem title="Equipo" meta={`${usuario.equipo}`} />
+          <ListItem title="Turno" meta={`${usuario.turno}`} />
+          <ListItem
+            title="Horarios Laborales"
+            meta={`${usuario.diasLaborales}`}
+          />
+          <ListItem
+            title="Dias Laborales"
+            meta={`${usuario.horariosLaborales}`}
+          />
+          <ListItem title="Observaciones" meta={`${usuario.observaciones}`} />
         </Box>
       </ScrollView>
     </SafeAreaView>
