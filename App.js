@@ -1,23 +1,14 @@
 import react from "react";
-import { NavigationContainer, Stack } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./screens/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import  StackNavigation  from "./navigation/StackNavigation"
 
-export default function App() {
-  const Stack = createNativeStackNavigator();
-
+const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#0072b7",
-          },
-          headerTintColor: "#f89c1c",
-        }}
-      >
-        <Stack.Screen name="GLOBAL NEWS" component={Login} />
-      </Stack.Navigator>
+      <StackNavigation/>
     </NavigationContainer>
   );
 }
+
+
+export default App
