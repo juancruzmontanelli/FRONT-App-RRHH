@@ -40,6 +40,7 @@ const usuarioSlice = createSlice({
     },
     [iniciarSesion.rejected]: (estado) => {
       estado.cargando = false;
+      throw new Error("ERROR");
     },
   },
 });
