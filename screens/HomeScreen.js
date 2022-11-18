@@ -13,7 +13,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { useFonts } from "expo-font";
 
-const Home = () => {
+const Home = ({navigation}) => {
   const styles = StyleSheet.create({
     logo: {
       width: 150,
@@ -46,6 +46,7 @@ const Home = () => {
             titleStyle={{fontFamily: "Arimo", fontSize: 20}}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300}}
             trailing={props => <Icon name="send" {...props} />} 
+            onPress={() => {navigation.navigate("Novedades")}}
           />
         </View>
         <View>
