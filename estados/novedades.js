@@ -8,21 +8,8 @@ const estadoInicial = {
 };
 
 const urlBaseNovedad = axios.create({
-  baseURL: "http://localhost:8080/api/novedades",
+  baseURL: "http://127.0.0.1:8080/api/novedades",
 });
-
-export const traerNovedades = createAsyncThunk(
-  "TRAER_NOVEDADES",
-  async (usuarioId) => {
-    try {
-      const novedades = await urlBaseNovedad.post("/", usuarioId);
-      return novedades;
-    } catch (error) {
-      /*alert(error.response.data)*/
-      throw new Error(error);
-    }
-  }
-);
 
 export const crearNovedad = createAsyncThunk(
   "CREAR_NOVEDAD",
@@ -34,6 +21,46 @@ export const crearNovedad = createAsyncThunk(
       /*alert(error.response.data)*/
       throw new Error(error);
     }
+  }
+);
+
+export const traerTodasNovedades = createAsyncThunk(
+  "TRAER_TODAS_NOVEDADES",
+  async (usuario) => {
+    if (usuario.tipo) {
+      try {
+        const novedades = await urlBaseNovedad.get(`/`);
+        return novedades.data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    } else throw new Error("Acceso denegado!");
+  }
+);
+
+export const traerNovedadesUsuario = createAsyncThunk(
+  "TRAER_USUARIO_NOVEDADES",
+  async (usuarioId) => {
+    try {
+      const novedades = await urlBaseNovedad.get(`/${usuarioId}`);
+      return novedades.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+
+export const actualizarNovedad = createAsyncThunk(
+  "ACTUALIZAR_NOVEDAD",
+  async (novedadId, usuario) => {
+    if (usuario.tipo) {
+      try {
+        const novedades = await urlBaseNovedad.get(`/${novedadId}`);
+        return "Novedad actualizada con éxito";
+      } catch (error) {
+        throw new Error(error);
+      }
+    } else throw new Error("Acceso denegado!");
   }
 );
 
@@ -54,15 +81,39 @@ const novedadSlice = createSlice({
     [crearNovedad.rejected]: (estado) => {
       estado.cargando = false;
     },
-    [traerNovedades.pending]: (estado) => {
+    [traerNovedadesUsuario.pending]: (estado) => {
       estado.cargando = true;
     },
-    [traerNovedades.fulfilled]: (estado, accion) => {
+    [traerNovedadesUsuario.fulfilled]: (estado, accion) => {
       estado.cargando = false;
       estado.novedades = accion.payload;
     },
-    [traerNovedades.rejected]: (estado) => {
+    [traerNovedadesUsuario.rejected]: (estado) => {
       estado.cargando = false;
+    },
+    [traerTodasNovedades.pending]: (estado) => {
+      estado.cargando = true;
+    },
+    [traerTodasNovedades.fulfilled]: (estado, accion) => {
+      estado.cargando = false;
+      estado.novedades = accion.payload;
+    },
+    [traerTodasNovedades.rejected]: (estado) => {
+      estado.cargando = false;
+      throw new Error("Acceso denegado!");
+    },
+    [actualizarNovedad.pending]: (estado) => {
+      estado.cargando = true;
+    },
+    [actualizarNovedad.fulfilled]: (estado, accion) => {
+      estado.cargando = false;
+      Alert.alert("Novedades", accion.payload, [{ text: "Entiendo" }], {
+        cancelable: true,
+      });
+    },
+    [actualizarNovedad.rejected]: (estado) => {
+      estado.cargando = false;
+      throw new Error("Acceso denegado!");
     },
   },
 });
