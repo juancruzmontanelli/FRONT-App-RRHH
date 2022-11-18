@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const estadoInicial = {
   cargando: true,
   infoDeUsuario: {},
 };
 
-const urlBaseUsuario = axios.create({
-  baseURL: "http://localhost:8080/api/usuarios",
+export const urlBaseUsuario = axios.create({
+  baseURL: "http://192.168.1.41:8080/api/usuarios",
 });
 
 export const iniciarSesion = createAsyncThunk(
@@ -40,7 +41,7 @@ const usuarioSlice = createSlice({
     },
     [iniciarSesion.rejected]: (estado) => {
       estado.cargando = false;
-      throw new Error("ERROR");
+      throw new Error("Credenciales incorrectas");
     },
   },
 });

@@ -35,10 +35,21 @@ const Login = ({ navigation }) => {
   const SubmitHandler = () => {
     dispatch(iniciarSesion(Login))
       .then(() => {
+        Alert.alert(
+          "Inicio de Sesión",
+          "Inicio de sesión exitoso!",
+          [{ text: "Entendido" }],
+          { cancelable: true }
+        );
         navigation.navigate("Inicio");
       })
-      .catch((Error) => {
-        console.error(Error);
+      .catch((error) => {
+        Alert.alert(
+          "Inicio de Sesión",
+          error.message,
+          [{ text: "Entendido" }],
+          { cancelable: true }
+        );
       });
   };
 
@@ -55,7 +66,7 @@ const Login = ({ navigation }) => {
       >
         <Image style={styles.logo} source={require("../assets/globlal.png")} />
         <Text style={{ fontFamily: "Arimo", fontSize: 30, marginBottom: 10 }}>
-          INGRESAR SESION
+          INICIAR SESIÓN
         </Text>
         <View
           style={{

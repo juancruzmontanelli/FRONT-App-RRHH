@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 const User = () => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
-  console.log(usuario, "USUARIO EN USER");
   const [fontLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });
@@ -24,7 +23,10 @@ const User = () => {
       />
       <ScrollView>
         <Box>
-          <ListItem title="Apellido y nombres" meta={`${usuario.nombre}`} />
+          <ListItem
+            title="Nombre y Apellido"
+            meta={`${usuario.nombre} ${usuario.apellido}`}
+          />
           <ListItem title="Domicilio" meta={`${usuario.domicilio}`} />
           <ListItem title="Documento" meta={`${usuario.documento}`} />
           <ListItem title="Telefono" meta={`${usuario.telefono}`} />
