@@ -3,9 +3,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../screens/LoginScreen";
 import Home from "../screens/HomeScreen";
 import Novedades from "../screens/NovedadesScreen";
+import User from "../screens/UserScreen";
+
 
 const StackScreen = () => {
-    const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator();
 
     return (
         
@@ -20,9 +22,11 @@ const StackScreen = () => {
         <Stack.Screen name="GLOBAL NEWS" component={Login} />
         <Stack.Screen name="Inicio" component={Home} />
         <Stack.Screen name="Novedades" component={Novedades} />
+        <Stack.Screen name="Usuario" component={User} />
       </Stack.Navigator>
     
     )
 }
 
-export default StackScreen  
+
+export default StackScreen;
