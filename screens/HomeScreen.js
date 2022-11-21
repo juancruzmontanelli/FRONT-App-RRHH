@@ -13,12 +13,11 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { useFonts } from "expo-font";
 
-
 const Home = ({ navigation }) => {
   const [fontLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });
-  
+
   const styles = StyleSheet.create({
     logo: {
       width: 150,
@@ -30,7 +29,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
       <Box
         style={{
-          marginTop: "20%",
+          marginTop: "10%",
           alignItems: "center",
         }}
       >
@@ -55,27 +54,34 @@ const Home = ({ navigation }) => {
         </View>
         <View>
           <Button
-            title="Solicitar Novedad"
-            tintColor="#f89c1c"
-
-            titleStyle={{fontFamily: "Arimo", fontSize: 20}}
-            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300}}
-            trailing={props => <Icon name="send" {...props} />} 
-            onPress={() => {navigation.navigate("Novedades")}}
-          />
-        </View>
-        <View>
-          <Button
-            title="Tu Actividad"
+            title="Novedades"
             tintColor="#f89c1c"
             titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            trailing={(props) => <Icon name="calendar" {...props} />}
+            trailing={(props) => <Icon name="send" {...props} />}
+            onPress={() => {
+              navigation.navigate("Novedades");
+            }}
           />
         </View>
         <View>
           <Button
-            title="Empleados"
+            title="Mi Equipo"
+            tintColor="#f89c1c"
+            titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
+            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
+            trailing={(props) => (
+              <Avatar
+                icon={(props) => <Icon name="account" {...props} />}
+                size={26}
+                color={"#f89c1c"}
+              />
+            )}
+          />
+        </View>
+        <View>
+          <Button
+            title="Mi Asistencia"
             tintColor="#f89c1c"
             titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
