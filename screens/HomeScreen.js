@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -106,6 +107,44 @@ const Home = ({ navigation }) => {
                 color={"#f89c1c"}
               />
             )}
+          />
+        </View>
+        <View style={{ flexDirection: "row", paddingHorizontal: 4 / -2 }}>
+          <Button
+            title="Fichar Ingreso"
+            tintColor="#f89c1c"
+            titleStyle={{ fontFamily: "Arimo", fontSize: 13 }}
+            style={{
+              backgroundColor: "#0072b7",
+              marginTop: 50,
+              width: "45%",
+              marginHorizontal: 4 / 2,
+            }}
+            trailing={(props) => <Icon name="send" {...props} />}
+            onPress={() => {
+              Alert.alert("Ingreso", "Hora de ingreso: 08:32", [
+                { text: "Entendido" },
+              ]);
+            }}
+          />
+          <Button
+            title="Fichar Salida"
+            tintColor="#f89c1c"
+            titleStyle={{ fontFamily: "Arimo", fontSize: 13 }}
+            style={{
+              backgroundColor: "#0072b7",
+              marginTop: 50,
+              width: "45%",
+              marginHorizontal: 4 / 2,
+            }}
+            trailing={(props) => <Icon name="history" {...props} />}
+            onPress={() => {
+              Alert.alert(
+                "Salida",
+                "Hora de ingreso: 08:32 \n Hora de salida: 17:20",
+                [{ text: "Entendido" }]
+              );
+            }}
           />
         </View>
       </Box>
