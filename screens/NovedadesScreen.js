@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 const Novedades = () => {
   // DROPDOWN STATE
   const [tipo, setTipo] = useState("");
+  const [id, setId] = useState("");
 
   // DATE STATES
   const [fecha, setFecha] = useState(new Date());
@@ -123,9 +124,17 @@ const observacionesInput = (e) => {
                 {" "}
                 Tipo De Novedad
               </Text>
-              <SelectList data={data} setSelected={setTipo} onSelect={() => {
+              <SelectList data={data} setSelected={setTipo} 
+              save='value'
+              onSelect={() => {
                     setInput("SELECT")
                     setInput2("SELECT")
+                     data.map((obj) => {
+                     if (obj.value === tipo) {
+                      setId(obj.key)
+                     }
+                    })
+                
               }}/>
             </View>
           {tipo ?  <View
@@ -168,7 +177,7 @@ const observacionesInput = (e) => {
            
            : ""}
 
-            {tipo === "1" ?
+            {id === "1" ?
            <View
            style={{
              marginBottom: 25,
@@ -211,7 +220,7 @@ const observacionesInput = (e) => {
          
          : ""}
   
-  {tipo === "2" ?
+  {id === "2" ?
            <View
            style={{
              marginBottom: 25,
@@ -254,7 +263,7 @@ const observacionesInput = (e) => {
          
          : ""}
            
-  {tipo === "3" ?
+  {id === "3" ?
            <View
            style={{
              marginBottom: 25,
