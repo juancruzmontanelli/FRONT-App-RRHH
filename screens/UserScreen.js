@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 const User = () => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   console.log(usuario);
-  const [fontLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
+  const [fontsLoaded] = useFonts({
+    "Arimo": require("../assets/fonts/Arimo.ttf"),
   });
   return (
     <SafeAreaView>

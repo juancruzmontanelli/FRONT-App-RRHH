@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Alert } from "react-native";
 import axios from "axios";
+import { Constants } from "expo-constants";
 
 const estadoInicial = {
   cargando: true,
@@ -8,7 +9,7 @@ const estadoInicial = {
 };
 
 const urlBaseNovedad = axios.create({
-  baseURL: "http://127.0.0.1:8080/api/novedades",
+  baseURL: `http://10.10.10.101:8080/api/novedades`,
 });
 
 export const crearNovedad = createAsyncThunk(
