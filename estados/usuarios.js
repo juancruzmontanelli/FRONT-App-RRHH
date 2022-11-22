@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
-import { Constants } from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { traerInfoDeUsuario } from "../servicios/usuario";
 
