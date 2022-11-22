@@ -48,4 +48,26 @@ const dummyNovedades = [
     autorizadoPor: "Santiago Lucero",
   },
 ];
-module.exports = { categoriasNovedad, dummyNovedades };
+const retornarFechaActual = () => {
+  const fechaActual = {
+    fecha: `${new Date().getDate()}/${
+      new Date().getMonth() + 1
+    }/${new Date().getFullYear()}`,
+    hora: `${new Date().getHours()}:${new Date().getMinutes()}hs`,
+  };
+
+  return fechaActual;
+};
+
+const restablecerFechaActual = {
+  fecha: "",
+  horaDeIngreso: "",
+  horaDeSalida: "",
+};
+
+module.exports = {
+  categoriasNovedad,
+  dummyNovedades,
+  retornarFechaActual,
+  restablecerFechaActual,
+};

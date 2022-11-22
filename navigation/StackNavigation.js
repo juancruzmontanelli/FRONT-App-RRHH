@@ -5,6 +5,7 @@ import Novedades from "../screens/NovedadesScreen";
 import User from "../screens/UserScreen";
 import NovedadScreen from "../screens/NovedadScreen";
 import HistorialNovedades from "../screens/HistorialNovedades";
+import HistorialAsistencias from "../screens/HistorialAsistencias";
 
 const StackScreen = () => {
   const dummyNovedades = {
@@ -29,8 +30,12 @@ const StackScreen = () => {
     >
       <Stack.Screen name="GLOBAL NEWS" component={Login} />
       <Stack.Screen name="Inicio" component={Home} />
-      <Stack.Screen name="Novedades" component={Novedades} />
+      <Stack.Screen
+        name="HistorialAsistencias"
+        component={HistorialAsistencias}
+      />
       <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
+      <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="Novedad">
         {(props) => <NovedadScreen {...props} novedad={dummyNovedades} />}
       </Stack.Screen>
