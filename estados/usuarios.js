@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createReducer} from "@reduxjs/toolkit";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Constants } from "expo-constants";
@@ -19,7 +19,7 @@ const estadoInicial = usuarioLogueado
     };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://10.10.10.17:8080/api/usuarios`,
+  baseURL: `http://10.10.10.103:8080/api/usuarios`,
 });
 
 export const iniciarSesion = createAsyncThunk(
@@ -38,17 +38,16 @@ export const iniciarSesion = createAsyncThunk(
 );
 
 const usuarioReducer = createReducer(estadoInicial, {
-  [iniciarSesion.pending]: (state) => {
-    state.cargando = true;
+  [iniciarSesion.pending]: (estado) => {
+    estado.cargando = true;
   },
-  [iniciarSesion.fulfilled]: async (state, action) => {
-    state.cargando = false;
-    state.infoDeUsuario = action.payload;
-    await AsyncStorage.setItem("usuario", JSON.stringify(action.payload));
-    return action.payload;
+  [iniciarSesion.fulfilled]: async (estado, accion) => {
+    estado.cargando = false;
+    estado.infoDeUsuario = accion.payload;
+    await AsyncStorage.setItem("usuario", JSON.stringify(accion.payload));
   },
-  [iniciarSesion.rejected]: (state) => {
-    state.cargando = false;
+  [iniciarSesion.rejected]: (estado) => {
+    estado.cargando = false;
     throw new Error("Credenciales incorrectas");
   },
 });
