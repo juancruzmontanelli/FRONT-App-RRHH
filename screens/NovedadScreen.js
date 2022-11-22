@@ -3,9 +3,10 @@ import { ScrollView } from "react-native";
 import ItemDeLista from "../componentes/ItemDeLista";
 import { categoriasNovedad } from "../Utils/utils";
 
+
 function NovedadScreen({ navigation, novedad }) {
   const valoresNovedad = Object.keys(novedad).map((key) => novedad[key]);
-
+  
   return (
     <ScrollView style={{ backgroundColor: "#0072b7" }}>
       {categoriasNovedad.map((categoria, indice) => (

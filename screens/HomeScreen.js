@@ -9,13 +9,11 @@ import {
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { urlBaseUsuario } from "../estados/usuarios";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { useFonts } from "expo-font";
 
 const Home = ({ navigation }) => {
-  urlBaseUsuario.get("/me").then((user) => {console.log(user)});
   const [fontsLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });

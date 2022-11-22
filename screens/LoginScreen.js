@@ -1,7 +1,6 @@
 import react, { useEffect, useState } from "react";
 import { iniciarSesion } from "../estados/usuarios";
 import { useSelector, useDispatch } from "react-redux";
-
 import {
   Text,
   SafeAreaView,
@@ -22,11 +21,14 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
-
-
+  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
   const dispatch = useDispatch();
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+
+  useEffect(() => {
+    navigation.navigate("Inicio");
+  }, [usuario.loading]);
+
 
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
@@ -57,7 +59,7 @@ const Login = ({ navigation }) => {
   };
 
   const [fontsLoaded] = useFonts({
-    "Arimo": require("../assets/fonts/Arimo.ttf"),
+    Arimo: require("../assets/fonts/Arimo.ttf"),
   });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
