@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
+
 import { useSelector } from "react-redux";
 
 const User = () => {
   const estadoUsuario = useSelector((estado) => estado.usuarios);
+  const cargando = !estadoUsuario.cargando
+    ? estadoUsuario.cargando
+    : estadoUsuario._z.cargando;
   const [usuario, setUsuario] = useState({});
+
   useEffect(() => {
-    estadoUsuario.infoDeUsuario.then((promesaDeUsuarioResuelta) => {
-      setUsuario(promesaDeUsuarioResuelta);
-    });
-  }, [estadoUsuario.cargando]);
+    if (estadoUsuario._z) {
+      setUsuario(estadoUsuario._z.infoDeUsuario);
+    } else
+      estadoUsuario.infoDeUsuario.then((usuario) => {
+        setUsuario(usuario);
+      });
+  }, [cargando]);
 
   return (
     <SafeAreaView>

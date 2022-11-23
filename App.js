@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./estados/store";
 import { IconComponentProvider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 const App = () => {
   return (
     <Provider store={store}>

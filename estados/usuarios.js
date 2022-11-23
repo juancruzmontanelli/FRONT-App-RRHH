@@ -3,7 +3,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { traerInfoDeUsuario } from "../servicios/usuario";
 
-const usuarioLogueado = traerInfoDeUsuario(); //ESTO ES UNA PROMESA NO RESUELTA, SE RESUELVE EN EL FRONT SI SE NECESITA.
+const usuarioLogueado = (async () => await traerInfoDeUsuario())(); //ESTO ES UNA PROMESA NO RESUELTA, SE RESUELVE EN EL FRONT SI SE NECESITA.
 const estadoInicial = usuarioLogueado
   ? {
       cargando: false,
