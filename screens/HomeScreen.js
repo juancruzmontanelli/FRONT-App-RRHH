@@ -1,16 +1,14 @@
-import react from "react";
 import {
   Text,
   SafeAreaView,
   Image,
   StyleSheet,
   View,
-  TouchableOpacity,
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-import { Box, TextInput, Button } from "@react-native-material/core";
+import { Box, Button } from "@react-native-material/core";
 import { useFonts } from "expo-font";
 
 const Home = ({ navigation }) => {

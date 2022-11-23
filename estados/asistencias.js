@@ -15,7 +15,7 @@ export const crearAsistencia = createAsyncThunk(
   "CREAR_ASISTENCIA",
   async (usuarioId, datosAsistencia) => {
     try {
-      urlBaseAsistencia.post("/", { idUsuario, datosAsistencia });
+      urlBaseAsistencia.post("/", { usuarioId, datosAsistencia });
     } catch (error) {
       throw new Error(error);
     }
@@ -23,8 +23,13 @@ export const crearAsistencia = createAsyncThunk(
 );
 export const traerAsistencias = createAsyncThunk(
   "HISTORIAL_ASISTENCIAS",
-  async (infoDeUsuario) => {
+  async (usuarioId) => {
     try {
+      const historialDeAsistencias = await urlBaseAsistencia.post(
+        "/historial",
+        usuarioId
+      );
+      return historialDeAsistencias;
     } catch (error) {
       throw new Error(error);
     }
