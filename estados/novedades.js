@@ -1,7 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { Alert } from "react-native";
 import axios from "axios";
-import { Constants } from "expo-constants";
 
 const estadoInicial = {
   cargando: true,
@@ -9,7 +8,7 @@ const estadoInicial = {
 };
 
 const urlBaseNovedad = axios.create({
-  baseURL: `http://10.10.10.101:8080/api/novedades`,
+  baseURL: `http://10.10.10.103:8080/api/novedades`,
 });
 
 export const crearNovedad = createAsyncThunk(
@@ -65,58 +64,53 @@ export const actualizarNovedad = createAsyncThunk(
   }
 );
 
-const novedadSlice = createSlice({
-  name: "novedades",
-  initialState: estadoInicial,
-  reducers: {},
-  extraReducers: {
-    [crearNovedad.pending]: (estado) => {
-      estado.cargando = true;
-    },
-    [crearNovedad.fulfilled]: (estado, accion) => {
-      estado.cargando = false;
-      Alert.alert("Novedades", accion.payload, [{ text: "Entiendo" }], {
-        cancelable: true,
-      });
-    },
-    [crearNovedad.rejected]: (estado) => {
-      estado.cargando = false;
-    },
-    [traerNovedadesUsuario.pending]: (estado) => {
-      estado.cargando = true;
-    },
-    [traerNovedadesUsuario.fulfilled]: (estado, accion) => {
-      estado.cargando = false;
-      estado.novedades = accion.payload;
-    },
-    [traerNovedadesUsuario.rejected]: (estado) => {
-      estado.cargando = false;
-    },
-    [traerTodasNovedades.pending]: (estado) => {
-      estado.cargando = true;
-    },
-    [traerTodasNovedades.fulfilled]: (estado, accion) => {
-      estado.cargando = false;
-      estado.novedades = accion.payload;
-    },
-    [traerTodasNovedades.rejected]: (estado) => {
-      estado.cargando = false;
-      throw new Error("Acceso denegado!");
-    },
-    [actualizarNovedad.pending]: (estado) => {
-      estado.cargando = true;
-    },
-    [actualizarNovedad.fulfilled]: (estado, accion) => {
-      estado.cargando = false;
-      Alert.alert("Novedades", accion.payload, [{ text: "Entiendo" }], {
-        cancelable: true,
-      });
-    },
-    [actualizarNovedad.rejected]: (estado) => {
-      estado.cargando = false;
-      throw new Error("Acceso denegado!");
-    },
+const novedadReducer = createReducer(estadoInicial, {
+  [crearNovedad.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [crearNovedad.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    Alert.alert("Novedades", accion.payload, [{ text: "Entiendo" }], {
+      cancelable: true,
+    });
+  },
+  [crearNovedad.rejected]: (estado) => {
+    estado.cargando = false;
+  },
+  [traerNovedadesUsuario.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [traerNovedadesUsuario.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.novedades = accion.payload;
+  },
+  [traerNovedadesUsuario.rejected]: (estado) => {
+    estado.cargando = false;
+  },
+  [traerTodasNovedades.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [traerTodasNovedades.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.novedades = accion.payload;
+  },
+  [traerTodasNovedades.rejected]: (estado) => {
+    estado.cargando = false;
+    throw new Error("Acceso denegado!");
+  },
+  [actualizarNovedad.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [actualizarNovedad.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    Alert.alert("Novedades", accion.payload, [{ text: "Entiendo" }], {
+      cancelable: true,
+    });
+  },
+  [actualizarNovedad.rejected]: (estado) => {
+    estado.cargando = false;
+    throw new Error("Acceso denegado!");
   },
 });
 
-export default novedadSlice.reducer;
+export default novedadReducer

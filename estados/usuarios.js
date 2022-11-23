@@ -1,9 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { traerInfoDeUsuario } from "../servicios/usuario";
-
-import { Alert } from "react-native";
 
 const usuarioLogueado = traerInfoDeUsuario();
 const estadoInicial = usuarioLogueado
@@ -35,31 +33,19 @@ export const iniciarSesion = createAsyncThunk(
   }
 );
 
-const usuarioSlice = createSlice({
-  name: "usuarios",
-  initialState: estadoInicial,
-  reducers: {
-    logOut: (estado, accion) => {
-      AsyncStorage.removeItem("usuario");
-      Alert.alert("Cerrar Sesión", "Sesión cerrada con éxito", [
-        { text: "Entendido!" },
-      ]);
-    },
+const usuarioReducer = createReducer(estadoInicial, {
+  [iniciarSesion.pending]: (estado) => {
+    estado.cargando = true;
   },
-  extraReducers: {
-    [iniciarSesion.pending]: (estado) => {
-      estado.cargando = true;
-    },
-    [iniciarSesion.fulfilled]: async (estado, accion) => {
-      estado.cargando = false;
-      estado.infoDeUsuario = accion.payload;
-      await AsyncStorage.setItem("usuario", JSON.stringify(accion.payload));
-    },
-    [iniciarSesion.rejected]: (estado) => {
-      estado.cargando = false;
-      throw new Error("Credenciales incorrectas");
-    },
+  [iniciarSesion.fulfilled]: async (estado, accion) => {
+    estado.cargando = false;
+    estado.infoDeUsuario = accion.payload;
+    await AsyncStorage.setItem("usuario", JSON.stringify(accion.payload));
+  },
+  [iniciarSesion.rejected]: (estado) => {
+    estado.cargando = false;
+    throw new Error("Credenciales incorrectas");
   },
 });
 
-export default usuarioSlice.reducer;
+export default usuarioReducer;
