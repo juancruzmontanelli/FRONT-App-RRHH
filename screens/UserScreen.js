@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
-
 import { useSelector } from "react-redux";
 
 const User = () => {
@@ -25,7 +24,7 @@ const User = () => {
       <Button
         style={{
           textAlign: "center",
-          fontFamily: "Arimo",
+
           fontSize: 30,
         }}
         title="EDITA TU INFORMACION"
@@ -47,7 +46,6 @@ const User = () => {
           />
           <Text
             style={{
-              fontFamily: "Arimo",
               fontSize: 20,
               textAlign: "center",
               backgroundColor: "#0072b7",
@@ -58,8 +56,7 @@ const User = () => {
           </Text>
           <ListItem title="Fecha Ingreso" meta={`${usuario.fechaDeIngreso}`} />
           <ListItem title="Puesto" meta={`${usuario.puesto}`} />
-          <ListItem title="Equipo" meta={`${usuario.equipo}`} />
-          <ListItem title="Turno" meta={`${usuario.turno}`} />
+
           <ListItem
             title="Horarios Laborales"
             meta={`${usuario.diasLaborales}`}
