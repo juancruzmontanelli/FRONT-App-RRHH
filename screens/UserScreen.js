@@ -1,16 +1,17 @@
-import react, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
-import { useDispatch, useSelector } from "react-redux";
-import { traerAsistencias } from "../estados/asistencias";
+import { useSelector } from "react-redux";
 
 const User = () => {
-  const usuario = useSelector((estado) => estado.usuarios);
+  const estadoUsuario = useSelector((estado) => estado.usuarios);
+  const [usuario, setUsuario] = useState({});
+  useEffect(() => {
+    estadoUsuario.infoDeUsuario.then((promesaDeUsuarioResuelta) => {
+      setUsuario(promesaDeUsuarioResuelta);
+    });
+  }, [estadoUsuario.cargando]);
 
-  const [fontsLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
-  });
   return (
     <SafeAreaView>
       <Button
@@ -27,14 +28,14 @@ const User = () => {
         <Box>
           <ListItem
             title="Nombre y Apellido"
-            meta={`${usuario._z.nombre} ${usuario._z.apellido}`}
+            meta={`${usuario.nombre} ${usuario.apellido}`}
           />
-          <ListItem title="Domicilio" meta={`${usuario._z.domicilio}`} />
-          <ListItem title="Documento" meta={`${usuario._z.documento}`} />
-          <ListItem title="Telefono" meta={`${usuario._z.telefono}`} />
+          <ListItem title="Domicilio" meta={`${usuario.domicilio}`} />
+          <ListItem title="Documento" meta={`${usuario.documento}`} />
+          <ListItem title="Telefono" meta={`${usuario.telefono}`} />
           <ListItem
             title="Fecha de nacimiento"
-            meta={`${usuario._z.fechaDeNacimiento}`}
+            meta={`${usuario.fechaDeNacimiento}`}
           />
           <Text
             style={{

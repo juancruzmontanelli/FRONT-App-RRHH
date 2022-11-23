@@ -3,7 +3,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { traerInfoDeUsuario } from "../servicios/usuario";
 
-const usuarioLogueado = traerInfoDeUsuario();
+const usuarioLogueado = traerInfoDeUsuario(); //ESTO ES UNA PROMESA NO RESUELTA, SE RESUELVE EN EL FRONT SI SE NECESITA.
 const estadoInicial = usuarioLogueado
   ? {
       cargando: false,
@@ -39,11 +39,11 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [iniciarSesion.fulfilled]: async (estado, accion) => {
     estado.cargando = false;
-    estado.infoDeUsuario = accion.payload;
     await AsyncStorage.setItem("usuario", JSON.stringify(accion.payload));
+    estado.infoDeUsuario = await traerInfoDeUsuario();
   },
   [iniciarSesion.rejected]: (estado) => {
-    estado.cargando = false;
+    estado.cargando = true;
     throw new Error("Credenciales incorrectas");
   },
 });

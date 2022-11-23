@@ -45,7 +45,6 @@ const Login = ({ navigation }) => {
           [{ text: "Entendido" }],
           { cancelable: true }
         );
-        navigation.navigate("Inicio");
       })
       .catch((error) => {
         Alert.alert(

@@ -1,11 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
-import { Text, SafeAreaView, Image, StyleSheet, View, Alert } from "react-native";
+import {SafeAreaView, Image, StyleSheet, View, Alert } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
 
 
 const Home = ({ navigation }) => {
