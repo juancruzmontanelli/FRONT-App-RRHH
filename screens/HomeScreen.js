@@ -65,16 +65,6 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
-
-        <View>
-          <Button
-            title="Mi actividad"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 20 }}
-            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            trailing={(props) => <Icon name="calendar" {...props} />}
-          />
-        </View>
         <View>
           <Button
             title="Empleados"
