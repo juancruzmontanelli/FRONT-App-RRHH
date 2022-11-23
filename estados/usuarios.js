@@ -15,6 +15,7 @@ const estadoInicial = usuarioLogueado
     };
 
 export const urlBaseUsuario = axios.create({
+
   baseURL: `http://10.10.10.103:8080/api/usuarios`,
 });
 

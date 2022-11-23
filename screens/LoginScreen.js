@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create({
   logo: {
@@ -57,9 +56,7 @@ const Login = ({ navigation }) => {
       });
   };
 
-  const [fontsLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
-  });
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
       <Box
@@ -69,9 +66,7 @@ const Login = ({ navigation }) => {
         }}
       >
         <Image style={styles.logo} source={require("../assets/globlal.png")} />
-        <Text style={{ fontFamily: "Arimo", fontSize: 30, marginBottom: 10 }}>
-          INICIAR SESIÓN
-        </Text>
+        <Text style={{ fontSize: 30, marginBottom: 10 }}>INICIAR SESIÓN</Text>
         <View
           style={{
             flexDirection: "row",
