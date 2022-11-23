@@ -27,9 +27,9 @@ export const traerAsistencias = createAsyncThunk(
     try {
       const historialDeAsistencias = await urlBaseAsistencia.post(
         "/historial",
-        usuarioId
+        {usuarioId}
       );
-      return historialDeAsistencias;
+      return historialDeAsistencias.data
     } catch (error) {
       throw new Error(error);
     }
@@ -40,7 +40,7 @@ const asistenciasReducer = createReducer(estadoInicial, {
   [crearAsistencia.pending]: (estado) => {
     estado.cargando = true;
   },
-  [crearAsistencia.fulfilled]: async (estado, accion) => {
+  [crearAsistencia.fulfilled]: (estado, accion) => {
     estado.cargando = false;
     Alert.alert("Asistencias", "Asistencia registrada con éxito!", [
       { text: "Entendido" },
@@ -53,7 +53,7 @@ const asistenciasReducer = createReducer(estadoInicial, {
   [traerAsistencias.pending]: (estado) => {
     estado.cargando = true;
   },
-  [traerAsistencias.fulfilled]: async (estado, accion) => {
+  [traerAsistencias.fulfilled]: (estado, accion) => {
     estado.cargando = false;
     estado.asistencias = accion.payload;
   },

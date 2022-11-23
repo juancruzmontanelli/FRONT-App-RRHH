@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+  const usuario = useSelector((estado) => estado.usuarios);
   const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
   const dispatch = useDispatch();
 
   useEffect(() => {
     navigation.navigate("Inicio");
-  }, [usuario.loading]);
+  }, [usuario.cargando]);
 
 
   const LoginEmailHandler = (e) => {
