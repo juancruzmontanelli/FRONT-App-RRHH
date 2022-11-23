@@ -27,7 +27,7 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     navigation.navigate("Inicio");
   }, [usuario.cargando]);
-  
+
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
   };
@@ -44,7 +44,6 @@ const Login = ({ navigation }) => {
           [{ text: "Entendido" }],
           { cancelable: true }
         );
-        navigation.navigate("Inicio");
       })
       .catch((error) => {
         Alert.alert(
