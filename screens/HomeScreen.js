@@ -1,32 +1,21 @@
-
 import react from "react";
+
+import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
 import {
   Text,
   SafeAreaView,
   Image,
   StyleSheet,
   View,
-  TouchableOpacity,
   Alert,
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-
-import { Box, TextInput, Button } from "@react-native-material/core";
-
-import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
-import { Text, SafeAreaView, Image, StyleSheet, View, Alert } from "react-native";
-import { Avatar } from "@react-native-material/core";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button } from "@react-native-material/core";
 
-
-
-
 const Home = ({ navigation }) => {
-
   const styles = StyleSheet.create({
     logo: {
       width: 150,
@@ -53,7 +42,6 @@ const Home = ({ navigation }) => {
     Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
     setFichaje(restablecerFechaActual);
   };
-
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
@@ -118,7 +106,6 @@ const Home = ({ navigation }) => {
               width: "48%",
               marginHorizontal: 4 / 2,
             }}
-
             trailing={(props) => <Icon name="send" {...props} />}
             onPress={() => {
               navigation.navigate("Novedades");
@@ -197,7 +184,6 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
-
       </Box>
     </SafeAreaView>
   );

@@ -1,5 +1,4 @@
 import react, { useState, Component } from "react";
-
 import {
   Text,
   SafeAreaView,
@@ -12,14 +11,8 @@ import {
   Platform,
 } from "react-native";
 import { Box, TextInput, Button, select } from "@react-native-material/core";
-
-
-import { SelectList } from "react-native-dropdown-select-list";
-
-
 import { SelectList } from "react-native-dropdown-select-list";
 import DateTimePicker from "@react-native-community/datetimepicker";
-
 
 const styles = StyleSheet.create({
   logo: {
@@ -33,7 +26,6 @@ const styles = StyleSheet.create({
 });
 
 const Novedades = () => {
-
   const [type, setType] = useState("");
 
   // DROPDOWN STATE
@@ -48,7 +40,6 @@ const Novedades = () => {
   const [input, setInput] = useState("select");
   const [input2, setInput2] = useState("select");
   const [button, setButton] = useState(0);
-
 
   // OBSERVACIONES STATE
   const [observaciones, setObservaciones] = useState("");
@@ -195,7 +186,6 @@ const Novedades = () => {
                   });
                 }}
               />
-
             </View>
             {tipo ? (
               <View
@@ -382,7 +372,6 @@ const Novedades = () => {
 
 export default Novedades;
 
-
 // const [selectedDate, setSelectedDate] = useState("");
 // const [open, setOpen] = useState(false);
 
@@ -409,4 +398,3 @@ export default Novedades;
 //     }}
 //     onPress={() => setOpen(!open)}
 //   ></Button>
-

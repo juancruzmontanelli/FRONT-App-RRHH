@@ -3,7 +3,6 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
 import { useDispatch, useSelector } from "react-redux";
 import { traerAsistencias } from "../estados/asistencias";
-import { useSelector } from "react-redux";
 
 const User = () => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
