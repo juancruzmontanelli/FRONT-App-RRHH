@@ -20,10 +20,14 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
+  const usuario = useSelector((estado) => estado.usuarios);
   const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
   const dispatch = useDispatch();
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
 
+  useEffect(() => {
+    navigation.navigate("Inicio");
+  }, [usuario.cargando]);
+  
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
   };
@@ -51,6 +55,7 @@ const Login = ({ navigation }) => {
         );
       });
   };
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
