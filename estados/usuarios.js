@@ -1,10 +1,7 @@
-import { createSlice, createAsyncThunk, createReducer} from "@reduxjs/toolkit";
+import {createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
-import { Constants } from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { traerInfoDeUsuario } from "../servicios/usuario";
-
 import { Alert } from "react-native";
 
 const usuarioLogueado = traerInfoDeUsuario();
@@ -22,15 +19,19 @@ export const urlBaseUsuario = axios.create({
   baseURL: `http://10.10.10.103:8080/api/usuarios`,
 });
 
-export const iniciarSesion = createAsyncThunk(
-  "INICIO_SESION",
-  async (infoUsuario) => {
+export const crearAsistencia = createAsyncThunk(
+  "CREAR_ASISTENCIA",
+  async (infoDeUsuario) => {
     try {
-      const usuarioEncontrado = await urlBaseUsuario.post(
-        "/iniciosesion",
-        infoUsuario
-      );
-      return usuarioEncontrado.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+export const traerAsistencias = createAsyncThunk(
+  "HISTORIAL_ASISTENCIAS",
+  async (infoDeUsuario) => {
+    try {
     } catch (error) {
       throw new Error(error);
     }
@@ -49,7 +50,7 @@ const usuarioReducer = createReducer(estadoInicial, {
   [iniciarSesion.rejected]: (estado) => {
     estado.cargando = false;
     throw new Error("Credenciales incorrectas");
-  },
+  }
 });
 
 export default usuarioReducer;
