@@ -28,8 +28,7 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     navigation.navigate("Inicio");
   }, [usuario.cargando]);
-
-
+  
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
   };
