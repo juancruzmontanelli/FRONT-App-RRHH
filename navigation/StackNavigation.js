@@ -3,6 +3,7 @@ import Login from "../screens/LoginScreen";
 import Home from "../screens/HomeScreen";
 import Novedades from "../screens/NovedadesScreen";
 import User from "../screens/UserScreen";
+import VerSolicitudes from "../screens/superUserSolicitudes";
 
 import { Button } from "@react-native-material/core";
 
@@ -58,9 +59,10 @@ const StackScreen = (navigation) => {
       <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
 
       <Stack.Screen name="Novedades" component={Novedades} />
-      <Stack.Screen name="Novedad">
-        {(props) => <NovedadScreen {...props} novedad={dummyNovedades} />}
-      </Stack.Screen>
+      <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
+
+   
+
       <Stack.Screen name="Usuario" component={User} />
     </Stack.Navigator>
   );
