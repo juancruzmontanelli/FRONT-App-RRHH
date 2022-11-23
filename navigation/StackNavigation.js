@@ -6,13 +6,11 @@ import User from "../screens/UserScreen";
 
 import { Button } from "@react-native-material/core";
 
-const StackScreen = (navigation) => {
-
 import NovedadScreen from "../screens/NovedadScreen";
 import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
 
-const StackScreen = () => {
+const StackScreen = (navigation) => {
   const dummyNovedades = {
     tipoNovedad: "Vacaciones",
     fechaInicio: "26/12/2022",
@@ -21,7 +19,6 @@ const StackScreen = () => {
     observaciones: "",
     autorizadoPor: "Santiago Lucero",
   };
-
 
   const Stack = createNativeStackNavigator();
 
@@ -35,7 +32,6 @@ const StackScreen = () => {
         headerTintColor: "#f89c1c",
       }}
     >
-
       <Stack.Screen name="GLOBALNEWS" component={Login} />
       <Stack.Screen
         name="Inicio"
@@ -54,7 +50,7 @@ const StackScreen = () => {
         })}
       />
       <Stack.Screen name="GLOBAL NEWS" component={Login} />
-      
+
       <Stack.Screen
         name="HistorialAsistencias"
         component={HistorialAsistencias}
