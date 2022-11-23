@@ -1,20 +1,12 @@
-import react from "react";
-import {
-  Text,
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { Text, SafeAreaView, Image, StyleSheet, View } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-import { Box, TextInput, Button } from "@react-native-material/core";
+import { Box, Button } from "@react-native-material/core";
 import { useFonts } from "expo-font";
 
 const Home = ({ navigation }) => {
-  const [fontLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });
 
@@ -52,7 +44,7 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
-        <View>
+        <View style={{ flexDirection: "row", paddingHorizontal: 4 / -2 }}>
           <Button
             title="Novedades"
             tintColor="#f89c1c"

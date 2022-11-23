@@ -21,9 +21,14 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
+  const usuario = useSelector((estado) => estado.usuarios);
   const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
   const dispatch = useDispatch();
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+
+  useEffect(() => {
+    navigation.navigate("Inicio");
+  }, [usuario.cargando]);
+
 
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
@@ -53,7 +58,7 @@ const Login = ({ navigation }) => {
       });
   };
 
-  const [fontLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Arimo: require("../assets/fonts/Arimo.ttf"),
   });
   return (
