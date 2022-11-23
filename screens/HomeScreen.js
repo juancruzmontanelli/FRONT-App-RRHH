@@ -6,18 +6,14 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
 
 const Home = ({ navigation }) => {
-  const [fontLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
-  });
-
   const styles = StyleSheet.create({
     logo: {
       width: 150,
@@ -38,7 +34,7 @@ const Home = ({ navigation }) => {
           <Button
             title="Mi Perfil"
             tintColor="#f89c1c"
-            titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
+            titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
             trailing={(props) => (
               <Avatar
@@ -56,7 +52,7 @@ const Home = ({ navigation }) => {
           <Button
             title="Novedades"
             tintColor="#f89c1c"
-            titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
+            titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
             trailing={(props) => <Icon name="send" {...props} />}
             onPress={() => {
@@ -68,7 +64,7 @@ const Home = ({ navigation }) => {
           <Button
             title="Mi Equipo"
             tintColor="#f89c1c"
-            titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
+            titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
             trailing={(props) => (
               <Avatar
@@ -83,7 +79,7 @@ const Home = ({ navigation }) => {
           <Button
             title="Mi Asistencia"
             tintColor="#f89c1c"
-            titleStyle={{ fontFamily: "Arimo", fontSize: 20 }}
+            titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
             trailing={(props) => (
               <Avatar
@@ -94,6 +90,18 @@ const Home = ({ navigation }) => {
             )}
           />
         </View>
+        {/* <View>
+          <Button
+            title="Cerrar sesion"
+            tintColor="#f89c1c"
+            titleStyle={{ fontSize: 20 }}
+            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
+            trailing={(props) => <Icon name="close" {...props} />}
+            onPress={() => {
+              navigation.navigate("GLOBALNEWS");
+            }}
+          />
+        </View> */}
       </Box>
     </SafeAreaView>
   );

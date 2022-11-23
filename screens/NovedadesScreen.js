@@ -9,15 +9,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
-import {
-  Box,
-  TextInput,
-  Button,
-  select,
-} from "@react-native-material/core";
-import { useFonts } from "expo-font";
-import { SelectList } from "react-native-dropdown-select-list";
+import { Box, TextInput, Button, select } from "@react-native-material/core";
 
+import { SelectList } from "react-native-dropdown-select-list";
 
 const styles = StyleSheet.create({
   logo: {
@@ -27,8 +21,7 @@ const styles = StyleSheet.create({
 });
 
 const Novedades = () => {
-
-  const [type, setType] = useState('')
+  const [type, setType] = useState("");
 
   const data = [
     { key: "1", value: "Licencia Vacaciones" },
@@ -58,28 +51,22 @@ const Novedades = () => {
               alignItems: "center",
             }}
           >
-             <Image
+            <Image
               style={styles.logo}
               source={require("../assets/megafono.png")}
             />
-            <Text
-              style={{ fontFamily: "Arimo", fontSize: 30, marginBottom: 10 }}
-            >
-              NOVEDADES
-            </Text>
+            <Text style={{ fontSize: 30, marginBottom: 10 }}>NOVEDADES</Text>
             <View
               style={{
                 marginBottom: 25,
                 width: 380,
               }}
             >
-              <Text
-                style={{ fontFamily: "Arimo", fontSize: 15, marginBottom: 10 }}
-              >
+              <Text style={{ ffontSize: 15, marginBottom: 10 }}>
                 {" "}
                 Tipo de Novedad
               </Text>
-              <SelectList data={data} setSelected={setType}/>
+              <SelectList data={data} setSelected={setType} />
             </View>
             <View
               style={{
@@ -136,9 +123,7 @@ const Novedades = () => {
                   width: 130,
                 }}
               ></Button>
-            </View> 
-    
-            
+            </View>
           </Box>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -148,10 +133,8 @@ const Novedades = () => {
 
 export default Novedades;
 
-
 // const [selectedDate, setSelectedDate] = useState("");
 // const [open, setOpen] = useState(false);
-
 
 // {open ? (
 //     <DatePicker
@@ -176,5 +159,3 @@ export default Novedades;
 //     }}
 //     onPress={() => setOpen(!open)}
 //   ></Button>
-
-
