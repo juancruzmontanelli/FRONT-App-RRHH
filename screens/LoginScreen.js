@@ -106,7 +106,7 @@ const Login = ({ navigation }) => {
           <Button
             title="ENTRAR"
             style={{ backgroundColor: "#0072b7", marginTop: 30, width: 130 }}
-            onPress={SubmitHandler} // navigation.navigate("Inicio")
+            onPress={SubmitHandler} 
           ></Button>
         </View>
       </Box>
