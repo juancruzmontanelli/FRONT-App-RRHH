@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create({
   logo: {
@@ -21,9 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
+  const usuario = useSelector((estado) => estado.usuarios);
   const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
   const dispatch = useDispatch();
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+
+  useEffect(() => {
+    navigation.navigate("Inicio");
+  }, [usuario.cargando]);
 
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
@@ -41,7 +44,6 @@ const Login = ({ navigation }) => {
           [{ text: "Entendido" }],
           { cancelable: true }
         );
-        navigation.navigate("Inicio");
       })
       .catch((error) => {
         Alert.alert(
@@ -53,9 +55,7 @@ const Login = ({ navigation }) => {
       });
   };
 
-  const [fontLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
-  });
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
       <Box
@@ -65,9 +65,7 @@ const Login = ({ navigation }) => {
         }}
       >
         <Image style={styles.logo} source={require("../assets/globlal.png")} />
-        <Text style={{ fontFamily: "Arimo", fontSize: 30, marginBottom: 10 }}>
-          INICIAR SESIÓN
-        </Text>
+        <Text style={{ fontSize: 30, marginBottom: 10 }}>INICIAR SESIÓN</Text>
         <View
           style={{
             flexDirection: "row",

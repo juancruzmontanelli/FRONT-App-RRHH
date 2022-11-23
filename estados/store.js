@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import usuarios from "./usuarios";
-import novedades from "./novedades";
+import usuarioReducer from "./usuarios";
+import novedadReducer from "./novedades";
+import asistenciasReducer from "./asistencias";
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
-    usuarios,
-    novedades,
+    usuarios: usuarioReducer,
+    novedades: novedadReducer,
+    asistencias: asistenciasReducer
   },
 });
 

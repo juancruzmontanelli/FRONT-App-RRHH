@@ -1,14 +1,21 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { traerInfoDeUsuario } from "../servicios/usuario";
 
-const estadoInicial = {
-  cargando: true,
-  infoDeUsuario: {},
-};
+const usuarioLogueado = (async () => await traerInfoDeUsuario())(); //ESTO ES UNA PROMESA NO RESUELTA, SE RESUELVE EN EL FRONT SI SE NECESITA.
+const estadoInicial = usuarioLogueado
+  ? {
+      cargando: false,
+      infoDeUsuario: usuarioLogueado,
+    }
+  : {
+      cargando: true,
+      infoDeUsuario: {},
+    };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://127.0.0.1:8080/api/usuarios`,
+  baseURL: `http://192.168.1.36:8080/api/usuarios`,
 });
 
 export const iniciarSesion = createAsyncThunk(
@@ -21,29 +28,24 @@ export const iniciarSesion = createAsyncThunk(
       );
       return usuarioEncontrado.data;
     } catch (error) {
-      /*alert(error.response.data)*/
       throw new Error(error);
     }
   }
 );
 
-const usuarioSlice = createSlice({
-  name: "usuarios",
-  initialState: estadoInicial,
-  reducers: {},
-  extraReducers: {
-    [iniciarSesion.pending]: (estado) => {
-      estado.cargando = true;
-    },
-    [iniciarSesion.fulfilled]: (estado, accion) => {
-      estado.cargando = false;
-      estado.infoDeUsuario = accion.payload;
-    },
-    [iniciarSesion.rejected]: (estado) => {
-      estado.cargando = false;
-      throw new Error("Credenciales incorrectas");
-    },
+const usuarioReducer = createReducer(estadoInicial, {
+  [iniciarSesion.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [iniciarSesion.fulfilled]: async (estado, accion) => {
+    estado.cargando = false;
+    await AsyncStorage.setItem("usuario", JSON.stringify(accion.payload));
+    estado.infoDeUsuario = await traerInfoDeUsuario();
+  },
+  [iniciarSesion.rejected]: (estado) => {
+    estado.cargando = true;
+    throw new Error("Credenciales incorrectas");
   },
 });
 
-export default usuarioSlice.reducer;
+export default usuarioReducer;
