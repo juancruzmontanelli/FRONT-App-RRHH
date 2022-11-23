@@ -13,8 +13,9 @@ export const urlBaseAsistencia = axios.create({
 
 export const crearAsistencia = createAsyncThunk(
   "CREAR_ASISTENCIA",
-  async (infoDeUsuario) => {
+  async (usuarioId, datosAsistencia) => {
     try {
+      urlBaseAsistencia.post("/", { idUsuario, datosAsistencia });
     } catch (error) {
       throw new Error(error);
     }
