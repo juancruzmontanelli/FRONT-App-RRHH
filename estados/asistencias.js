@@ -8,14 +8,14 @@ const estadoInicial = {
 };
 
 export const urlBaseAsistencia = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/asistencias`,
+  baseURL: `http://192.168.1.36:8080/api/asistencias`,
 });
 
 export const crearAsistencia = createAsyncThunk(
   "CREAR_ASISTENCIA",
   async (idUsuarioYdatosAsistencia) => {
-    const {usuarioId} = idUsuarioYdatosAsistencia
-    const {datosAsistencia} = idUsuarioYdatosAsistencia
+    const { usuarioId } = idUsuarioYdatosAsistencia;
+    const { datosAsistencia } = idUsuarioYdatosAsistencia;
     try {
       await urlBaseAsistencia.post("/", { usuarioId, datosAsistencia });
     } catch (error) {
