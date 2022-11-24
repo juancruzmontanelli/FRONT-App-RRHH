@@ -18,6 +18,9 @@ import {
   Col,
 } from "react-native-table-component";
 import { SelectList } from "react-native-dropdown-select-list";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { traerNovedadesUsuario,  } from "../estados/novedades";
 
 const Detalles = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
@@ -40,17 +43,22 @@ const Detalles = ({ visible, children }) => {
 };
 
 const VerSolicitudes = () => {
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.usuarios.infoDeUsuario)
+  const novedades = useSelector((state) => state.novedades.novedades.novedades)
+
+  useEffect(() => {
+    dispatch(traerNovedadesUsuario(user.id))
+  }, [])
+  
   // STATES
   const [visible, setVisible] = useState(false);
   const [estado, setEstado] = useState('Pendiente')
   // TABLA
-  const headers = ["Nombre", "Dependencia", "estado", "detalle"];
-  const rows = [
-    ["nombre1", "desarollo", "pendiente", ""],
-    ["nombre2", "comercial", "pendiente", ""],
-    ["nombre3", "audiovisual", "pendiente", ""],
-  ];
+  const headers = ["Tipo Novedad", "Estado",  "detalle"];
+  const rows = novedades.map((novedad) => [novedad.tipoDeNovedad, novedad.estado, novedad.id])
 
+  // DETALLES 
   const rowsDetalles = [
     ['fecha de inicio:', 'XXXXXXX'],
     ['fecha de fin:', 'XXXXXXX'],
@@ -65,13 +73,18 @@ const VerSolicitudes = () => {
   ]
 
 
-  const element = (data, index) => (
-    <Button
+  const element = (data, index, ) => (
+    <Button 
+      key={data}
       title="DETALLES"
       style={styles.btn}
       titleStyle={styles.btnText}
-      onPress={() => setVisible(true)}
+      onPress={() => {
+        console.log(data)
+        setVisible(true)
+      }}
     />
+
   );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
@@ -87,15 +100,27 @@ const VerSolicitudes = () => {
           <Table borderStyle={{ borderColor: "transparent" }}>
             <Row data={headers} style={styles.head} textStyle={styles.title} />
             {rows.map((rowData, index) => (
+              <>
+              
+              
               <TableWrapper key={index} style={styles.row}>
                 {rowData.map((cellData, cellIndex) => (
+                
+                  
+                
                   <Cell
                     key={cellIndex}
-                    data={cellIndex === 3 ? element(cellData, index) : cellData}
+                    data={cellIndex === 2 ? element(cellData, index,) : cellData}
                     textStyle={styles.text}
                   />
-                ))}
+              
+                
+                ))
+                }
               </TableWrapper>
+              
+               
+              </>
             ))}
           </Table>
         </View>
