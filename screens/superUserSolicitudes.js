@@ -77,7 +77,7 @@ const VerSolicitudes = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
       <Box style={{ marginTop: 20 }}>
         <View style={{ alignItems: "center" }}>
-          <Text style={{ fontFamily: "Arimo", fontSize: 20 }}>
+          <Text style={{  fontSize: 20 }}>
             HISTORIAL NOVEDADES{" "}
           </Text>
           <Box></Box>
@@ -107,7 +107,7 @@ const VerSolicitudes = () => {
             </TouchableOpacity>
             </View>
             <View style={styles.modalHeader}>
-              <Text style={{fontFamily: 'armio'}}>Licencia Vacaciones</Text>
+              <Text>Licencia Vacaciones</Text>
               <View style={styles.container2}>
                 <Table>
                   <Rows data={rowsDetalles} textStyle={{margin: 10}}/>
@@ -130,7 +130,7 @@ const VerSolicitudes = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30 },
   head: { height: 40 },
-  title: { color: "#0072B7", fontFamily: "Arimo", textAlign: "center" },
+  title: { color: "#0072B7",  textAlign: "center" },
   text: { margin: 6, textAlign: "center" },
   row: { flexDirection: "row" },
   btn: { width: 100, height: 25, borderRadius: 2, backgroundColor: "#f89c1c" },
