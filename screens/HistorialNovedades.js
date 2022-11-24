@@ -1,30 +1,34 @@
 import React, { useEffect } from "react";
-import { ScrollView } from "react-native";
+import { Pressable, ScrollView } from "react-native";
 import { Button } from "@react-native-material/core";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { dummyNovedades } from "../Utils/utils";
-import { AntDesign } from "@expo/vector-icons";
+import ItemDeLista from "../componentes/ItemDeLista";
+import { traerNovedadesUsuario } from "../estados/novedades";
 
 function HistorialNovedades({ navigation }) {
+  const dispatch = useDispatch();
+  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+  const novedades = useSelector((estado) => estado.novedades.novedades.novedades);
+
+  useEffect(() => {
+    dispatch(traerNovedadesUsuario(usuario.id));
+  }, []);
   return (
     <ScrollView style={{ backgroundColor: "#0072b7" }}>
-      {dummyNovedades.map((novedad, indice) => (
-        <Button
-          title={`#${indice + 1} ${novedad.tipoNovedad}`}
-          variant="contained"
-          color="#f89c1c"
-          onPress={() => {
-            navigation.navigate("Novedad");
-          }}
-          leading={(props) => (
-            <AntDesign
-              size={24}
-              name="rightcircle"
-              color="#0072b7"
-              {...props}
-            />
-          )}
+      {novedades.map((novedad, indice) => (
+        <ItemDeLista
+          key={
+            Math.random(indice * 11) +
+            Math.random(indice * 22) +
+            Math.random(indice * 33)
+          }
+          title={novedad.tipoNovedad}
+          secondaryText={novedad.estado}
+          id={novedad.id}
+          novedad={true}
+          navigation={navigation}
         />
       ))}
     </ScrollView>
