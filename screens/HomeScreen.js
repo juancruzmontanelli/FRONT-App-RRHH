@@ -3,21 +3,31 @@ import react from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
-import {Text ,SafeAreaView, Image, StyleSheet, View, Alert } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  Image,
+  StyleSheet,
+  View,
+  Alert,
+} from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button } from "@react-native-material/core";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { crearAsistencia } from "../estados/asistencias";
 
 const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   const styles = StyleSheet.create({
     logo: {
       width: 150,
       height: 150,
     },
   });
-
+  useSelector((estado) => {
+    console.log();
+  });
   const [fichaje, setFichaje] = useState({
     fecha: "",
     horaDeIngreso: "",
@@ -63,16 +73,6 @@ const Home = ({ navigation }) => {
             onPress={() => {
               navigation.navigate("Usuario");
             }}
-          />
-        </View>
-
-        <View>
-          <Button
-            title="Mi actividad"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 20 }}
-            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            trailing={(props) => <Icon name="calendar" {...props} />}
           />
         </View>
         <View>
@@ -134,7 +134,10 @@ const Home = ({ navigation }) => {
                 width: "75%",
               }}
               trailing={(props) => <MaterialIcons name="work-off" {...props} />}
-              onPress={salidaHandler}
+              onPressIn={salidaHandler}
+              onPressOut={() => {
+                dispatch(crearAsistencia({ usuarioId }));
+              }}
             />
           ) : (
             <Button

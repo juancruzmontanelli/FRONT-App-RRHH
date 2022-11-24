@@ -55,7 +55,6 @@ const Login = ({ navigation }) => {
       });
   };
 
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
       <Box
