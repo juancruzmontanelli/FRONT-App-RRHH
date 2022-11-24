@@ -13,7 +13,8 @@ const dummyNovedades = [
     fechaFin: "10/01/2023",
     cantidad: "15",
     observaciones: "",
-    autorizadoPor: "Santiago Lucero",
+    autorizadoPor: "pendiente",
+    estado:'pendiente'
   },
   {
     tipoNovedad: "Llegada tarde",
@@ -22,6 +23,7 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "Santiago Lucero",
+    estado:'aprobado'
   },
   {
     tipoNovedad: "Licencia",
@@ -29,7 +31,8 @@ const dummyNovedades = [
     fechaFin: "10/01/2023",
     cantidad: "15",
     observaciones: "",
-    autorizadoPor: "Santiago Lucero",
+    autorizadoPor: "No autorizado",
+    estado:'rechazado'
   },
   {
     tipoNovedad: "Otro",
@@ -38,6 +41,7 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "Santiago Lucero",
+    estado:'aprobado'
   },
   {
     tipoNovedad: "Accidente Laboral",
@@ -45,7 +49,8 @@ const dummyNovedades = [
     fechaFin: "10/01/2023",
     cantidad: "15",
     observaciones: "",
-    autorizadoPor: "Santiago Lucero",
+    autorizadoPor: "pendiente",
+    estado:'pendiente'
   },
 ];
 const retornarFechaActual = () => {

@@ -5,10 +5,12 @@ import axios from "axios";
 const estadoInicial = {
   cargando: true,
   novedades: [],
+  novedad: {},
 };
 
 const urlBaseNovedad = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/novedades`,
+
+  baseURL: `http://192.168.1.41:8080/api/novedades`,
 });
 
 export const crearNovedad = createAsyncThunk(
@@ -18,7 +20,17 @@ export const crearNovedad = createAsyncThunk(
       await urlBaseNovedad.post("/", infoNovedad);
       return "Novedad creada con éxito!";
     } catch (error) {
-      /*alert(error.response.data)*/
+      throw new Error(error);
+    }
+  }
+);
+export const traerUnaNovedad = createAsyncThunk(
+  "TRAER_UNA_NOVEDAD",
+  async (idNovedad) => {
+    try {
+      const novedad = await urlBaseNovedad.get(`/una/${idNovedad}`);
+      return novedad;
+    } catch (error) {
       throw new Error(error);
     }
   }
@@ -111,6 +123,17 @@ const novedadReducer = createReducer(estadoInicial, {
     estado.cargando = false;
     throw new Error("Acceso denegado!");
   },
+  [traerUnaNovedad.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [traerUnaNovedad.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.novedad = accion.payload;
+  },
+  [traerUnaNovedad.rejected]: (estado) => {
+    estado.cargando = false;
+    throw new Error("Ha ocurrido un error al intentar traer su novedad");
+  },
 });
 
-export default novedadReducer
+export default novedadReducer;
