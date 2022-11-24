@@ -55,7 +55,6 @@ const Login = ({ navigation }) => {
       });
   };
 
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
       <Box
@@ -106,7 +105,7 @@ const Login = ({ navigation }) => {
           <Button
             title="ENTRAR"
             style={{ backgroundColor: "#0072b7", marginTop: 30, width: 130 }}
-            onPress={SubmitHandler} // navigation.navigate("Inicio")
+            onPress={SubmitHandler} 
           ></Button>
         </View>
       </Box>

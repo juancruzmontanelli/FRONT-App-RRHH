@@ -60,9 +60,9 @@ const StackScreen = (navigation) => {
 
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
-
-   
-
+      <Stack.Screen name="Novedad">
+        {(props) => <NovedadScreen {...props} novedad={dummyNovedades} />}
+      </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
     </Stack.Navigator>
   );

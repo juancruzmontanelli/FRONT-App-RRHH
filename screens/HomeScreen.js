@@ -1,5 +1,3 @@
-import react from "react";
-
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
@@ -7,6 +5,8 @@ import {Text ,SafeAreaView, Image, StyleSheet, View, Alert,TouchableOpacity,Moda
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button } from "@react-native-material/core";
+import { useDispatch, useSelector } from "react-redux";
+import { crearAsistencia } from "../estados/asistencias";
 
 const NovedadesMenu = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
@@ -30,11 +30,11 @@ const NovedadesMenu = ({ visible, children }) => {
 
 
 const Home = ({ navigation }) => {
-
+ const dispatch = useDispatch();
+  const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
 
 // STATES SUBMENU
   const [visible, setVisible] = useState(false);
-
 
   const [fichaje, setFichaje] = useState({
     fecha: "",
@@ -42,7 +42,11 @@ const Home = ({ navigation }) => {
     horaDeSalida: "",
   });
   const ingresoHandler = () => {
-    setFichaje({ ...fichaje, horaDeIngreso: retornarFechaActual().hora });
+    setFichaje({
+      ...fichaje,
+      horaDeIngreso: retornarFechaActual().hora,
+      fecha: retornarFechaActual().fecha,
+    });
     Alert.alert("Ingreso", `Hora de ingreso: ${retornarFechaActual().hora}`);
   };
 
@@ -50,10 +54,8 @@ const Home = ({ navigation }) => {
     setFichaje({
       ...fichaje,
       horaDeSalida: retornarFechaActual().hora,
-      fecha: retornarFechaActual().fecha,
     });
     Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
-    setFichaje(restablecerFechaActual);
   };
 
   return (
@@ -64,7 +66,10 @@ const Home = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <Image style={styles.logo} source={require("../assets/globlal.png")} />
+        <Image
+          style={{ width: 150, height: 150 }}
+          source={require("../assets/globlal.png")}
+        />
         <View>
           <Button
             title="Mi Perfil"
@@ -81,16 +86,6 @@ const Home = ({ navigation }) => {
             onPress={() => {
               navigation.navigate("Usuario");
             }}
-          />
-        </View>
-
-        <View>
-          <Button
-            title="Mi actividad"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 20 }}
-            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            trailing={(props) => <Icon name="calendar" {...props} />}
           />
         </View>
         <View>
@@ -137,7 +132,16 @@ const Home = ({ navigation }) => {
                 width: "75%",
               }}
               trailing={(props) => <MaterialIcons name="work-off" {...props} />}
-              onPress={salidaHandler}
+              onPressIn={salidaHandler}
+              onPressOut={() => {
+                dispatch(
+                  crearAsistencia({
+                    usuarioId: usuarioId,
+                    datosAsistencia: fichaje,
+                  })
+                );
+                setFichaje(restablecerFechaActual);
+              }}
             />
           ) : (
             <Button
@@ -266,4 +270,5 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
 });
+
 export default Home;

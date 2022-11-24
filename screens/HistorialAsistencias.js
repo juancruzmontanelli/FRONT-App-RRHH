@@ -1,21 +1,28 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 import ItemDeLista from "../componentes/ItemDeLista";
-import { retornarFechaActual } from "../Utils/utils";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { traerAsistencias } from "../estados/asistencias";
 
 function HistorialAsistencias() {
+  const dispatch = useDispatch();
+  const asistencias = useSelector((estado) => estado.asistencias);
+  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+
+  useEffect(() => {
+    dispatch(traerAsistencias(usuario.id));
+  }, []);
   return (
-    <View>
-      <ItemDeLista
-        title={`${retornarFechaActual().fecha}`}
-        secondaryText={`Hora de Ingreso: ${
-          retornarFechaActual().hora
-        }\nHora de salida: ${retornarFechaActual().hora}`}
-      />
-    </View>
+    <ScrollView>
+      {asistencias.asistencias.map((el) => (
+        <ItemDeLista
+          title={`${el.fecha}`}
+          secondaryText={`Hora de Ingreso: ${el.horaDeIngreso}\nHora de salida: ${el.horaDeSalida}`}
+        />
+      ))}
+    </ScrollView>
   );
 }
 
