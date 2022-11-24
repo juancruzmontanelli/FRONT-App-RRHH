@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { traerDatosUsuario } from "../estados/usuarios";
 
 const User = () => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
@@ -15,21 +16,22 @@ const User = () => {
   }, []);
   return (
     <SafeAreaView>
-      <Button
-        style={{
-          textAlign: "center",
-
-          fontSize: 30,
-        }}
-        title="EDITA TU INFORMACION"
-        color="#0072b7"
-        tintColor="#f89c1c"
-      />
       <ScrollView>
+        <Button
+          style={{
+            textAlign: "center",
+
+            fontSize: 30,
+          }}
+          title="EDITA TU INFORMACION"
+          color="#0072b7"
+          tintColor="#f89c1c"
+        />
+
         <Box>
           <ListItem
             title="Nombre y Apellido"
-            meta={`${datosLaborales.perfil.nombre} ${datosLaborales.perfil.apellido}`}
+            meta={`${usuario.nombre} ${usuario.apellido}`}
           />
           <ListItem
             title="Domicilio"
@@ -81,12 +83,12 @@ const User = () => {
           />
           <ListItem
             title="Dias Laborales"
-            meta={`${datosLaborales.datosLaborales.horariosLaborales}`}
+            meta={`${datosLaborales.datosLaborales.diasLaborales}`}
           />
 
           <ListItem
             title="Horarios Laborales"
-            meta={`${datosLaborales.datosLaborales.diasLaborales}`}
+            meta={`${datosLaborales.datosLaborales.horarioLaboral}`}
           />
 
           <ListItem
