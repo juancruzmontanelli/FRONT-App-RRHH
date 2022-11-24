@@ -5,7 +5,14 @@ import { useSelector } from "react-redux";
 
 const User = () => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+  const dispatch = useDispatch();
+  const datosLaborales = useSelector(
+    (estado) => estado.usuarios.datosLaborales
+  );
 
+  useEffect(() => {
+    dispatch(traerDatosUsuario(usuario.id));
+  }, []);
   return (
     <SafeAreaView>
       <Button
@@ -22,15 +29,25 @@ const User = () => {
         <Box>
           <ListItem
             title="Nombre y Apellido"
-            meta={`${usuario.nombre} ${usuario.apellido}`}
+            meta={`${datosLaborales.perfil.nombre} ${datosLaborales.perfil.apellido}`}
           />
-          <ListItem title="Domicilio" meta={`${usuario.domicilio}`} />
-          <ListItem title="Documento" meta={`${usuario.documento}`} />
-          <ListItem title="Telefono" meta={`${usuario.telefono}`} />
+          <ListItem
+            title="Domicilio"
+            meta={`${datosLaborales.perfil.domicilio}`}
+          />
+          <ListItem
+            title="Documento"
+            meta={`${datosLaborales.perfil.documento}`}
+          />
+          <ListItem
+            title="Telefono"
+            meta={`${datosLaborales.perfil.telefono}`}
+          />
           <ListItem
             title="Fecha de nacimiento"
-            meta={`${usuario.fechaDeNacimiento}`}
+            meta={`${datosLaborales.perfil.fechaDeNacimiento}`}
           />
+          <ListItem title="Email" meta={`${datosLaborales.perfil.eMail}`} />
           <Text
             style={{
               fontSize: 20,
@@ -41,18 +58,41 @@ const User = () => {
           >
             DATOS LABORALES
           </Text>
-          <ListItem title="Fecha Ingreso" meta={`${usuario.fechaDeIngreso}`} />
-          <ListItem title="Puesto" meta={`${usuario.puesto}`} />
+          <ListItem
+            title="Fecha Ingreso"
+            meta={`${datosLaborales.datosLaborales.fechaDeIngreso}`}
+          />
 
           <ListItem
-            title="Horarios Laborales"
-            meta={`${usuario.diasLaborales}`}
+            title="Puesto"
+            meta={`${datosLaborales.datosLaborales.puesto}`}
+          />
+          <ListItem
+            title="Equipo"
+            meta={`${datosLaborales.datosLaborales.equipo}`}
+          />
+          <ListItem
+            title="Turno"
+            meta={`${datosLaborales.datosLaborales.turno}`}
+          />
+          <ListItem
+            title="Oficina"
+            meta={`${datosLaborales.datosLaborales.oficina}`}
           />
           <ListItem
             title="Dias Laborales"
-            meta={`${usuario.horariosLaborales}`}
+            meta={`${datosLaborales.datosLaborales.horariosLaborales}`}
           />
-          <ListItem title="Observaciones" meta={`${usuario.observaciones}`} />
+
+          <ListItem
+            title="Horarios Laborales"
+            meta={`${datosLaborales.datosLaborales.diasLaborales}`}
+          />
+
+          <ListItem
+            title="Observaciones"
+            meta={`${datosLaborales.datosLaborales.observaciones}`}
+          />
         </Box>
       </ScrollView>
     </SafeAreaView>
