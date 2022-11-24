@@ -1,5 +1,3 @@
-import react from "react";
-
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
@@ -19,22 +17,18 @@ import { crearAsistencia } from "../estados/asistencias";
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const styles = StyleSheet.create({
-    logo: {
-      width: 150,
-      height: 150,
-    },
-  });
-  useSelector((estado) => {
-    console.log();
-  });
+  const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
   const [fichaje, setFichaje] = useState({
     fecha: "",
     horaDeIngreso: "",
     horaDeSalida: "",
   });
   const ingresoHandler = () => {
-    setFichaje({ ...fichaje, horaDeIngreso: retornarFechaActual().hora });
+    setFichaje({
+      ...fichaje,
+      horaDeIngreso: retornarFechaActual().hora,
+      fecha: retornarFechaActual().fecha,
+    });
     Alert.alert("Ingreso", `Hora de ingreso: ${retornarFechaActual().hora}`);
   };
 
@@ -42,10 +36,8 @@ const Home = ({ navigation }) => {
     setFichaje({
       ...fichaje,
       horaDeSalida: retornarFechaActual().hora,
-      fecha: retornarFechaActual().fecha,
     });
     Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
-    setFichaje(restablecerFechaActual);
   };
 
   return (
@@ -56,7 +48,10 @@ const Home = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <Image style={styles.logo} source={require("../assets/globlal.png")} />
+        <Image
+          style={{ width: 150, height: 150 }}
+          source={require("../assets/globlal.png")}
+        />
         <View>
           <Button
             title="Mi Perfil"
@@ -136,7 +131,13 @@ const Home = ({ navigation }) => {
               trailing={(props) => <MaterialIcons name="work-off" {...props} />}
               onPressIn={salidaHandler}
               onPressOut={() => {
-                dispatch(crearAsistencia({ usuarioId }));
+                dispatch(
+                  crearAsistencia({
+                    usuarioId: usuarioId,
+                    datosAsistencia: fichaje,
+                  })
+                );
+                setFichaje(restablecerFechaActual);
               }}
             />
           ) : (
@@ -187,10 +188,4 @@ const Home = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  logo: {
-    width: 150,
-    height: 150,
-  },
-});
 export default Home;
