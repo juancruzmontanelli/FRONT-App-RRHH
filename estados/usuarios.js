@@ -8,7 +8,7 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/usuarios`,
+  baseURL: `http://192.168.1.36:8080/api/usuarios`,
 });
 
 export const iniciarSesion = createAsyncThunk(

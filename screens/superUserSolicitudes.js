@@ -20,19 +20,19 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { traerNovedadesUsuario,  } from "../estados/novedades";
+import { traerNovedadesUsuario } from "../estados/novedades";
 
 const Detalles = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
 
   useEffect(() => {
     toggleModal();
-  }, [visible])
+  }, [visible]);
 
-    // TOGGLE MODAL
-    const toggleModal = () => {
-      visible ? setShowModal(true) : setShowModal(false)
-    }
+  // TOGGLE MODAL
+  const toggleModal = () => {
+    visible ? setShowModal(true) : setShowModal(false);
+  };
   return (
     <Modal transparent visible={showModal}>
       <View style={styles.modalBackGround}>
@@ -43,56 +43,61 @@ const Detalles = ({ visible, children }) => {
 };
 
 const VerSolicitudes = () => {
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.usuarios.infoDeUsuario)
-  const novedades = useSelector((state) => state.novedades.novedades.novedades)
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.usuarios.infoDeUsuario);
+  const novedades = useSelector((state) => state.novedades.novedades.novedades);
 
   useEffect(() => {
-    dispatch(traerNovedadesUsuario(user.id))
-  }, [])
-  
+    dispatch(traerNovedadesUsuario(user.id));
+  }, []);
+
+  console.log(user.id, "USER ID");
+  console.log(novedades, "NOVEDADES");
+
   // STATES
   const [visible, setVisible] = useState(false);
-  const [estado, setEstado] = useState('Pendiente')
+  const [estado, setEstado] = useState("Pendiente");
   // TABLA
-  const headers = ["Tipo Novedad", "Estado",  "detalle"];
-  const rows = novedades.map((novedad) => [novedad.tipoDeNovedad, novedad.estado, novedad.id])
+  const headers = ["Tipo Novedad", "Estado", "detalle"];
+  const rows = novedades.length
+    ? novedades.map((novedad) => [
+        novedad.tipoDeNovedad,
+        novedad.estado,
+        novedad.id,
+      ])
+    : ["cargando"];
 
-  // DETALLES 
+  // DETALLES
   const rowsDetalles = [
-    ['fecha de inicio:', 'XXXXXXX'],
-    ['fecha de fin:', 'XXXXXXX'],
-    ['cantidad de dias:', 'XXXXXXX'],
-    ['observaciones:', 'XXXXXXX'],
-    ['autorizado por:', 'XXXXXXX']
-  ]
+    ["fecha de inicio:", "XXXXXXX"],
+    ["fecha de fin:", "XXXXXXX"],
+    ["cantidad de dias:", "XXXXXXX"],
+    ["observaciones:", "XXXXXXX"],
+    ["autorizado por:", "XXXXXXX"],
+  ];
   const data = [
     { key: "1", value: "Pendiente " },
     { key: "2", value: "Confirmada " },
     { key: "4", value: "Rechazada" },
-  ]
+  ];
 
-
-  const element = (data, index, ) => (
-    <Button 
+  const element = (data, index) => (
+    <Button
       key={data}
       title="DETALLES"
       style={styles.btn}
       titleStyle={styles.btnText}
       onPress={() => {
-        console.log(data)
-        setVisible(true)
+        console.log(data);
+        setVisible(true);
       }}
     />
-
   );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
       <Box style={{ marginTop: 20 }}>
         <View style={{ alignItems: "center" }}>
-          <Text style={{  fontSize: 20 }}>
-            HISTORIAL NOVEDADES{" "}
-          </Text>
+          <Text style={{ fontSize: 20 }}>HISTORIAL NOVEDADES </Text>
           <Box></Box>
         </View>
 
@@ -101,50 +106,46 @@ const VerSolicitudes = () => {
             <Row data={headers} style={styles.head} textStyle={styles.title} />
             {rows.map((rowData, index) => (
               <>
-              
-              
-              <TableWrapper key={index} style={styles.row}>
-                {rowData.map((cellData, cellIndex) => (
-                
-                  
-                
-                  <Cell
-                    key={cellIndex}
-                    data={cellIndex === 2 ? element(cellData, index,) : cellData}
-                    textStyle={styles.text}
-                  />
-              
-                
-                ))
-                }
-              </TableWrapper>
-              
-               
+                <TableWrapper key={index} style={styles.row}>
+                  {rowData.map((cellData, cellIndex) => (
+                    <Cell
+                      key={cellIndex}
+                      data={
+                        cellIndex === 2 ? element(cellData, index) : cellData
+                      }
+                      textStyle={styles.text}
+                    />
+                  ))}
+                </TableWrapper>
               </>
             ))}
           </Table>
         </View>
         <Detalles visible={visible}>
           <View style={{ alignItems: "center" }}>
-            <View style={{width: '100%', alignItems: 'flex-end'}}>
-            <TouchableOpacity onPress={() => setVisible(false)}>   
-            <Image source={require("../assets/cancel.png")} style={styles.cancel}/>
-            </TouchableOpacity>
+            <View style={{ width: "100%", alignItems: "flex-end" }}>
+              <TouchableOpacity onPress={() => setVisible(false)}>
+                <Image
+                  source={require("../assets/cancel.png")}
+                  style={styles.cancel}
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.modalHeader}>
               <Text>Licencia Vacaciones</Text>
               <View style={styles.container2}>
                 <Table>
-                  <Rows data={rowsDetalles} textStyle={{margin: 10}}/>
+                  <Rows data={rowsDetalles} textStyle={{ margin: 10 }} />
                 </Table>
               </View>
-                  <Text>ESTADO:</Text>
-                  <SelectList data={data}
-                  setSelected={setEstado}
-                  save={'value'}
-                  placeholder={estado}
-                  boxStyles={{width:150}}
-                  />
+              <Text>ESTADO:</Text>
+              <SelectList
+                data={data}
+                setSelected={setEstado}
+                save={"value"}
+                placeholder={estado}
+                boxStyles={{ width: 150 }}
+              />
             </View>
           </View>
         </Detalles>
@@ -155,7 +156,7 @@ const VerSolicitudes = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30 },
   head: { height: 40 },
-  title: { color: "#0072B7",  textAlign: "center" },
+  title: { color: "#0072B7", textAlign: "center" },
   text: { margin: 6, textAlign: "center" },
   row: { flexDirection: "row" },
   btn: { width: 100, height: 25, borderRadius: 2, backgroundColor: "#f89c1c" },
@@ -182,8 +183,8 @@ const styles = StyleSheet.create({
   modalHeader: {
     alignItems: "center",
   },
-  container2: {width: 350, margin: 20, marginLeft: 100},
-  cancel: {height: 20, width: 20}
+  container2: { width: 350, margin: 20, marginLeft: 100 },
+  cancel: { height: 20, width: 20 },
 });
 
 export default VerSolicitudes;

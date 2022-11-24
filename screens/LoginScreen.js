@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
+import { traerNovedadesUsuario } from "../estados/novedades";
 
 const styles = StyleSheet.create({
   logo: {
@@ -26,6 +27,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     navigation.navigate("Inicio");
+    dispatch(traerNovedadesUsuario(usuario.infoDeUsuario.id));
   }, [usuario.cargando]);
 
   const LoginEmailHandler = (e) => {
