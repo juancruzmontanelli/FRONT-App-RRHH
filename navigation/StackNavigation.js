@@ -10,16 +10,10 @@ import { Button } from "@react-native-material/core";
 import NovedadScreen from "../screens/NovedadScreen";
 import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
+import { useSelector } from "react-redux";
 
 const StackScreen = (navigation) => {
-  const dummyNovedades = {
-    tipoNovedad: "Vacaciones",
-    fechaInicio: "26/12/2022",
-    fechaFin: "10/01/2023",
-    cantidad: "15",
-    observaciones: "",
-    autorizadoPor: "Santiago Lucero",
-  };
+  const novedad = useSelector((estado) => estado.novedades.novedad);
 
   const Stack = createNativeStackNavigator();
 
@@ -61,7 +55,7 @@ const StackScreen = (navigation) => {
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen name="Novedad">
-        {(props) => <NovedadScreen {...props} novedad={dummyNovedades} />}
+        {(props) => <NovedadScreen {...props} novedad={novedad} />}
       </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
     </Stack.Navigator>
