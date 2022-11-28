@@ -9,12 +9,18 @@ import {
   Alert,
   TouchableOpacity,
   Modal,
+  Text,
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button } from "@react-native-material/core";
 import { crearAsistencia } from "../estados/asistencias";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ficharIngreso,
+  resetearIngreso,
+  setearUltimoFichaje,
+} from "../estados/usuarios";
 
 const NovedadesMenu = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
@@ -37,18 +43,30 @@ const NovedadesMenu = ({ visible, children }) => {
 };
 
 const Home = ({ navigation }) => {
- 
+  const dispatch = useDispatch();
+  const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
+  const { ingresoDeUsuario } = useSelector((estado) => estado.usuarios);
+  const { ultimoFichaje } = useSelector((estado) => estado.usuarios);
+
   // STATES SUBMENU
   const [visible, setVisible] = useState(false);
+  const [fichaje, setFichaje] = useState(
+    ingresoDeUsuario.fecha
+      ? { ...ingresoDeUsuario, horaDeSalida: "" }
+      : {
+          fecha: "",
+          horaDeIngreso: "",
+          horaDeSalida: "",
+        }
+  );
 
-  
-
-  const [fichaje, setFichaje] = useState({
-    fecha: "",
-    horaDeIngreso: "",
-    horaDeSalida: "",
-  });
   const ingresoHandler = () => {
+    dispatch(
+      ficharIngreso({
+        horaDeIngreso: retornarFechaActual().hora,
+        fecha: retornarFechaActual().fecha,
+      })
+    );
     setFichaje({
       ...fichaje,
       horaDeIngreso: retornarFechaActual().hora,
@@ -62,6 +80,7 @@ const Home = ({ navigation }) => {
       ...fichaje,
       horaDeSalida: retornarFechaActual().hora,
     });
+
     Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
   };
 
@@ -78,6 +97,11 @@ const Home = ({ navigation }) => {
           source={require("../assets/globlal.png")}
         />
         <View>
+          <View>
+            <Text>Fecha: {ultimoFichaje.fecha}</Text>
+            <Text>Ultimo Ingreso: {ultimoFichaje.horaDeIngreso}</Text>
+            <Text>Ultima Salida: {ultimoFichaje.horaDeSalida}</Text>
+          </View>
           <Button
             title="Mi Perfil"
             tintColor="#f89c1c"
@@ -95,7 +119,7 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
-       {/*  <View>
+        {/*  <View>
           <Button
             title="Empleados"
             tintColor="#f89c1c"
@@ -139,13 +163,23 @@ const Home = ({ navigation }) => {
               }}
               trailing={(props) => <MaterialIcons name="work-off" {...props} />}
               onPressIn={salidaHandler}
-              onPressOut={() => {
+              onPressOut={async () => {
                 dispatch(
                   crearAsistencia({
                     usuarioId: usuarioId,
                     datosAsistencia: fichaje,
                   })
-                );
+                )
+                  .then(() => {
+                    dispatch(setearUltimoFichaje(fichaje));
+                  })
+                  .catch(() => {
+                    Alert.alert(
+                      "Asistencia",
+                      "La cantidad máxima de fichajes diarios es de 2(dos) ingresos y 2(dos) salidas"
+                    );
+                  });
+                dispatch(resetearIngreso());
                 setFichaje(restablecerFechaActual);
               }}
             />
@@ -164,7 +198,7 @@ const Home = ({ navigation }) => {
             />
           )}
         </View>
-       {/*  <View>
+        {/*  <View>
           <Button
             title="Mi Equipo"
             tintColor="#f89c1c"
@@ -235,7 +269,7 @@ const Home = ({ navigation }) => {
                 navigation.navigate("VerSolicitudes");
               }}
             />
-          {/*   <Button
+            {/*   <Button
               title="Mis novedades"
               tintColor="#f89c1c"
               titleStyle={{ fontSize: 13 }}
