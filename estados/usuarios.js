@@ -1,5 +1,11 @@
-import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  createAction,
+  createAsyncThunk,
+  createReducer,
+} from "@reduxjs/toolkit";
 import axios from "axios";
+import { Alert } from "react-native";
 
 const estadoInicial = {
   cargando: true,
@@ -8,7 +14,7 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://192.168.1.36:8080/api/usuarios`,
+  baseURL: `http://192.168.1.41:8080/api/usuarios`,
 });
 
 export const iniciarSesion = createAsyncThunk(
@@ -25,6 +31,14 @@ export const iniciarSesion = createAsyncThunk(
     }
   }
 );
+
+export const cerrarSesion = createAsyncThunk("CERRAR_SESION", async () => {
+  try {
+    await AsyncStorage.clear();
+  } catch (error) {
+    throw "Ha habido un error al cerrar sesión";
+  }
+});
 
 export const traerDatosUsuario = createAsyncThunk(
   "TRAER_INFO_DE_USUARIO",
@@ -46,9 +60,19 @@ const usuarioReducer = createReducer(estadoInicial, {
     estado.cargando = false;
     estado.infoDeUsuario = accion.payload;
   },
-  [iniciarSesion.rejected]: (estado) => {
-    estado.cargando = true;
+  [iniciarSesion.rejected]: () => {
     throw new Error("Credenciales incorrectas");
+  },
+  [cerrarSesion.fulfilled]: (estado) => {
+    estado.infoDeUsuario = {};
+    estado.datosLaborales = {};
+    Alert.alert("Cerrar Sesión", "Su sesión ha sido cerrada con éxito!");
+  },
+  [cerrarSesion.rejected]: (estado) => {
+    Alert.alert(
+      "Cerrar Sesión",
+      "Ha habido un error al intentar cerrar sesión"
+    );
   },
   [traerDatosUsuario.pending]: (estado) => {
     estado.cargando = true;
@@ -58,7 +82,6 @@ const usuarioReducer = createReducer(estadoInicial, {
     estado.datosLaborales = accion.payload;
   },
   [traerDatosUsuario.rejected]: (estado) => {
-    estado.cargando = true;
     throw new Error("Error de validación!");
   },
 });

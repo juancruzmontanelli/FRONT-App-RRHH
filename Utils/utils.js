@@ -4,6 +4,7 @@ const categoriasNovedad = [
   "Fecha de Finalización",
   "Cantidad",
   "Observaciones",
+  "Certificado",
   "Autorizado por: ",
 ];
 const dummyNovedades = [

@@ -1,24 +1,32 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
-import {Text ,SafeAreaView, Image, StyleSheet, View, Alert,TouchableOpacity,Modal, } from "react-native";
+import {
+  SafeAreaView,
+  Image,
+  StyleSheet,
+  View,
+  Alert,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
 import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button } from "@react-native-material/core";
-import { useDispatch, useSelector } from "react-redux";
 import { crearAsistencia } from "../estados/asistencias";
+
 
 const NovedadesMenu = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
 
   useEffect(() => {
     toggleModal();
-  }, [visible])
+  }, [visible]);
 
-    // TOGGLE MODAL
-    const toggleModal = () => {
-      visible ? setShowModal(true) : setShowModal(false)
-    }
+  // TOGGLE MODAL
+  const toggleModal = () => {
+    visible ? setShowModal(true) : setShowModal(false);
+  };
   return (
     <Modal transparent visible={showModal}>
       <View style={styles.modalBackGround}>
@@ -28,13 +36,12 @@ const NovedadesMenu = ({ visible, children }) => {
   );
 };
 
-
 const Home = ({ navigation }) => {
- const dispatch = useDispatch();
-  const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
-
-// STATES SUBMENU
+ 
+  // STATES SUBMENU
   const [visible, setVisible] = useState(false);
+
+  
 
   const [fichaje, setFichaje] = useState({
     fecha: "",
@@ -88,7 +95,7 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
-        <View>
+       {/*  <View>
           <Button
             title="Empleados"
             tintColor="#f89c1c"
@@ -102,7 +109,7 @@ const Home = ({ navigation }) => {
               />
             )}
           />
-        </View>
+        </View> */}
         <View style={{ flexDirection: "row", paddingHorizontal: 4 / -2 }}>
           <Button
             title="Novedades"
@@ -111,14 +118,13 @@ const Home = ({ navigation }) => {
             style={{
               backgroundColor: "#0072b7",
               marginTop: 50,
-              width: 300 
+              width: 300,
             }}
             trailing={(props) => <Icon name="send" {...props} />}
             onPress={() => {
-              setVisible(true); 
+              setVisible(true);
             }}
           />
-         
         </View>
         <View>
           {fichaje.horaDeIngreso ? (
@@ -158,7 +164,7 @@ const Home = ({ navigation }) => {
             />
           )}
         </View>
-        <View>
+       {/*  <View>
           <Button
             title="Mi Equipo"
             tintColor="#f89c1c"
@@ -172,7 +178,7 @@ const Home = ({ navigation }) => {
               />
             )}
           />
-        </View>
+        </View> */}
 
         <View>
           <Button
@@ -189,59 +195,62 @@ const Home = ({ navigation }) => {
 
         <NovedadesMenu visible={visible}>
           <View style={{ alignItems: "center" }}>
-            <View style={{width: '100%', alignItems: 'flex-end'}}>
-            <TouchableOpacity onPress={() => setVisible(false)}>   
-            <Image source={require("../assets/cancel.png")} style={styles.cancel}/>
-            </TouchableOpacity>
+            <View style={{ width: "100%", alignItems: "flex-end" }}>
+              <TouchableOpacity onPress={() => setVisible(false)}>
+                <Image
+                  source={require("../assets/cancel.png")}
+                  style={styles.cancel}
+                />
+              </TouchableOpacity>
             </View>
             <Button
-            title="Nueva novedad"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 13 }}
-            style={{
-              backgroundColor: "#0072b7",
-              marginTop: 50,
-              width: "48%",
-              marginHorizontal: 4 / 2,
-            }}
-            trailing={(props) => <Icon name="send" {...props} />}
-            onPress={() => {
-              setVisible(false)
-              navigation.navigate("Novedades");  
-            }}
-          />
-          <Button
-            title="Ver Solicitudes"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 13 }}
-            style={{
-              backgroundColor: "#0072b7",
-              marginTop: 50,
-              width: "48%",
-              marginHorizontal: 4 / 2,
-            }}
-            trailing={(props) => <Icon name="send" {...props} />}
-            onPress={() => {
-              setVisible(false)
-              navigation.navigate("VerSolicitudes");  
-            }}
-          />
-           <Button
-            title="Mis novedades"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 13 }}
-            style={{
-              backgroundColor: "#0072b7",
-              marginTop: 50,
-              width: "48%",
-              marginHorizontal: 4 / 2,
-            }}
-            trailing={(props) => <Icon name="history" {...props} />}
-            onPress={() => {
-              setVisible(false)
-              navigation.navigate("HistorialNovedades");
-            }}
-          />
+              title="Nueva novedad"
+              tintColor="#f89c1c"
+              titleStyle={{ fontSize: 13 }}
+              style={{
+                backgroundColor: "#0072b7",
+                marginTop: 50,
+                width: "48%",
+                marginHorizontal: 4 / 2,
+              }}
+              trailing={(props) => <Icon name="send" {...props} />}
+              onPress={() => {
+                setVisible(false);
+                navigation.navigate("Novedades");
+              }}
+            />
+            <Button
+              title="Ver Solicitudes"
+              tintColor="#f89c1c"
+              titleStyle={{ fontSize: 13 }}
+              style={{
+                backgroundColor: "#0072b7",
+                marginTop: 50,
+                width: "48%",
+                marginHorizontal: 4 / 2,
+              }}
+              trailing={(props) => <Icon name="send" {...props} />}
+              onPress={() => {
+                setVisible(false);
+                navigation.navigate("VerSolicitudes");
+              }}
+            />
+          {/*   <Button
+              title="Mis novedades"
+              tintColor="#f89c1c"
+              titleStyle={{ fontSize: 13 }}
+              style={{
+                backgroundColor: "#0072b7",
+                marginTop: 50,
+                width: "48%",
+                marginHorizontal: 4 / 2,
+              }}
+              trailing={(props) => <Icon name="history" {...props} />}
+              onPress={() => {
+                setVisible(false);
+                navigation.navigate("HistorialNovedades");
+              }}
+            /> */}
           </View>
         </NovedadesMenu>
       </Box>
@@ -254,7 +263,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
-  cancel: {height: 20, width: 20},
+  cancel: { height: 20, width: 20 },
   modalBackGround: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",

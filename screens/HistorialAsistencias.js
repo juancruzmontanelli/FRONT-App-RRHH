@@ -5,24 +5,29 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { traerAsistencias } from "../estados/asistencias";
+import Loader from "../componentes/Loader";
 
 function HistorialAsistencias() {
   const dispatch = useDispatch();
-  const asistencias = useSelector((estado) => estado.asistencias);
+  const asistencias = useSelector((estado) => estado.asistencias.asistencias);
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
 
   useEffect(() => {
     dispatch(traerAsistencias(usuario.id));
   }, []);
-  return (
+
+  return asistencias.length ? (
     <ScrollView>
-      {asistencias.asistencias.map((el) => (
+      {asistencias.map((asistencia, indice) => (
         <ItemDeLista
-          title={`${el.fecha}`}
-          secondaryText={`Hora de Ingreso: ${el.horaDeIngreso}\nHora de salida: ${el.horaDeSalida}`}
+          key={indice}
+          title={`${asistencia.fecha}`}
+          secondaryText={`Hora de Ingreso: ${asistencia.horaDeIngreso}\nHora de salida: ${asistencia.horaDeSalida}`}
         />
       ))}
     </ScrollView>
+  ) : (
+    <Loader />
   );
 }
 

@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Text,
   SafeAreaView,
@@ -8,23 +8,21 @@ import {
   TouchableOpacity,
   Modal,
 } from "react-native";
-import { Box, TextInput, Button, Wrap } from "@react-native-material/core";
+import { Box, Button } from "@react-native-material/core";
 import {
   Table,
   Row,
   TableWrapper,
   Rows,
   Cell,
-  Col,
 } from "react-native-table-component";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import Loader from "../componentes/Loader";
 import { traerNovedadesUsuario } from "../estados/novedades";
 
 const Detalles = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
-
   useEffect(() => {
     toggleModal();
   }, [visible]);
@@ -44,28 +42,27 @@ const Detalles = ({ visible, children }) => {
 
 const VerSolicitudes = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.usuarios.infoDeUsuario);
+  const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
   const novedades = useSelector((state) => state.novedades.novedades.novedades);
-
+ 
   useEffect(() => {
-    dispatch(traerNovedadesUsuario(user.id));
+    dispatch(traerNovedadesUsuario(usuarioId));
   }, []);
-
-  console.log(user.id, "USER ID");
-  console.log(novedades, "NOVEDADES");
 
   // STATES
   const [visible, setVisible] = useState(false);
   const [estado, setEstado] = useState("Pendiente");
   // TABLA
   const headers = ["Tipo Novedad", "Estado", "detalle"];
-  const rows = novedades.length
-    ? novedades.map((novedad) => [
-        novedad.tipoDeNovedad,
-        novedad.estado,
-        novedad.id,
-      ])
-    : ["cargando"];
+  const rows = novedades ? (
+    novedades.map((novedad) => [
+      novedad.tipoDeNovedad,
+      novedad.estado,
+      novedad.id,
+    ])
+  ) : (
+    <></>
+  );
 
   // DETALLES
   const rowsDetalles = [
@@ -88,12 +85,12 @@ const VerSolicitudes = () => {
       style={styles.btn}
       titleStyle={styles.btnText}
       onPress={() => {
-        console.log(data);
         setVisible(true);
       }}
     />
   );
-  return (
+
+  return novedades ? (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
       <Box style={{ marginTop: 20 }}>
         <View style={{ alignItems: "center" }}>
@@ -151,6 +148,8 @@ const VerSolicitudes = () => {
         </Detalles>
       </Box>
     </SafeAreaView>
+  ) : (
+    <Loader />
   );
 };
 const styles = StyleSheet.create({
