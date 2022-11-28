@@ -4,15 +4,17 @@ import Home from "../screens/HomeScreen";
 import Novedades from "../screens/NovedadesScreen";
 import User from "../screens/UserScreen";
 import VerSolicitudes from "../screens/superUserSolicitudes";
-
+import { useDispatch } from "react-redux";
 import { Button } from "@react-native-material/core";
-
+import { cerrarSesion } from "../estados/usuarios";
 import NovedadScreen from "../screens/NovedadScreen";
 import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
 import { useSelector } from "react-redux";
+import { Alert } from "react-native";
 
 const StackScreen = (navigation) => {
+  const dispatch = useDispatch();
   const novedad = useSelector((estado) => estado.novedades.novedad);
 
   const Stack = createNativeStackNavigator();
@@ -38,7 +40,20 @@ const StackScreen = (navigation) => {
               color="#f89c1c"
               title="Cerrar sesion"
               onPress={() => {
-                navigation.navigate("GLOBALNEWS");
+                Alert.alert(
+                  "Cerrar Sesión",
+                  "Está seguro que quiere cerrar sesión?",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        dispatch(cerrarSesion());
+                        navigation.navigate("GLOBALNEWS");
+                      },
+                    },
+                    { text: "Cancelar" },
+                  ]
+                );
               }}
             />
           ),

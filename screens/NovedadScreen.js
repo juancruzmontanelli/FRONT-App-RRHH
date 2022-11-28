@@ -5,6 +5,7 @@ import { categoriasNovedad } from "../Utils/utils";
 
 function NovedadScreen({ navigation, novedad }) {
   const valoresNovedad = Object.keys(novedad).map((key) => novedad[key]);
+  valoresNovedad.shift();
 
   return (
     <ScrollView style={{ backgroundColor: "#0072b7" }}>

@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { iniciarSesion } from "../estados/usuarios";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
-import { traerNovedadesUsuario } from "../estados/novedades";
 
 const styles = StyleSheet.create({
   logo: {
@@ -21,14 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
   const usuario = useSelector((estado) => estado.usuarios);
   const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    navigation.navigate("Inicio");
-    dispatch(traerNovedadesUsuario(usuario.infoDeUsuario.id));
-  }, [usuario.cargando]);
+    if (usuario.infoDeUsuario.id) navigation.navigate("Inicio");
+  }, [usuario.infoDeUsuario]);
 
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });

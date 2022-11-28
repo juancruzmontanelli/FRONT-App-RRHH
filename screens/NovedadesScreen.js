@@ -1,26 +1,18 @@
-import react, { useState, Component } from "react";
+import useState from "react";
 import {
   Text,
   SafeAreaView,
   Image,
-  StyleSheet,
   View,
-  TouchableOpacity,
+
   ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { Box, TextInput, Button, select } from "@react-native-material/core";
-import { useFonts } from "expo-font";
+import { Box, TextInput, Button } from "@react-native-material/core";
 import { SelectList } from "react-native-dropdown-select-list";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const styles = StyleSheet.create({
-  logo: {
-    width: 130,
-    height: 130,
-  },
-});
 
 const Novedades = () => {
   // DROPDOWN STATE
@@ -37,7 +29,7 @@ const Novedades = () => {
   const [button, setButton] = useState(0);
 
   // OBSERVACIONES STATE
-  const [observaciones, setObservaciones ] = useState('')
+  const [observaciones, setObservaciones] = useState("");
 
   // DROPDOWN DATA
   const data = [
@@ -60,38 +52,39 @@ const Novedades = () => {
 
   // DATE HANDLERS
   const onChange = (event, fechaSeleccionada) => {
-    const fechaActual= fechaSeleccionada || fecha;
+    const fechaActual = fechaSeleccionada || fecha;
     setShow(Platform.OS === "ios");
     setFecha(fechaActual);
     let tempDate = new Date(fechaActual);
-if(modo === 'date') {
-    let fDate =
-      tempDate.getDate() +
-      "/" +
-      (tempDate.getMonth() + 1) +
-      "/" +
-      tempDate.getFullYear();
+    if (modo === "date") {
+      let fDate =
+        tempDate.getDate() +
+        "/" +
+        (tempDate.getMonth() + 1) +
+        "/" +
+        tempDate.getFullYear();
       button == 1 ? setInput(fDate) : setInput2(fDate);
-  }
-  if(modo === 'time') {
-    let fTime = tempDate.getHours() + " : " + (tempDate.getMinutes()<10?'0':'') + tempDate.getMinutes()
-    button == 1 ? setInput(fTime) : setInput2(fTime);
-  
-  }
-    
+    }
+    if (modo === "time") {
+      let fTime =
+        tempDate.getHours() +
+        " : " +
+        (tempDate.getMinutes() < 10 ? "0" : "") +
+        tempDate.getMinutes();
+      button == 1 ? setInput(fTime) : setInput2(fTime);
+    }
   };
 
   const showMode = (modoActual, displayActual) => {
     setShow(true);
     setModo(modoActual);
-    setDisplay(displayActual)
+    setDisplay(displayActual);
   };
 
   // OBSERVACIONES HANDLER
-const observacionesInput = (e) => {
-  setObservaciones(e)
-}
-
+  const observacionesInput = (e) => {
+    setObservaciones(e);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
@@ -104,11 +97,14 @@ const observacionesInput = (e) => {
             }}
           >
             <Image
-              style={styles.logo}
+              style={{
+                width: 130,
+                height: 130,
+              }}
               source={require("../assets/megafono.png")}
             />
             <Text
-              style={{ fontFamily: "Arimo", fontSize: 30, marginBottom: 10 }}
+              style={{fontSize: 30, marginBottom: 10 }}
             >
               NOVEDADES
             </Text>
@@ -119,180 +115,190 @@ const observacionesInput = (e) => {
               }}
             >
               <Text
-                style={{ fontFamily: "Arimo", fontSize: 15, marginBottom: 10 }}
+                style={{ fontSize: 15, marginBottom: 10 }}
               >
                 {" "}
                 Tipo De Novedad
               </Text>
-              <SelectList data={data} setSelected={setTipo} 
-              save='value'
-              onSelect={() => {
-                    setInput("SELECT")
-                    setInput2("SELECT")
-                     data.map((obj) => {
-                     if (obj.value === tipo) {
-                      setId(obj.key)
-                     }
-                    })
-                
-              }}/>
+              <SelectList
+                data={data}
+                setSelected={setTipo}
+                save="value"
+                onSelect={() => {
+                  setInput("SELECT");
+                  setInput2("SELECT");
+                  data.map((obj) => {
+                    if (obj.value === tipo) {
+                      setId(obj.key);
+                    }
+                  });
+                }}
+              />
             </View>
-          {tipo ?  <View
-           style={{
-             marginBottom: 25,
-             width: 380,
-           }}
-         >
-           <Text
-             style={{ fontFamily: "Arimo", fontSize: 15, marginBottom: 10 }}
-           >
-             {" "}
-             Fecha De Inicio
-           </Text>
-           <Button
-             title={input}
-             onPress={() => {
-               showMode("date", "default");
-               setButton(1);
-             }}
-             style={{
-               backgroundColor: "#0072b7",
-               marginTop: 10,
-               width: 380,
-               flex: 1,
-               paddingVertical: 0,
-             }}
-           ></Button> 
-             {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={fecha}
-                mode={modo}
-                is24Hour={true}
-                display={display}
-                onChange={onChange}
-              />
-            )}
-           </View>
-           
-           : ""}
-
-            {id === "1" ?
-           <View
-           style={{
-             marginBottom: 25,
-             width: 380,
-           }}
-         >
-         
-
-<Text
-                style={{ fontFamily: "Arimo", fontSize: 15, marginBottom: 10 }}
-              >
-                {" "}
-                Fecha De Final
-              </Text>
-              <Button
-                title={input2}
-                onPress={() => {
-                  showMode("date", "default");
-                  setButton(2);
-                }}
+            {tipo ? (
+              <View
                 style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 10,
+                  marginBottom: 25,
                   width: 380,
-                  flex: 1,
-                  paddingVertical: 0,
                 }}
-              ></Button>
-              {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={fecha}
-                mode={modo}
-                is24Hour={true}
-                display={display}
-                onChange={onChange}
-              />
-            )}
-         </View>
-         
-         : ""}
-  
-  {id === "2" ?
-           <View
-           style={{
-             marginBottom: 25,
-             width: 380,
-           }}
-         >
-          
-<Text
-                style={{ fontFamily: "Arimo", fontSize: 15, marginBottom: 10 }}
               >
-                {" "}
-                Cantidad De Horas
-              </Text>
-              <Button
-                title={input2}
-                onPress={() => {
-                  showMode("time", "default");
-                  setButton(2);
-                }}
+                <Text
+                  style={{
+               
+                    fontSize: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  {" "}
+                  Fecha De Inicio
+                </Text>
+                <Button
+                  title={input}
+                  onPress={() => {
+                    showMode("date", "default");
+                    setButton(1);
+                  }}
+                  style={{
+                    backgroundColor: "#0072b7",
+                    marginTop: 10,
+                    width: 380,
+                    flex: 1,
+                    paddingVertical: 0,
+                  }}
+                ></Button>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={fecha}
+                    mode={modo}
+                    is24Hour={true}
+                    display={display}
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+            ) : (
+              ""
+            )}
+
+            {id === "1" ? (
+              <View
                 style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 10,
+                  marginBottom: 25,
                   width: 380,
-                  flex: 1,
-                  paddingVertical: 0,
                 }}
-              ></Button>
-              {show && (
-              <DateTimePicker
-              
-                testID="dateTimePicker"
-                value={fecha}
-                mode={modo}
-                is24Hour={true}
-                display={display}
-                onChange={onChange}
-              />
+              >
+                <Text
+                  style={{
+       
+                    fontSize: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  {" "}
+                  Fecha De Final
+                </Text>
+                <Button
+                  title={input2}
+                  onPress={() => {
+                    showMode("date", "default");
+                    setButton(2);
+                  }}
+                  style={{
+                    backgroundColor: "#0072b7",
+                    marginTop: 10,
+                    width: 380,
+                    flex: 1,
+                    paddingVertical: 0,
+                  }}
+                ></Button>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={fecha}
+                    mode={modo}
+                    is24Hour={true}
+                    display={display}
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+            ) : (
+              ""
             )}
-         </View>
-         
-         : ""}
-           
-  {id === "3" ?
-           <View
-           style={{
-             marginBottom: 25,
-             width: 380,
-           }}
-         >
-           
-              <TextInput
-                onChangeText={observacionesInput}
-                placeholder="Observaciones"
-                style={{ flex: 1, paddingVertical: 0, margintop: 10}}
-              ></TextInput>
 
-              {show && (
-              <DateTimePicker
-              
-                testID="dateTimePicker"
-                value={fecha}
-                mode={modo}
-                is24Hour={true}
-                display={display}
-                onChange={onChange}
-              />
+            {id === "2" ? (
+              <View
+                style={{
+                  marginBottom: 25,
+                  width: 380,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  {" "}
+                  Cantidad De Horas
+                </Text>
+                <Button
+                  title={input2}
+                  onPress={() => {
+                    showMode("time", "default");
+                    setButton(2);
+                  }}
+                  style={{
+                    backgroundColor: "#0072b7",
+                    marginTop: 10,
+                    width: 380,
+                    flex: 1,
+                    paddingVertical: 0,
+                  }}
+                ></Button>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={fecha}
+                    mode={modo}
+                    is24Hour={true}
+                    display={display}
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+            ) : (
+              ""
             )}
-         </View>
-         
-         : ""}
-          
 
+            {id === "3" ? (
+              <View
+                style={{
+                  marginBottom: 25,
+                  width: 380,
+                }}
+              >
+                <TextInput
+                  onChangeText={observacionesInput}
+                  placeholder="Observaciones"
+                  style={{ flex: 1, paddingVertical: 0, margintop: 10 }}
+                ></TextInput>
+
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={fecha}
+                    mode={modo}
+                    is24Hour={true}
+                    display={display}
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+            ) : (
+              ""
+            )}
 
             <View>
               <Button

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
 import { useSelector, useDispatch } from "react-redux";
 import { traerDatosUsuario } from "../estados/usuarios";
+import Loader from "../componentes/Loader";
 
 const User = () => {
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   const dispatch = useDispatch();
+  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   const datosLaborales = useSelector(
     (estado) => estado.usuarios.datosLaborales
   );
@@ -14,7 +15,8 @@ const User = () => {
   useEffect(() => {
     dispatch(traerDatosUsuario(usuario.id));
   }, []);
-  return (
+
+  return datosLaborales.perfil && usuario.nombre ? (
     <SafeAreaView>
       <ScrollView>
         <Button
@@ -98,6 +100,8 @@ const User = () => {
         </Box>
       </ScrollView>
     </SafeAreaView>
+  ) : (
+    <Loader />
   );
 };
 
