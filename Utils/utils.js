@@ -15,7 +15,7 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "pendiente",
-    estado:'pendiente'
+    estado: "pendiente",
   },
   {
     tipoNovedad: "Llegada tarde",
@@ -24,7 +24,7 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "Santiago Lucero",
-    estado:'aprobado'
+    estado: "aprobado",
   },
   {
     tipoNovedad: "Licencia",
@@ -33,7 +33,7 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "No autorizado",
-    estado:'rechazado'
+    estado: "rechazado",
   },
   {
     tipoNovedad: "Otro",
@@ -42,7 +42,7 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "Santiago Lucero",
-    estado:'aprobado'
+    estado: "aprobado",
   },
   {
     tipoNovedad: "Accidente Laboral",
@@ -51,15 +51,29 @@ const dummyNovedades = [
     cantidad: "15",
     observaciones: "",
     autorizadoPor: "pendiente",
-    estado:'pendiente'
+    estado: "pendiente",
   },
 ];
 const retornarFechaActual = () => {
   const fechaActual = {
-    fecha: `${new Date().getDate()}/${
-      new Date().getMonth() + 1
+    fecha: `${
+      String(new Date().getDate()).length === 1
+        ? `0${new Date().getDate()}`
+        : new Date().getDate()
+    }/${
+      (String(new Date().getMonth() + 1)).length === 1
+        ? `0${new Date().getMonth() + 1}`
+        : new Date().getMonth() + 1
     }/${new Date().getFullYear()}`,
-    hora: `${new Date().getHours()}:${new Date().getMinutes()}hs`,
+    hora: `${
+      String(new Date().getHours()).length === 1
+        ? `0${new Date().getHours()}`
+        : new Date().getHours()
+    }:${
+      String(new Date().getMinutes()).length === 1
+        ? `0${new Date().getMinutes()}`
+        : new Date().getMinutes()
+    }hs`,
   };
 
   return fechaActual;
