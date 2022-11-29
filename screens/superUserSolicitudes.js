@@ -19,7 +19,7 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../componentes/Loader";
-import { traerNovedadesUsuario } from "../estados/novedades";
+import { traerNovedadesUsuario, traerUnaNovedad } from "../estados/novedades";
 
 const Detalles = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible);
@@ -44,7 +44,8 @@ const VerSolicitudes = () => {
   const dispatch = useDispatch();
   const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
   const novedades = useSelector((state) => state.novedades.novedades.novedades);
- 
+  const novedad = useSelector((estado) => estado.novedades.novedad)
+  
   useEffect(() => {
     dispatch(traerNovedadesUsuario(usuarioId));
   }, []);
@@ -66,17 +67,20 @@ const VerSolicitudes = () => {
 
   // DETALLES
   const rowsDetalles = [
-    ["fecha de inicio:", "XXXXXXX"],
-    ["fecha de fin:", "XXXXXXX"],
-    ["cantidad de dias:", "XXXXXXX"],
-    ["observaciones:", "XXXXXXX"],
+    ["fecha de inicio:", novedad.fechaDeInicio],
+    ["fecha de fin:", novedad.fechaDeFin],
+    ["cantidad de dias:", novedad.cantidadDias],
+    ["cantidad de horas:", novedad.cantidadHoras],
+    ["observaciones:", novedad.observacion],
     ["autorizado por:", "XXXXXXX"],
   ];
-  const data = [
-    { key: "1", value: "Pendiente " },
-    { key: "2", value: "Confirmada " },
-    { key: "4", value: "Rechazada" },
-  ];
+
+  
+  // const data = [
+  //   { key: "1", value: "Pendiente " },
+  //   { key: "2", value: "Confirmada " },
+  //   { key: "4", value: "Rechazada" },
+  // ];
 
   const element = (data, index) => (
     <Button
@@ -86,8 +90,10 @@ const VerSolicitudes = () => {
       titleStyle={styles.btnText}
       onPress={() => {
         setVisible(true);
+        dispatch(traerUnaNovedad(data))
       }}
     />
+  
   );
 
   return novedades ? (
@@ -129,20 +135,21 @@ const VerSolicitudes = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.modalHeader}>
-              <Text>Licencia Vacaciones</Text>
+              <Text>{novedad.tipoDeNovedad}</Text>
               <View style={styles.container2}>
                 <Table>
                   <Rows data={rowsDetalles} textStyle={{ margin: 10 }} />
                 </Table>
               </View>
               <Text>ESTADO:</Text>
-              <SelectList
+              <Text>{novedad.estado}</Text>
+              {/* <SelectList
                 data={data}
                 setSelected={setEstado}
                 save={"value"}
                 placeholder={estado}
                 boxStyles={{ width: 150 }}
-              />
+              /> */}
             </View>
           </View>
         </Detalles>
