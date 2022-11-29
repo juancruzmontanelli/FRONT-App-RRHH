@@ -3,7 +3,7 @@ import Login from "../screens/LoginScreen";
 import Home from "../screens/HomeScreen";
 import Novedades from "../screens/NovedadesScreen";
 import User from "../screens/UserScreen";
-import VerSolicitudes from "../screens/superUserSolicitudes";
+import VerSolicitudes from "../screens/UserSolicitudes";
 import { useDispatch } from "react-redux";
 import { Button } from "@react-native-material/core";
 import { cerrarSesion } from "../estados/usuarios";
