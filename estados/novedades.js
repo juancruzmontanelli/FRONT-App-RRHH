@@ -9,7 +9,7 @@ const estadoInicial = {
 };
 
 const urlBaseNovedad = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/novedades`, //192.168.0.92
+  baseURL: `http://192.168.0.80:8080/api/novedades`, //192.168.0.80
 });
 
 export const crearNovedad = createAsyncThunk(

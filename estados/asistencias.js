@@ -8,7 +8,7 @@ const estadoInicial = {
 };
 
 export const urlBaseAsistencia = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/asistencias`, //192.168.0.92
+  baseURL: `http://192.168.0.80:8080/api/asistencias`,
 });
 
 export const crearAsistencia = createAsyncThunk(

@@ -16,7 +16,10 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/usuarios`, //192.168.0.92
+  baseURL: `http://192.168.0.80:8080/api/usuarios`, //192.168.0.80
+});
+export const urlBaseDatosLaborales = axios.create({
+  baseURL: `http://192.168.0.80:8080/api/datosLaborales`, //192.168.0.80
 });
 
 export const iniciarSesion = createAsyncThunk(
@@ -52,7 +55,31 @@ export const traerDatosUsuario = createAsyncThunk(
   "TRAER_INFO_DE_USUARIO",
   async (idUsuario) => {
     try {
-      const datosLaborales = await urlBaseUsuario.get(`/uno/${idUsuario}`);
+      const datos = await urlBaseUsuario.get(`/uno/${idUsuario}`);
+      return datos.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+export const editarDatosUsuario = createAsyncThunk(
+  "EDITAR_INFO_DE_USUARIO",
+  async (idUsuario) => {
+    try {
+      const datosPersonales = await urlBaseUsuario.put(`/${idUsuario}`);
+      return datosPersonales.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+export const editarDatosLaborales = createAsyncThunk(
+  "EDITAR_DATOS_LABORALES",
+  async (idDatosLaborales) => {
+    try {
+      const datosLaborales = await urlBaseDatosLaborales.put(
+        `/${idDatosLaborales}`
+      );
       return datosLaborales.data;
     } catch (error) {
       throw new Error(error);
@@ -96,9 +123,29 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [traerDatosUsuario.fulfilled]: (estado, accion) => {
     estado.cargando = false;
-    estado.datosLaborales = accion.payload;
+    estado.datos = accion.payload;
   },
   [traerDatosUsuario.rejected]: (estado) => {
+    throw new Error("Error de validación!");
+  },
+  [editarDatosUsuario.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [editarDatosUsuario.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.datosPersonales = accion.payload;
+  },
+  [editarDatosUsuario.rejected]: (estado) => {
+    throw new Error("Error de validación!");
+  },
+  [editarDatosLaborales.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [editarDatosLaborales.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.datosLaborales = accion.payload;
+  },
+  [editarDatosLaborales.rejected]: (estado) => {
     throw new Error("Error de validación!");
   },
 });
