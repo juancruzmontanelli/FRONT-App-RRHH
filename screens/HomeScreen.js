@@ -2,13 +2,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import { retornarFechaActual, restablecerFechaActual } from "../Utils/utils";
 import {
-  SafeAreaView,
   Image,
   StyleSheet,
   View,
   Alert,
   TouchableOpacity,
   Modal,
+  ScrollView,
   Text,
 } from "react-native";
 import { Avatar } from "@react-native-material/core";
@@ -50,6 +50,7 @@ const Home = ({ navigation }) => {
 
   // STATES SUBMENU
   const [visible, setVisible] = useState(false);
+
   const [fichaje, setFichaje] = useState(
     ingresoDeUsuario.fecha
       ? { ...ingresoDeUsuario, horaDeSalida: "" }
@@ -84,29 +85,109 @@ const Home = ({ navigation }) => {
     Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
   };
 
+  const fichajeStyles = StyleSheet.create({
+    fichajeContainer: {
+      marginVertical: "7%",
+      marginHorizontal: "5%",
+      borderLeftWidth: 1,
+      borderBottomWidth: 1,
+      borderRightWidth: 1,
+      borderRadius: 5,
+    },
+    botonFichaje: {
+      backgroundColor: fichaje.horaDeIngreso
+        ? "rgba(227, 102, 102, 0.67)"
+        : "rgba(102, 227, 119, 0.67)",
+      borderColor: "black",
+      borderStyle: "solid",
+      borderWidth: 1,
+    },
+    fechaFichajeContainer: {
+      width: "40%",
+      paddingVertical: "10%",
+      alignItems: "center",
+      borderRightWidth: 1,
+    },
+    horarioFichajeContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      paddingHorizontal: "3%",
+    },
+  });
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "#ffff" }}>
       <Box
         style={{
-          marginTop: "7%",
           alignItems: "center",
         }}
       >
-        <Image
-          style={{ width: 150, height: 150 }}
-          source={require("../assets/globlal.png")}
-        />
-        <View>
+        <View style={fichajeStyles.fichajeContainer}>
           <View>
-            <Text>Fecha: {ultimoFichaje.fecha}</Text>
-            <Text>Ultimo Ingreso: {ultimoFichaje.horaDeIngreso}</Text>
-            <Text>Ultima Salida: {ultimoFichaje.horaDeSalida}</Text>
+            <Button
+              title={fichaje.horaDeIngreso ? "Fichar Salida" : "Fichar Ingreso"}
+              tintColor="black"
+              titleStyle={{ fontSize: 20, fontWeight: "300" }}
+              style={fichajeStyles.botonFichaje}
+              trailing={(props) => (
+                <MaterialIcons
+                  name="touch-app"
+                  style={{ fontSize: 25 }}
+                  {...props}
+                />
+              )}
+              onPressIn={fichaje.horaDeIngreso ? salidaHandler : ingresoHandler}
+              onPressOut={() => {
+                if (fichaje.horaDeIngreso && fichaje.horaDeSalida) {
+                  dispatch(
+                    crearAsistencia({
+                      usuarioId: usuarioId,
+                      datosAsistencia: fichaje,
+                    })
+                  )
+                    .then(() => {
+                      dispatch(setearUltimoFichaje(fichaje));
+                    })
+                    .catch(() => {
+                      Alert.alert(
+                        "Asistencia",
+                        "La cantidad máxima de fichajes diarios es de 2(dos) ingresos y 2(dos) salidas"
+                      );
+                    });
+                  dispatch(resetearIngreso());
+                  setFichaje(restablecerFechaActual);
+                }
+              }}
+            />
           </View>
+          <View style={{ flexDirection: "row" }}>
+            <View style={fichajeStyles.fechaFichajeContainer}>
+              <Icon
+                name="calendar"
+                style={{ fontSize: 80, color: "#0072b7" }}
+              />
+              <Text style={{ fontWeight: "600" }}>{ultimoFichaje.fecha}</Text>
+            </View>
+            <View style={fichajeStyles.horarioFichajeContainer}>
+              <Icon
+                name="clock-outline"
+                style={{ fontSize: 80, color: "#0072b7" }}
+              />
+              <Text style={{ fontWeight: "600" }}>
+                Último ingreso: <Text>{ultimoFichaje.horaDeIngreso}</Text>
+              </Text>
+              <Text style={{ fontWeight: "600" }}>
+                Última salida: <Text>{ultimoFichaje.horaDeSalida}</Text>
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View>
           <Button
             title="Mi Perfil"
             tintColor="#f89c1c"
             titleStyle={{ fontSize: 20 }}
-            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
+            style={{ backgroundColor: "#0072b7", width: 300 }}
             trailing={(props) => (
               <Avatar
                 icon={(props) => <Icon name="account" {...props} />}
@@ -119,7 +200,7 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
-        {/*  <View>
+        <View>
           <Button
             title="Empleados"
             tintColor="#f89c1c"
@@ -133,12 +214,12 @@ const Home = ({ navigation }) => {
               />
             )}
           />
-        </View> */}
+        </View>
         <View style={{ flexDirection: "row", paddingHorizontal: 4 / -2 }}>
           <Button
             title="Novedades"
             tintColor="#f89c1c"
-            titleStyle={{ fontSize: 13 }}
+            titleStyle={{ fontSize: 20 }}
             style={{
               backgroundColor: "#0072b7",
               marginTop: 50,
@@ -150,55 +231,8 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
+
         <View>
-          {fichaje.horaDeIngreso ? (
-            <Button
-              title="Fichar Salida"
-              tintColor="#f89c1c"
-              titleStyle={{ fontSize: 20 }}
-              style={{
-                backgroundColor: "#0072b7",
-                marginTop: 50,
-                width: "75%",
-              }}
-              trailing={(props) => <MaterialIcons name="work-off" {...props} />}
-              onPressIn={salidaHandler}
-              onPressOut={async () => {
-                dispatch(
-                  crearAsistencia({
-                    usuarioId: usuarioId,
-                    datosAsistencia: fichaje,
-                  })
-                )
-                  .then(() => {
-                    dispatch(setearUltimoFichaje(fichaje));
-                  })
-                  .catch(() => {
-                    Alert.alert(
-                      "Asistencia",
-                      "La cantidad máxima de fichajes diarios es de 2(dos) ingresos y 2(dos) salidas"
-                    );
-                  });
-                dispatch(resetearIngreso());
-                setFichaje(restablecerFechaActual);
-              }}
-            />
-          ) : (
-            <Button
-              title="Fichar Ingreso"
-              tintColor="#f89c1c"
-              titleStyle={{ fontSize: 20 }}
-              style={{
-                backgroundColor: "#0072b7",
-                marginTop: 50,
-                width: 300,
-              }}
-              trailing={(props) => <MaterialIcons name="work" {...props} />}
-              onPress={ingresoHandler}
-            />
-          )}
-        </View>
-        {/*  <View>
           <Button
             title="Mi Equipo"
             tintColor="#f89c1c"
@@ -212,7 +246,7 @@ const Home = ({ navigation }) => {
               />
             )}
           />
-        </View> */}
+        </View>
 
         <View>
           <Button
@@ -288,7 +322,7 @@ const Home = ({ navigation }) => {
           </View>
         </NovedadesMenu>
       </Box>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
