@@ -11,6 +11,8 @@ const estadoInicial = {
   cargando: true,
   infoDeUsuario: {},
   datosLaborales: {},
+  ingresoDeUsuario: {},
+  ultimoFichaje: {},
 };
 
 export const urlBaseUsuario = axios.create({
@@ -40,6 +42,12 @@ export const cerrarSesion = createAsyncThunk("CERRAR_SESION", async () => {
   }
 });
 
+export const ficharIngreso = createAction("FICHAR_INGRESO");
+
+export const resetearIngreso = createAction("RESETEAR_INGRESO");
+
+export const setearUltimoFichaje = createAction("SETEAR_ULTIMO_FICHAJE");
+
 export const traerDatosUsuario = createAsyncThunk(
   "TRAER_INFO_DE_USUARIO",
   async (idUsuario) => {
@@ -67,6 +75,15 @@ const usuarioReducer = createReducer(estadoInicial, {
     estado.infoDeUsuario = {};
     estado.datosLaborales = {};
     Alert.alert("Cerrar Sesión", "Su sesión ha sido cerrada con éxito!");
+  },
+  [ficharIngreso]: (estado, accion) => {
+    estado.ingresoDeUsuario = accion.payload;
+  },
+  [resetearIngreso]: (estado) => {
+    estado.ingresoDeUsuario = {};
+  },
+  [setearUltimoFichaje]: (estado, accion) => {
+    estado.ultimoFichaje = accion.payload;
   },
   [cerrarSesion.rejected]: (estado) => {
     Alert.alert(

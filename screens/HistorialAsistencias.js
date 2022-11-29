@@ -15,7 +15,6 @@ function HistorialAsistencias() {
   useEffect(() => {
     dispatch(traerAsistencias(usuario.id));
   }, []);
-
   return asistencias.length ? (
     <ScrollView>
       {asistencias.map((asistencia, indice) => (
