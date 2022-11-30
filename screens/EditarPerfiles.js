@@ -14,24 +14,18 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useSelector, useDispatch } from "react-redux";
 import { crearNovedad } from "../estados/novedades";
 
-const Novedades = ({ navigation }) => {
+const datosPerfil = ({ navigation }) => {
   // DROPDOWN STATE
-  const [tipo, setTipo] = useState("");
+  const [eMail, setEMail] = useState("");
   const [id, setId] = useState("");
 
   // DATE STATES
-  const [fecha, setFecha] = useState(new Date());
-  const [modo, setModo] = useState("date");
-  const [display, setDisplay] = useState("");
-  const [show, setShow] = useState(false);
-  const [input, setInput] = useState(null); // fecha inicio
-  const [input2, setInput2] = useState(null); // fecha final
-  const [button, setButton] = useState(0);
-  const [date, setDate] = useState(null);
-  const [date2, setDate2] = useState(null);
-  const [horas, setHoras] = useState(null);
-  // OBSERVACIONES STATE
-  const [observaciones, setObservaciones] = useState(null);
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [domicilio, setDomicilio] = useState("");
+  const [documento, setDocumento] = useState("");
+  const [telefono, setTelefono] = useState(""); // fecha inicio
+  const [FechaNac, setFechaNac] = useState(""); // fecha final
 
   // DISPATCH
   const dispatch = useDispatch();
