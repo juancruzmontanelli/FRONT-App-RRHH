@@ -6,6 +6,7 @@ const estadoInicial = {
   cargando: true,
   editado: false,
   novedades: [],
+  novedadesUsuario:[],
   novedad: {},
 };
 
@@ -55,7 +56,7 @@ export const traerNovedadesUsuario = createAsyncThunk(
   async (usuarioId) => {
     try {
       const novedades = await urlBaseNovedad.get(`/${usuarioId}`);
-      return novedades.data;
+      return novedades.data.novedades;
     } catch (error) {
       throw new Error(error);
     }
@@ -93,7 +94,7 @@ const novedadReducer = createReducer(estadoInicial, {
   },
   [traerNovedadesUsuario.fulfilled]: (estado, accion) => {
     estado.cargando = false;
-    estado.novedades = accion.payload;
+    estado.novedadesUsuario = accion.payload;
   },
   [traerNovedadesUsuario.rejected]: (estado) => {
     estado.cargando = false;

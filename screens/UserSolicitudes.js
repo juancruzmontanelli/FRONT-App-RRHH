@@ -43,7 +43,7 @@ const Detalles = ({ visible, children }) => {
 const VerSolicitudes = () => {
   const dispatch = useDispatch();
   const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
-  const novedades = useSelector((state) => state.novedades.novedades.novedades);
+  const {novedadesUsuario} = useSelector((state) => state.novedades);
   const novedad = useSelector((estado) => estado.novedades.novedad)
   
   useEffect(() => {
@@ -52,11 +52,11 @@ const VerSolicitudes = () => {
 
   // STATES
   const [visible, setVisible] = useState(false);
-  const [estado, setEstado] = useState("Pendiente");
+  //const [estado, setEstado] = useState("Pendiente");
   // TABLA
   const headers = ["Tipo Novedad", "Estado", "detalle"];
-  const rows = novedades ? (
-    novedades.map((novedad) => [
+  const rows = novedadesUsuario ? (
+    novedadesUsuario.map((novedad) => [
       novedad.tipoDeNovedad,
       novedad.estado,
       novedad.id,
@@ -72,15 +72,9 @@ const VerSolicitudes = () => {
     ["cantidad de dias:", novedad.cantidadDias],
     ["cantidad de horas:", novedad.cantidadHoras],
     ["observaciones:", novedad.observacion],
-    ["autorizado por:", "XXXXXXX"],
+    ["Autorizado por:", novedad.autorizadoPor ? novedad.autorizadoPor : 'XXXX'],
   ];
 
-  
-  // const data = [
-  //   { key: "1", value: "Pendiente " },
-  //   { key: "2", value: "Confirmada " },
-  //   { key: "4", value: "Rechazada" },
-  // ];
 
   const element = (data, index) => (
     <Button
@@ -96,11 +90,11 @@ const VerSolicitudes = () => {
   
   );
 
-  return novedades ? (
+  return novedadesUsuario ? (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
       <Box style={{ marginTop: 20 }}>
         <View style={{ alignItems: "center" }}>
-          <Text style={{ fontSize: 20 }}>HISTORIAL NOVEDADES </Text>
+          <Text style={{ fontSize: 30, fontWeight: 'bold', marginBottom: 10}}>HISTORIAL NOVEDADES </Text>
           <Box></Box>
         </View>
 
@@ -135,21 +129,14 @@ const VerSolicitudes = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.modalHeader}>
-              <Text>{novedad.tipoDeNovedad}</Text>
+              <Text  style={{ fontSize: 25, fontWeight: "bold" }} >{novedad.tipoDeNovedad}</Text>
               <View style={styles.container2}>
                 <Table>
-                  <Rows data={rowsDetalles} textStyle={{ margin: 10 }} />
+                  <Rows data={rowsDetalles} textStyle={{ margin: 10, fontWeight: "bold" }} />
                 </Table>
               </View>
-              <Text>ESTADO:</Text>
-              <Text>{novedad.estado}</Text>
-              {/* <SelectList
-                data={data}
-                setSelected={setEstado}
-                save={"value"}
-                placeholder={estado}
-                boxStyles={{ width: 150 }}
-              /> */}
+              <Text style={{ fontWeight: "bold", fontSize: 18 }}>ESTADO:</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 25, color: "#0072B7" }} >{novedad.estado}</Text>
             </View>
           </View>
         </Detalles>
@@ -162,15 +149,16 @@ const VerSolicitudes = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30 },
   head: { height: 40 },
-  title: { color: "#0072B7", textAlign: "center" },
-  text: { margin: 6, textAlign: "center" },
+  title: { color: "#0072B7", textAlign: "center", fontWeight: 'bold', fontSize: 15},
+  text: { margin: 6, textAlign: "center", fontWeight: 'bold' },
   row: { flexDirection: "row" },
-  btn: { width: 100, height: 25, borderRadius: 2, backgroundColor: "#f89c1c" },
+  btn: { width: 125, height: 25, borderRadius: 2, backgroundColor: "#f89c1c", margin: 5},
   btnText: {
     textAlign: "center",
     color: "#000000",
-    fontSize: 10,
+    fontSize: 12,
     marginBottom: 10,
+    fontWeight: "bold",
   },
   modalBackGround: {
     flex: 1,

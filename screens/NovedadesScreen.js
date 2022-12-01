@@ -47,14 +47,14 @@ const Novedades = ({ navigation }) => {
     let fecha = () => {
       let date = new Date();
       const year = date.getFullYear();
-      const month = date.getMonth();
+      const month = date.getMonth() + 1;
       const day = date.getDate();
       return `${year}-${month}-${day}`;
     };
     const addNovedad = {
       tipoDeNovedad: tipo,
-      fechaDeInicio: input != "SELECT" ? input : 0,
-      fechaDeFin: input2 != "SELECT" ? input2 : 0,
+      fechaDeInicio: input != "SELECT" ? input : fecha(),
+      fechaDeFin: input2 != "SELECT" ? input2 : input,
       fecha: fecha(),
       cantidadDias: cantidad() || 0,
       cantidadHoras: horas || 0,
@@ -62,7 +62,8 @@ const Novedades = ({ navigation }) => {
       observacion: observaciones || "n/a",
       eMail: usuario.eMail,
     };
-    dispatch(crearNovedad(addNovedad))
+    console.log(addNovedad)
+   dispatch(crearNovedad(addNovedad))
    navigation.navigate('Inicio')
   };
 
