@@ -214,6 +214,30 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
+        <View>
+          <Button
+            title="Oficinas"
+            tintColor="#f89c1c"
+            titleStyle={{ fontSize: 20 }}
+            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
+            trailing={(props) => (
+              <Avatar
+                icon={(props) => <Icon name="account" {...props} />}
+                size={26}
+                color={"#f89c1c"}
+              />
+            )}
+            onPress={() => {
+              if (usuario.tipo){
+                setVisible(true);
+                setModo("Oficinas");
+              }else{
+                navigation.navigate("Oficinas");
+              }
+            }}
+          />
+        </View>
+
         <View style={{ flexDirection: "row", paddingHorizontal: 4 / -2 }}>
           <Button
             title="Novedades"

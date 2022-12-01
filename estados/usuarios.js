@@ -16,7 +16,7 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://192.168.0.92:8080/api/usuarios`, //192.168.0.92
+  baseURL: `http://192.168.20.28:8080/api/usuarios`, //192.168.0.92
 });
 
 export const urlBaseDatosLaborales = axios.create({
