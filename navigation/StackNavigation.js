@@ -10,6 +10,7 @@ import { cerrarSesion } from "../estados/usuarios";
 import NovedadScreen from "../screens/NovedadScreen";
 import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
+import Registro from "../screens/RegistroScreen";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
 

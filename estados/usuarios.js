@@ -17,6 +17,10 @@ export const urlBaseUsuario = axios.create({
   baseURL: `http://192.168.1.41:8080/api/usuarios`,
 });
 
+export const urlBaseDatosLaborales = axios.create({
+  baseURL: `http://192.168.1.41:8080/api/datosLaborales`,
+});
+
 export const iniciarSesion = createAsyncThunk(
   "INICIO_SESION",
   async (infoUsuario) => {
@@ -32,6 +36,18 @@ export const iniciarSesion = createAsyncThunk(
   }
 );
 
+export const registro = createAsyncThunk("REGISTRO", async (datosUsuario) => {
+  try {
+    const usuarioRegistrado = await urlBaseUsuario.post(
+      "/registro",
+      datosUsuario
+    );
+    return usuarioRegistrado.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 export const cerrarSesion = createAsyncThunk("CERRAR_SESION", async () => {
   try {
     await AsyncStorage.clear();
@@ -46,6 +62,17 @@ export const traerDatosUsuario = createAsyncThunk(
     try {
       const datosLaborales = await urlBaseUsuario.get(`/uno/${idUsuario}`);
       return datosLaborales.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+
+export const crearDatosLaborales = createAsyncThunk(
+  "CREEAR_DATOS_LABORALES",
+  async (datosLaborales) => {
+    try {
+      await urlBaseDatosLaborales.post("/", datosLaborales);
     } catch (error) {
       throw new Error(error);
     }
@@ -83,6 +110,17 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [traerDatosUsuario.rejected]: (estado) => {
     throw new Error("Error de validación!");
+  },
+
+  [registro.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [registro.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    return accion.payload;
+  },
+  [registro.rejected]: () => {
+    throw new Error("Credenciales incorrectas");
   },
 });
 
