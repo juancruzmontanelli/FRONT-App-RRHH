@@ -5,6 +5,7 @@ import asistenciasReducer from "./asistencias";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
+import oficinasReducer from "./oficinas";
 
 const persistConfig = {
   key: "root",
@@ -18,6 +19,7 @@ const store = configureStore({
     usuarios: persistReducer(persistConfig, usuarioReducer),
     novedades: novedadReducer,
     asistencias: asistenciasReducer,
+    oficinas: oficinasReducer,
   },
 });
 

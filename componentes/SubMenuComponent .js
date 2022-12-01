@@ -1,12 +1,10 @@
 import React from "react";
-import { Avatar } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Button } from "@react-native-material/core";
-import { Image, View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 const SubMenuComponent = ({ modo, navigation, setVisible}) => {
-  const dispatch = useDispatch();
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   return (
     <View style={{ alignItems: "center" }}>
@@ -152,6 +150,44 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
                   setVisible(false);
+                }}
+              />
+            </View>
+          ) : (
+            ""
+          )}
+          {modo === "Oficinas" ? (
+            <View>
+              <Button
+                title="VER OFICINAS"
+                tintColor="#f89c1c"
+                titleStyle={{ fontSize: 13 }}
+                style={{
+                  backgroundColor: "#0072b7",
+                  marginTop: 50,
+                  width: "48%",
+                  marginHorizontal: 4 / 2,
+                }}
+                trailing={(props) => <Icon name="send" {...props} />}
+                onPress={() => {
+                  setVisible(false);
+                  navigation.navigate("Oficinas")
+                }}
+              />
+              <Button
+                title="CREAR OFICINA"
+                tintColor="#f89c1c"
+                titleStyle={{ fontSize: 13 }}
+                style={{
+                  backgroundColor: "#0072b7",
+                  marginTop: 50,
+                  width: "48%",
+                  marginHorizontal: 4 / 2,
+                }}
+                trailing={(props) => <Icon name="history" {...props} />}
+                onPress={() => {
+                  setVisible(false);
+                  navigation.navigate("CrearOficina")
                 }}
               />
             </View>

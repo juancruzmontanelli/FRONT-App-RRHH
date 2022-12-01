@@ -12,6 +12,8 @@ import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
+import Oficinas from "../screens/OficinasScreen";
+import crearOficina from "../screens/CrearOficina";
 
 const StackScreen = (navigation) => {
   const dispatch = useDispatch();
@@ -60,19 +62,16 @@ const StackScreen = (navigation) => {
         })}
       />
       <Stack.Screen name="GLOBAL NEWS" component={Login} />
-
-      <Stack.Screen
-        name="HistorialAsistencias"
-        component={HistorialAsistencias}
-      />
+      <Stack.Screen name="HistorialAsistencias" component={HistorialAsistencias} />
       <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
-
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen name="Novedad">
         {(props) => <NovedadScreen {...props} novedad={novedad} />}
       </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
+      <Stack.Screen name="Oficinas" component={Oficinas} />
+      <Stack.Screen name="CrearOficina" component={crearOficina} />
     </Stack.Navigator>
   );
 };
