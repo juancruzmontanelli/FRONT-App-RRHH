@@ -204,26 +204,14 @@ const Home = ({ navigation }) => {
               />
             )}
             onPress={() => {
-              if (!usuario.tipo) navigation.navigate("Usuario");
-              setVisible(true);
+              if (usuario.tipo) {
+                setVisible(true);
               setModo("usuario");
+              }
+              else {
+              navigation.navigate("Usuario")
+              }
             }}
-          />
-        </View>
-
-        <View>
-          <Button
-            title="Empleados"
-            tintColor="#f89c1c"
-            titleStyle={{ fontSize: 20 }}
-            style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            trailing={(props) => (
-              <Avatar
-                icon={(props) => <Icon name="account" {...props} />}
-                size={26}
-                color={"#f89c1c"}
-              />
-            )}
           />
         </View>
         <View>
@@ -249,6 +237,7 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
+
         <View style={{ flexDirection: "row", paddingHorizontal: 4 / -2 }}>
           <Button
             title="Novedades"
@@ -303,7 +292,8 @@ const Home = ({ navigation }) => {
               }}
               trailing={(props) => <MaterialIcons name="work" {...props} />}
               onPress={ingresoHandler}
-            />
+            /> 
+
           )}
         </View>
         <View>
@@ -321,8 +311,10 @@ const Home = ({ navigation }) => {
               />
             )}
             onPress={() => {
+              if(usuario.tipo){
               setVisible(true);
               setModo("equipo");
+              }
             }}
           />
         </View>
@@ -335,9 +327,13 @@ const Home = ({ navigation }) => {
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
             trailing={(props) => <Icon name="history" {...props} />}
             onPress={() => {
-              if (!usuario.tipo) navigation.navigate("HistorialAsistencias");
-              setVisible(true);
-              setModo("asistencia");
+              if (usuario.tipo) {
+                setVisible(true);
+                setModo("asistencia");
+              }
+             else {
+              navigation.navigate("HistorialAsistencias");
+             }
             }}
           />
         </View>
