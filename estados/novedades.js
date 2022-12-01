@@ -4,6 +4,7 @@ import axios from "axios";
 
 const estadoInicial = {
   cargando: true,
+  editado: false,
   novedades: [],
   novedad: {},
 };
@@ -40,7 +41,7 @@ export const traerTodasNovedades = createAsyncThunk(
   async (usuario) => {
     if (usuario.tipo) {
       try {
-        const novedades = await urlBaseNovedad.get(`/`);
+        const novedades = await urlBaseNovedad.get(`all/admin`);
         return novedades.data;
       } catch (error) {
         throw new Error(error);
@@ -63,10 +64,10 @@ export const traerNovedadesUsuario = createAsyncThunk(
 
 export const actualizarNovedad = createAsyncThunk(
   "ACTUALIZAR_NOVEDAD",
-  async (novedadId, usuario) => {
-    if (usuario.tipo) {
+  async (update) => {
+    if (update.usuario.tipo) {
       try {
-        const novedades = await urlBaseNovedad.get(`/${novedadId}`);
+        await urlBaseNovedad.put(`/${update.novedadId}`, update.estado);
         return "Novedad actualizada con éxito";
       } catch (error) {
         throw new Error(error);
@@ -74,7 +75,6 @@ export const actualizarNovedad = createAsyncThunk(
     } else throw new Error("Acceso denegado!");
   }
 );
-
 const novedadReducer = createReducer(estadoInicial, {
   [crearNovedad.pending]: (estado) => {
     estado.cargando = true;
@@ -110,16 +110,16 @@ const novedadReducer = createReducer(estadoInicial, {
     throw new Error("Acceso denegado!");
   },
   [actualizarNovedad.pending]: (estado) => {
-    estado.cargando = true;
+    estado.editado = false;
   },
   [actualizarNovedad.fulfilled]: (estado, accion) => {
-    estado.cargando = false;
+    estado.editado = true;
     Alert.alert("Novedades", accion.payload, [{ text: "Entiendo" }], {
       cancelable: true,
     });
   },
   [actualizarNovedad.rejected]: (estado) => {
-    estado.cargando = false;
+    estado.editado = false;
     throw new Error("Acceso denegado!");
   },
   [traerUnaNovedad.pending]: (estado) => {
