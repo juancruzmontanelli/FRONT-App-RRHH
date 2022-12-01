@@ -12,6 +12,7 @@ import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
+import SuperUserSolicitudes from "../screens/superUserSolicitudes";
 
 const StackScreen = (navigation) => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const StackScreen = (navigation) => {
 
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
+      <Stack.Screen name="SuperUsuarioNovedades" component={SuperUserSolicitudes} />
       <Stack.Screen name="Novedad">
         {(props) => <NovedadScreen {...props} novedad={novedad} />}
       </Stack.Screen>
