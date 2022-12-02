@@ -1,12 +1,4 @@
-const categoriasNovedad = [
-  "Tipo de Novedad",
-  "Fecha de Inicio",
-  "Fecha de Finalización",
-  "Cantidad",
-  "Observaciones",
-  "Certificado",
-  "Autorizado por: ",
-];
+const keysMiembro = ["Nombre", "Oficina", "Turno", "E-mail", "Estado"];
 const dummyNovedades = [
   {
     tipoNovedad: "Vacaciones",
@@ -61,7 +53,7 @@ const retornarFechaActual = () => {
         ? `0${new Date().getDate()}`
         : new Date().getDate()
     }/${
-      (String(new Date().getMonth() + 1)).length === 1
+      String(new Date().getMonth() + 1).length === 1
         ? `0${new Date().getMonth() + 1}`
         : new Date().getMonth() + 1
     }/${new Date().getFullYear()}`,
@@ -86,7 +78,7 @@ const restablecerFechaActual = {
 };
 
 module.exports = {
-  categoriasNovedad,
+  keysMiembro,
   dummyNovedades,
   retornarFechaActual,
   restablecerFechaActual,

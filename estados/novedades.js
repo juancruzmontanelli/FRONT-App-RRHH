@@ -63,10 +63,10 @@ export const traerNovedadesUsuario = createAsyncThunk(
 
 export const actualizarNovedad = createAsyncThunk(
   "ACTUALIZAR_NOVEDAD",
-  async (novedadId, usuario) => {
+  async (novedadId, nuevoValor) => {
     if (usuario.tipo) {
       try {
-        const novedades = await urlBaseNovedad.get(`/${novedadId}`);
+        await urlBaseNovedad.post(`/${novedadId}`, nuevoValor);
         return "Novedad actualizada con éxito";
       } catch (error) {
         throw new Error(error);

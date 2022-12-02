@@ -7,17 +7,16 @@ import VerSolicitudes from "../screens/superUserSolicitudes";
 import { useDispatch } from "react-redux";
 import { Button } from "@react-native-material/core";
 import { cerrarSesion } from "../estados/usuarios";
-import NovedadScreen from "../screens/NovedadScreen";
-import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
-import { useSelector } from "react-redux";
 import { Alert } from "react-native";
+import MiembrosLista from "../screens/MiembrosLista";
+import EquiposLista from "../screens/EquiposLista";
+import MiembroScreen from "../screens/MiembroScreen";
+
 
 const StackScreen = (navigation) => {
-  const dispatch = useDispatch();
-  const novedad = useSelector((estado) => estado.novedades.novedad);
-
   const Stack = createNativeStackNavigator();
+  const dispatch = useDispatch();
 
   return (
     <Stack.Navigator
@@ -65,13 +64,14 @@ const StackScreen = (navigation) => {
         name="HistorialAsistencias"
         component={HistorialAsistencias}
       />
-      <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
-
+      <Stack.Screen name="Mi Equipo" component={MiembrosLista} />
+      <Stack.Screen name="Equipos" component={EquiposLista} />
+      <Stack.Screen name="Miembro">
+        {(props) => <MiembroScreen {...props} />}
+      </Stack.Screen>
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
-      <Stack.Screen name="Novedad">
-        {(props) => <NovedadScreen {...props} novedad={novedad} />}
-      </Stack.Screen>
+
       <Stack.Screen name="Usuario" component={User} />
     </Stack.Navigator>
   );
