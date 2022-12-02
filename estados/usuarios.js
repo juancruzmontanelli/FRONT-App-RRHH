@@ -17,7 +17,11 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-  baseURL: `http://192.168.1.41:8080/api/usuarios`,
+  baseURL: `http://192.168.20.28:8080/api/usuarios`, //192.168.0.92
+});
+
+export const urlBaseDatosLaborales = axios.create({
+  baseURL: `http://192.168.1.41:8080/api/datosLaborales`,
 });
 
 export const resetearIngreso = createAction("RESETEAR_INGRESO");
@@ -58,6 +62,18 @@ export const iniciarSesion = createAsyncThunk(
   }
 );
 
+export const registro = createAsyncThunk("REGISTRO", async (datosUsuario) => {
+  try {
+    const usuarioRegistrado = await urlBaseUsuario.post(
+      "/registro",
+      datosUsuario
+    );
+    return usuarioRegistrado.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 export const cerrarSesion = createAsyncThunk("CERRAR_SESION", async () => {
   try {
     await AsyncStorage.clear();
@@ -78,6 +94,7 @@ export const traerDatosUsuario = createAsyncThunk(
   }
 );
 
+
 export const modificarDatosUsuario = createAsyncThunk(
   "MODIFICAR_INFO_DE_USUARIO",
   async (idUsuario, infoAModificar) => {
@@ -96,6 +113,17 @@ export const modificarEstadoUsuario = createAsyncThunk(
     const { activo } = usuarioIdYEstadoDeUsuario;
     try {
       await urlBaseUsuario.post(`/activo/${usuarioId}`, { activo });
+       } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+  
+export const crearDatosLaborales = createAsyncThunk(
+  "CREEAR_DATOS_LABORALES",
+  async (datosLaborales) => {
+    try {
+      await urlBaseDatosLaborales.post("/", datosLaborales);
     } catch (error) {
       throw new Error(error);
     }
@@ -163,6 +191,16 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [modificarEstadoUsuario.rejected]: (estado) => {
     Alert.alert("Fichaje", "No se ha podido realizar su fichaje");
+  },
+  [registro.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [registro.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    return accion.payload;
+  },
+  [registro.rejected]: () => {
+    throw new Error("Credenciales incorrectas");
   },
 });
 

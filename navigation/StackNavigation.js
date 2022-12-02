@@ -3,15 +3,21 @@ import Login from "../screens/LoginScreen";
 import Home from "../screens/HomeScreen";
 import Novedades from "../screens/NovedadesScreen";
 import User from "../screens/UserScreen";
-import VerSolicitudes from "../screens/superUserSolicitudes";
+import VerSolicitudes from "../screens/UserSolicitudes";
 import { useDispatch } from "react-redux";
 import { Button } from "@react-native-material/core";
 import { cerrarSesion } from "../estados/usuarios";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
-import { Alert } from "react-native";
 import MiembrosLista from "../screens/MiembrosLista";
 import EquiposLista from "../screens/EquiposLista";
 import MiembroScreen from "../screens/MiembroScreen";
+import Registro from "../screens/RegistroScreen";
+import { useSelector } from "react-redux";
+import { Alert } from "react-native";
+import Oficinas from "../screens/OficinasScreen";
+import crearOficina from "../screens/CrearOficina";
+import SuperUserSolicitudes from "../screens/superUserSolicitudes";
+
 
 
 const StackScreen = (navigation) => {
@@ -60,19 +66,24 @@ const StackScreen = (navigation) => {
       />
       <Stack.Screen name="GLOBAL NEWS" component={Login} />
 
-      <Stack.Screen
-        name="HistorialAsistencias"
-        component={HistorialAsistencias}
-      />
+
+     
       <Stack.Screen name="Mi Equipo" component={MiembrosLista} />
       <Stack.Screen name="Equipos" component={EquiposLista} />
       <Stack.Screen name="Miembro">
         {(props) => <MiembroScreen {...props} />}
       </Stack.Screen>
+      <Stack.Screen name="HistorialAsistencias" component={HistorialAsistencias} />
+      <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
-
+      <Stack.Screen name="SuperUsuarioNovedades" component={SuperUserSolicitudes} />
+      <Stack.Screen name="Novedad">
+        {(props) => <NovedadScreen {...props} novedad={novedad} />}
+      </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
+      <Stack.Screen name="Oficinas" component={Oficinas} />
+      <Stack.Screen name="CrearOficina" component={crearOficina} />
     </Stack.Navigator>
   );
 };
