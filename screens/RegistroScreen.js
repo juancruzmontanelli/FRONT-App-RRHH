@@ -4,9 +4,13 @@ import { Text, SafeAreaView, ScrollView, Alert, View } from "react-native";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { crearDatosLaborales, registro } from "../estados/usuarios";
+import { SelectList } from "react-native-dropdown-select-list";
 
 const Registro = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [equipo, setEquipo] = useState("");
+  const [oficina, setOficina] = useState("");
+
   const [Registro, setRegistro] = useState({
     nombre: "",
     apellido: "",
@@ -20,8 +24,6 @@ const Registro = ({ navigation }) => {
   const [Datos, setDatos] = useState({
     fechaDeIngreso: "",
     puesto: "",
-    equipo: "",
-    oficina: "",
     turno: "",
     diasLaborales: "",
     horariosLaborales: "",
