@@ -21,6 +21,7 @@ import {
   ficharIngreso,
   resetearIngreso,
   setearUltimoFichaje,
+  modificarEstadoUsuario,
 } from "../estados/usuarios";
 
 const SubMenu = ({ visible, children, modo }) => {
@@ -47,6 +48,9 @@ const SubMenu = ({ visible, children, modo }) => {
 const Home = ({ navigation }) => {
  // USER STATES
   const dispatch = useDispatch();
+  const usuarioTipo = useSelector(
+    (estado) => estado.usuarios.infoDeUsuario.tipo
+  );
   const usuarioId = useSelector((estado) => estado.usuarios.infoDeUsuario.id);
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   const { ingresoDeUsuario } = useSelector((estado) => estado.usuarios);
@@ -68,31 +72,7 @@ const Home = ({ navigation }) => {
         }
   );
 
-
-  const ingresoHandler = () => {
-    dispatch(
-      ficharIngreso({
-        horaDeIngreso: retornarFechaActual().hora,
-        fecha: retornarFechaActual().fecha,
-      })
-    );
-    setFichaje({
-      ...fichaje,
-      horaDeIngreso: retornarFechaActual().hora,
-      fecha: retornarFechaActual().fecha,
-    });
-    Alert.alert("Ingreso", `Hora de ingreso: ${retornarFechaActual().hora}`);
-  };
-
-  const salidaHandler = () => {
-    setFichaje({
-      ...fichaje,
-      horaDeSalida: retornarFechaActual().hora,
-    });
-
-    Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
-  };
-
+  //ESTILOS DEL MARCO DE FICHAJE
   const fichajeStyles = StyleSheet.create({
     fichajeContainer: {
       marginVertical: "7%",
@@ -122,6 +102,43 @@ const Home = ({ navigation }) => {
       paddingHorizontal: "3%",
     },
   });
+
+  //FUNCIONALIDAD DEL FICHAJE
+  const ingresoHandler = () => {
+    dispatch(
+      ficharIngreso({
+        horaDeIngreso: retornarFechaActual().hora,
+        fecha: retornarFechaActual().fecha,
+        idUsuario: usuarioId,
+      })
+    )
+      .then(() => {
+        dispatch(
+          modificarEstadoUsuario({ usuarioId: usuarioId, activo: true })
+        );
+        setFichaje({
+          ...fichaje,
+          horaDeIngreso: retornarFechaActual().hora,
+          fecha: retornarFechaActual().fecha,
+        });
+        Alert.alert(
+          "Ingreso",
+          `Hora de ingreso: ${retornarFechaActual().hora}`
+        );
+      })
+      .catch((error) => {
+        Alert.alert("Asistencia", error);
+      });
+  };
+
+  const salidaHandler = () => {
+    setFichaje({
+      ...fichaje,
+      horaDeSalida: retornarFechaActual().hora,
+    });
+    dispatch(modificarEstadoUsuario({ usuarioId: usuarioId, activo: false }));
+    Alert.alert("Salida", `Hora de salida: ${retornarFechaActual().hora}`);
+  };
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#ffff" }}>
@@ -174,7 +191,9 @@ const Home = ({ navigation }) => {
                 name="calendar"
                 style={{ fontSize: 80, color: "#0072b7" }}
               />
-              <Text style={{ fontWeight: "600" }}>{ultimoFichaje.fecha}</Text>
+              <Text style={{ fontWeight: "600" }}>
+                {fichaje.fecha ? fichaje.fecha : ultimoFichaje.fecha}
+              </Text>
             </View>
             <View style={fichajeStyles.horarioFichajeContainer}>
               <Icon
@@ -182,7 +201,12 @@ const Home = ({ navigation }) => {
                 style={{ fontSize: 80, color: "#0072b7" }}
               />
               <Text style={{ fontWeight: "600" }}>
-                Último ingreso: <Text>{ultimoFichaje.horaDeIngreso}</Text>
+                Último ingreso:{" "}
+                <Text>
+                  {fichaje.horaDeIngreso
+                    ? fichaje.horaDeIngreso
+                    : ultimoFichaje.horaDeIngreso}
+                </Text>
               </Text>
               <Text style={{ fontWeight: "600" }}>
                 Última salida: <Text>{ultimoFichaje.horaDeSalida}</Text>
@@ -299,13 +323,20 @@ const Home = ({ navigation }) => {
         <View>
         
           <Button
-            title="Mi Equipo"
+            title={usuarioTipo ? "Equipos" : "Mi Equipo"}
             tintColor="#f89c1c"
             titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
+            onPress={() => {
+              if (usuarioTipo) {
+                navigation.navigate("Equipos");
+              } else {
+                navigation.navigate("Mi Equipo");
+              }
+            }}
             trailing={(props) => (
               <Avatar
-                icon={(props) => <Icon name="account" {...props} />}
+                icon={(props) => <Icon name="account-group" {...props} />}
                 size={26}
                 color={"#f89c1c"}
               />

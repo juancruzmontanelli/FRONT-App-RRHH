@@ -11,7 +11,6 @@ const User = () => {
   const datosLaborales = useSelector(
     (estado) => estado.usuarios.datosLaborales
   );
-
   useEffect(() => {
     dispatch(traerDatosUsuario(usuario.id));
   }, []);
@@ -22,7 +21,6 @@ const User = () => {
         <Button
           style={{
             textAlign: "center",
-
             fontSize: 30,
           }}
           title="EDITA TU INFORMACION"

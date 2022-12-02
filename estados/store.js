@@ -1,7 +1,8 @@
-import {configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import usuarioReducer from "./usuarios";
 import novedadReducer from "./novedades";
 import asistenciasReducer from "./asistencias";
+import equiposReducer from "./equipos";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
@@ -19,11 +20,10 @@ const store = configureStore({
     usuarios: persistReducer(persistConfig, usuarioReducer),
     novedades: novedadReducer,
     asistencias: asistenciasReducer,
+    equipos: equiposReducer,
     oficinas: oficinasReducer,
   },
 });
 
 export const persistor = persistStore(store);
 export default store;
-
-// const store = createStore(rootReducer, applyMiddleware(thunk));  JUST IN CASE!
