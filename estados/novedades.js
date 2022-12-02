@@ -6,11 +6,14 @@ const estadoInicial = {
   cargando: true,
   editado: false,
   novedades: [],
+  novedadesUsuario:[],
   novedad: {},
 };
 
 const urlBaseNovedad = axios.create({
+
   baseURL: `http://192.168.1.36:8080/api/novedades`, //192.168.0.92//192.168.1.36
+
 });
 
 export const crearNovedad = createAsyncThunk(
@@ -24,6 +27,7 @@ export const crearNovedad = createAsyncThunk(
     }
   }
 );
+
 export const traerUnaNovedad = createAsyncThunk(
   "TRAER_UNA_NOVEDAD",
   async (idNovedad) => {
@@ -55,7 +59,7 @@ export const traerNovedadesUsuario = createAsyncThunk(
   async (usuarioId) => {
     try {
       const novedades = await urlBaseNovedad.get(`/${usuarioId}`);
-      return novedades.data;
+      return novedades.data.novedades;
     } catch (error) {
       throw new Error(error);
     }
@@ -93,7 +97,7 @@ const novedadReducer = createReducer(estadoInicial, {
   },
   [traerNovedadesUsuario.fulfilled]: (estado, accion) => {
     estado.cargando = false;
-    estado.novedades = accion.payload;
+    estado.novedadesUsuario = accion.payload;
   },
   [traerNovedadesUsuario.rejected]: (estado) => {
     estado.cargando = false;

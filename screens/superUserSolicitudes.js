@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   Modal,
+  ScrollView,
 } from "react-native";
 import { Box, Button } from "@react-native-material/core";
 import {
@@ -49,7 +50,7 @@ const SuperUserSolicitudes = () => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   const novedades = useSelector((state) => state.novedades.novedades);
   const novedad = useSelector((estado) => estado.novedades.novedad);
-  const estado = useSelector((estado) => estado.novedades.editado)
+  const estado = useSelector((estado) => estado.novedades.editado);
 
   useEffect(() => {
     dispatch(traerTodasNovedades(usuario));
@@ -73,19 +74,19 @@ const SuperUserSolicitudes = () => {
 
   // DETALLES
   const rowsDetalles = [
-    ["fecha de inicio:", novedad.fechaDeInicio],
-    ["fecha de fin:", novedad.fechaDeFin],
-    ["cantidad de dias:", novedad.cantidadDias],
-    ["cantidad de horas:", novedad.cantidadHoras],
-    ["observaciones:", novedad.observacion],
-    ["autorizado por:", "XXXXXXX"],
+    ["Fecha de Inicio:", novedad.fechaDeInicio],
+    ["Fecha de Fin:", novedad.fechaDeFin],
+    ["Cantidad de Dias:", novedad.cantidadDias],
+    ["Cantidad de Horas:", novedad.cantidadHoras],
+    ["Observaciones:", novedad.observacion],
+    ["Autorizado por:", novedad.autorizadoPor ? novedad.autorizadoPor : "XXXX"],
   ];
 
-  const data = [
-    { key: "1", value: "pendiente " },
-    { key: "2", value: "aprobado " },
-    { key: "4", value: "rechazado" },
-  ];
+  // const data = [
+  //   { key: "1", value: "pendiente " },
+  //   { key: "2", value: "aprobado " },
+  //   { key: "4", value: "rechazado" },
+  // ];
 
   const element = (data, index) => (
     <Button
@@ -102,111 +103,133 @@ const SuperUserSolicitudes = () => {
 
   // EDIT ESTADO
   const editarEstado = (estado) => {
-    const update = { estado:{ estado: estado}, 
-                    novedadId: novedad.id,
-                    usuario: usuario};
-   
+    const update = {
+      estado: { estado: estado },
+      novedadId: novedad.id,
+      usuario: usuario,
+    };
+
     dispatch(actualizarNovedad(update));
   };
 
   return novedades ? (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ffff" }}>
-      <Box style={{ marginTop: 20 }}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={{ fontSize: 20 }}>HISTORIAL NOVEDADES </Text>
-          <Box></Box>
-        </View>
-
-        <View>
-          <Table borderStyle={{ borderColor: "transparent" }}>
-            <Row data={headers} style={styles.head} textStyle={styles.title} />
-            {rows.map((rowData, index) => (
-              <>
-                <TableWrapper key={index} style={styles.row}>
-                  {rowData.map((cellData, cellIndex) => (
-                    <Cell
-                      key={cellIndex}
-                      data={
-                        cellIndex === 3 ? element(cellData, index) : cellData
-                      }
-                      textStyle={styles.text}
-                    />
-                  ))}
-                </TableWrapper>
-              </>
-            ))}
-          </Table>
-        </View>
-        <Detalles visible={visible}>
+      <ScrollView>
+        <Box style={{ marginTop: 20 }}>
           <View style={{ alignItems: "center" }}>
-            <View style={{ width: "100%", alignItems: "flex-end" }}>
-              <TouchableOpacity onPress={() => setVisible(false)}>
-                <Image
-                  source={require("../assets/cancel.png")}
-                  style={styles.cancel}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.modalHeader}>
-              <Text>{novedad.tipoDeNovedad}</Text>
-              <View style={styles.container2}>
-                <Table>
-                  <Rows data={rowsDetalles} textStyle={{ margin: 10 }} />
-                </Table>
-              </View>
-              <Text>ESTADO:</Text>
-              <Text>{novedad.estado}</Text>
-              {novedad.estado === "pendiente" ? (
-                <Box style={{ flexDirection: "row" }}>
-                  <Button
-                    title="Rechazar"
-                    tintColor="#000000"
-                    titleStyle={{ fontSize: 20 }}
-                    style={{
-                      backgroundColor: "#DC0101",
-                      marginTop: 10,
-                      marginRight: 10,
-                      width: 150,
-                    }}
-                    onPress={() => {
-                      editarEstado("rechazado")
-                      //setEstado('rechazado')
-                    setVisible(false)
-                  }}
-                  />
-                  <Button
-                    title="Aprobar"
-                    tintColor="#000000"
-                    titleStyle={{ fontSize: 20 }}
-                    style={{
-                      backgroundColor: "#5FBA00",
-                      marginTop: 10,
-                      width: 150,
-                    }}
-                    onPress={() => {
-                      editarEstado("aprobado")
-                    setVisible(false)
-                  }}
-                  />
-                </Box>
-              ) : (
-                <Button
-                  title="Pendiente"
-                  tintColor="#000000"
-                  titleStyle={{ fontSize: 20 }}
-                  style={{
-                    backgroundColor: "#0072b7",
-                    marginTop: 10,
-                    width: 150,
-                  }}
-                  onPress={() => {
-                    editarEstado("pendiente")
-                  setVisible(false)
-                }}
-                />
-              )}
+            <Text
+              style={{ fontSize: 30, fontWeight: "bold", marginBottom: 10 }}
+            >
+              SOLICITUDES USUARIO
+            </Text>
+            <Box></Box>
+          </View>
 
-              {/* <SelectList
+          <View>
+            <Table borderStyle={{ borderColor: "transparent" }}>
+              <Row
+                data={headers}
+                style={styles.head}
+                textStyle={styles.title}
+              />
+              {rows.map((rowData, index) => (
+                <>
+                  <TableWrapper key={index} style={styles.row}>
+                    {rowData.map((cellData, cellIndex) => (
+                      <Cell
+                        key={cellIndex}
+                        data={
+                          cellIndex === 3 ? element(cellData, index) : cellData
+                        }
+                        textStyle={styles.text}
+                      />
+                    ))}
+                  </TableWrapper>
+                </>
+              ))}
+            </Table>
+          </View>
+          <Detalles visible={visible}>
+            <View style={{ alignItems: "center" }}>
+              <View style={{ width: "100%", alignItems: "flex-end" }}>
+                <TouchableOpacity onPress={() => setVisible(false)}>
+                  <Image
+                    source={require("../assets/cancel.png")}
+                    style={styles.cancel}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.modalHeader}>
+                <Text style={{ fontSize: 25, fontWeight: "bold" }}>
+                  {novedad.tipoDeNovedad}
+                </Text>
+                <View style={styles.container2}>
+                  <Table>
+                    <Rows
+                      data={rowsDetalles}
+                      textStyle={{ margin: 10, fontWeight: "bold" }}
+                    />
+                  </Table>
+                </View>
+                <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                  ESTADO:
+                </Text>
+                <Text
+                  style={{ fontWeight: "bold", fontSize: 20, color: "#0072B7" }}
+                >
+                  {novedad.estado}
+                </Text>
+                {novedad.estado === "pendiente" ? (
+                  <Box style={{ flexDirection: "row" }}>
+                    <Button
+                      title="Rechazar"
+                      tintColor="white"
+                      titleStyle={{ fontSize: 20 }}
+                      style={{
+                        backgroundColor: "#DC0101",
+                        marginTop: 10,
+                        marginRight: 10,
+                        width: 150,
+                      }}
+                      onPress={() => {
+                        editarEstado("rechazado");
+                        //setEstado('rechazado')
+                        setVisible(false);
+                      }}
+                    />
+                    <Button
+                      title="Aprobar"
+                      tintColor="white"
+                      titleStyle={{ fontSize: 20 }}
+                      style={{
+                        backgroundColor: "#5FBA00",
+                        marginTop: 10,
+                        width: 150,
+                      }}
+                      onPress={() => {
+                        editarEstado("aprobado");
+                        setVisible(false);
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  <Button
+                    title="Pendiente"
+                    tintColor="white"
+                    titleStyle={{ fontSize: 20 }}
+                    style={{
+                      backgroundColor: "#0072b7",
+                      marginTop: 10,
+                      width: 150,
+                    }}
+                    onPress={() => {
+                      editarEstado("pendiente");
+                      setVisible(false);
+                    }}
+                  />
+                )}
+
+                {/* <SelectList
                 data={data}
                 setSelected={setEstado}
                 save={"value"}
@@ -219,10 +242,11 @@ const SuperUserSolicitudes = () => {
                 }}
                 
               /> */}
+              </View>
             </View>
-          </View>
-        </Detalles>
-      </Box>
+          </Detalles>
+        </Box>
+      </ScrollView>
     </SafeAreaView>
   ) : (
     <Loader />
@@ -231,15 +255,27 @@ const SuperUserSolicitudes = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30 },
   head: { height: 40 },
-  title: { color: "#0072B7", textAlign: "center" },
-  text: { margin: 6, textAlign: "center" },
+  title: {
+    color: "#0072B7",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  text: { margin: 6, textAlign: "center", fontWeight: "bold" },
   row: { flexDirection: "row" },
-  btn: { width: 100, height: 25, borderRadius: 2, backgroundColor: "#f89c1c" },
+  btn: {
+    width: 90,
+    height: 25,
+    borderRadius: 2,
+    backgroundColor: "#f89c1c",
+    margin: 5,
+  },
   btnText: {
     textAlign: "center",
     color: "#000000",
     fontSize: 10,
     marginBottom: 10,
+    fontWeight: "bold",
   },
   modalBackGround: {
     flex: 1,
