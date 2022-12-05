@@ -12,17 +12,23 @@ import MiembrosLista from "../screens/MiembrosLista";
 import EquiposLista from "../screens/EquiposLista";
 import MiembroScreen from "../screens/MiembroScreen";
 import Registro from "../screens/RegistroScreen";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Alert } from "react-native";
 import Oficinas from "../screens/OficinasScreen";
 import crearOficina from "../screens/CrearOficina";
 import SuperUserSolicitudes from "../screens/superUserSolicitudes";
-
-
+import { traerTodosLosEquipos } from "../estados/equipos";
+import { traerOficinas } from "../estados/oficinas";
 
 const StackScreen = (navigation) => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(traerTodosLosEquipos());
+  }, []);
+  useEffect(() => {
+    dispatch(traerOficinas());
+  }, []);
 
   return (
     <Stack.Navigator
@@ -66,24 +72,28 @@ const StackScreen = (navigation) => {
       />
       <Stack.Screen name="GLOBAL NEWS" component={Login} />
 
-
-     
       <Stack.Screen name="Mi Equipo" component={MiembrosLista} />
       <Stack.Screen name="Equipos" component={EquiposLista} />
       <Stack.Screen name="Miembro">
         {(props) => <MiembroScreen {...props} />}
       </Stack.Screen>
-      <Stack.Screen name="HistorialAsistencias" component={HistorialAsistencias} />
-      <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
+      <Stack.Screen
+        name="HistorialAsistencias"
+        component={HistorialAsistencias}
+      />
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
-      <Stack.Screen name="SuperUsuarioNovedades" component={SuperUserSolicitudes} />
+      <Stack.Screen
+        name="SuperUsuarioNovedades"
+        component={SuperUserSolicitudes}
+      />
       <Stack.Screen name="Novedad">
         {(props) => <NovedadScreen {...props} novedad={novedad} />}
       </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
       <Stack.Screen name="Oficinas" component={Oficinas} />
       <Stack.Screen name="CrearOficina" component={crearOficina} />
+      <Stack.Screen name="Registros" component={Registro} />
     </Stack.Navigator>
   );
 };

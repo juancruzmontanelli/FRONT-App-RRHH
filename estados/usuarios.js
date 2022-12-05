@@ -17,9 +17,7 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-
   baseURL: `http://192.168.1.36:8080/api/usuarios`, //192.168.0.92
-
 });
 
 export const urlBaseDatosLaborales = axios.create({
@@ -96,7 +94,6 @@ export const traerDatosUsuario = createAsyncThunk(
   }
 );
 
-
 export const modificarDatosUsuario = createAsyncThunk(
   "MODIFICAR_INFO_DE_USUARIO",
   async (idUsuario, infoAModificar) => {
@@ -115,12 +112,12 @@ export const modificarEstadoUsuario = createAsyncThunk(
     const { activo } = usuarioIdYEstadoDeUsuario;
     try {
       await urlBaseUsuario.post(`/activo/${usuarioId}`, { activo });
-       } catch (error) {
+    } catch (error) {
       throw new Error(error);
     }
   }
 );
-  
+
 export const crearDatosLaborales = createAsyncThunk(
   "CREEAR_DATOS_LABORALES",
   async (datosLaborales) => {
@@ -197,11 +194,19 @@ const usuarioReducer = createReducer(estadoInicial, {
   [registro.pending]: (estado) => {
     estado.cargando = true;
   },
-  [registro.fulfilled]: (estado, accion) => {
+  [registro.fulfilled]: (estado) => {
     estado.cargando = false;
-    return accion.payload;
   },
   [registro.rejected]: () => {
+    throw new Error("Credenciales incorrectas");
+  },
+  [crearDatosLaborales.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [crearDatosLaborales.fulfilled]: (estado) => {
+    estado.cargando = false;
+  },
+  [crearDatosLaborales.rejected]: () => {
     throw new Error("Credenciales incorrectas");
   },
 });

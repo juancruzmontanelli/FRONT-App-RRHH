@@ -4,7 +4,7 @@ import { Button } from "@react-native-material/core";
 import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-const SubMenuComponent = ({ modo, navigation, setVisible}) => {
+const SubMenuComponent = ({ modo, navigation, setVisible }) => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   return (
     <View style={{ alignItems: "center" }}>
@@ -98,6 +98,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 }}
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
+                  navigation.navigate("Registros");
                   setVisible(false);
                 }}
               />
@@ -135,6 +136,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="send" {...props} />}
                 onPress={() => {
                   setVisible(false);
+                  navigation.navigate("Equipos");
                 }}
               />
               <Button
@@ -171,7 +173,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="send" {...props} />}
                 onPress={() => {
                   setVisible(false);
-                  navigation.navigate("Oficinas")
+                  navigation.navigate("Oficinas");
                 }}
               />
               <Button
@@ -187,7 +189,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
                   setVisible(false);
-                  navigation.navigate("CrearOficina")
+                  navigation.navigate("CrearOficina");
                 }}
               />
             </View>
