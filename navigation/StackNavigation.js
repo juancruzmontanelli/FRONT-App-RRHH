@@ -10,16 +10,32 @@ import HistorialAsistencias from "../screens/HistorialAsistencias";
 import MiembrosLista from "../screens/MiembrosLista";
 import EquiposLista from "../screens/EquiposLista";
 import MiembroScreen from "../screens/MiembroScreen";
-import { Alert, Pressable, Text } from "react-native";
+
+import Registro from "../screens/RegistroScreen";
+import { useEffect } from "react";
+
 import Oficinas from "../screens/OficinasScreen";
 import crearOficina from "../screens/CrearOficina";
 import SuperUserSolicitudes from "../screens/superUserSolicitudes";
+import { traerTodosLosEquipos } from "../estados/equipos";
+import { traerOficinas } from "../estados/oficinas";
+
+import { Alert, Pressable, Text } from "react-native";
+
+
 import CrearEquipo from "../screens/CrearEquipo";
 import { Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
+
 
 const StackScreen = (navigation) => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(traerTodosLosEquipos());
+  }, []);
+  useEffect(() => {
+    dispatch(traerOficinas());
+  }, []);
 
   return (
     <Stack.Navigator
@@ -75,7 +91,7 @@ const StackScreen = (navigation) => {
         name="HistorialAsistencias"
         component={HistorialAsistencias}
       />
-      {/*       <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} /> */}
+
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen
@@ -88,6 +104,7 @@ const StackScreen = (navigation) => {
       <Stack.Screen name="Usuario" component={User} />
       <Stack.Screen name="Oficinas" component={Oficinas} />
       <Stack.Screen name="CrearOficina" component={crearOficina} />
+      <Stack.Screen name="Registros" component={Registro} />
     </Stack.Navigator>
   );
 };

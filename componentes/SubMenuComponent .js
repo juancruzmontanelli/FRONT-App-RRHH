@@ -98,6 +98,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
                 }}
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
+                  navigation.navigate("Registros");
                   setVisible(false);
                 }}
               />
