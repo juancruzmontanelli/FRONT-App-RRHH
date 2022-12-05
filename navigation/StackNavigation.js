@@ -5,20 +5,17 @@ import Novedades from "../screens/NovedadesScreen";
 import User from "../screens/UserScreen";
 import VerSolicitudes from "../screens/UserSolicitudes";
 import { useDispatch } from "react-redux";
-import { Button } from "@react-native-material/core";
 import { cerrarSesion } from "../estados/usuarios";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
-
 import MiembrosLista from "../screens/MiembrosLista";
 import EquiposLista from "../screens/EquiposLista";
 import MiembroScreen from "../screens/MiembroScreen";
-import Registro from "../screens/RegistroScreen";
-import { useSelector } from "react-redux";
-import { Alert } from "react-native";
+import { Alert, Pressable, Text } from "react-native";
 import Oficinas from "../screens/OficinasScreen";
 import crearOficina from "../screens/CrearOficina";
 import SuperUserSolicitudes from "../screens/superUserSolicitudes";
 import CrearEquipo from "../screens/CrearEquipo";
+import { Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
 
 const StackScreen = (navigation) => {
   const Stack = createNativeStackNavigator();
@@ -40,10 +37,10 @@ const StackScreen = (navigation) => {
         component={Home}
         options={({ navigation, route }) => ({
           headerBackVisible: false,
+          headerTitle: "GlobalNews",
+          headerTitleAlign: "center",
           headerRight: () => (
-            <Button
-              color="#f89c1c"
-              title="Cerrar sesion"
+            <Pressable
               onPress={() => {
                 Alert.alert(
                   "Cerrar Sesión",
@@ -60,7 +57,9 @@ const StackScreen = (navigation) => {
                   ]
                 );
               }}
-            />
+            >
+              <Entypo name="log-out" size={35} color="#D31F16" />
+            </Pressable>
           ),
         })}
       />

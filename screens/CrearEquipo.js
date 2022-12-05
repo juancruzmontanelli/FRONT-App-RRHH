@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import { Button } from "@react-native-material/core";
 import { crearEquipo } from "../estados/equipos";
 
-function CrearEquipo({navigation}) {
+function CrearEquipo({ navigation }) {
   const dispatch = useDispatch();
   const [nombreEquipo, setNombreEquipo] = useState("");
 
@@ -15,7 +15,7 @@ function CrearEquipo({navigation}) {
     dispatch(crearEquipo({ nombre: nombreEquipo }))
       .then(() => {
         Alert.alert("Crear Equipo", "Equipo creado con éxito");
-        navigation.navigate('Equipos')
+        navigation.navigate("Equipos");
       })
       .catch((error) => {
         Alert.alert("Crear Equipo", error.message);
@@ -46,8 +46,7 @@ function CrearEquipo({navigation}) {
                 {
                   text: "Aceptar",
                   onPress: () => {
-                    submitHandler()
-                    
+                    submitHandler();
                   },
                 },
                 {
