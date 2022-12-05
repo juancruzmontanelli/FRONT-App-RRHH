@@ -17,11 +17,17 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
+
   baseURL: `http://192.168.1.36:8080/api/usuarios`, //192.168.0.92
+
+
+  
+
+
 });
 
 export const urlBaseDatosLaborales = axios.create({
-  baseURL: `http://192.168.1.36:8080/api/datosLaborales`, //192.168.0.92//192.168.1.36
+  baseURL: `http://192.168.1.41:8080/api/datosLaborales`, //192.168.0.92//192.168.1.36
 });
 
 export const resetearIngreso = createAction("RESETEAR_INGRESO");

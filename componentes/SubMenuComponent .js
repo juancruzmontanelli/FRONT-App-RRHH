@@ -27,7 +27,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
             }}
           />
           <Button
-            title="Ver Solicitudes"
+            title="Mis Solicitudes"
             tintColor="#f89c1c"
             titleStyle={{ fontSize: 13 }}
             style={{
@@ -44,7 +44,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
           />
           {usuario.tipo ? (
             <Button
-              title="Ver Solicitudes Usuarios"
+              title="Solicitudes Usuarios"
               tintColor="#f89c1c"
               titleStyle={{ fontSize: 13 }}
               style={{
@@ -124,7 +124,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
           {modo === "equipo" ? (
             <View>
               <Button
-                title="VER EQUIPO"
+                title="VER EQUIPOS"
                 tintColor="#f89c1c"
                 titleStyle={{ fontSize: 13 }}
                 style={{
@@ -152,6 +152,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
                   setVisible(false);
+                  navigation.navigate('Crear Equipo')
                 }}
               />
             </View>

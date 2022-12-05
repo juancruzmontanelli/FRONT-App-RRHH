@@ -14,6 +14,18 @@ export const urlBaseEquipo = axios.create({
   baseURL: `http://192.168.1.36:8080/api/equipos`,
 });
 
+export const crearEquipo = createAsyncThunk(
+  "CREAR_EQUIPO",
+  async (nombreEquipo) => {
+    try {
+      await urlBaseEquipo.post("/", nombreEquipo);
+      return "Equipo creado con éxito";
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+
 export const traerEquipo = createAsyncThunk(
   "TRAER_EQUIPO",
   async (idEquipo) => {
@@ -65,6 +77,17 @@ const equiposReducer = createReducer(estadoInicial, {
       "Ha ocurrido un error al querer mostrar los miembros del equipo",
       [{ text: "Entendido" }]
     );
+  },
+  [crearEquipo.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [crearEquipo.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    
+  },
+  [crearEquipo.rejected]: (estado) => {
+    estado.cargando = false;
+    throw new Error("Ha habido un error al querer crear el equipo");
   },
   [traerMiembroEquipo.pending]: (estado) => {
     estado.cargando = true;
