@@ -4,7 +4,7 @@ import { Button } from "@react-native-material/core";
 import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-const SubMenuComponent = ({ modo, navigation, setVisible}) => {
+const SubMenuComponent = ({ modo, navigation, setVisible }) => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
   return (
     <View style={{ alignItems: "center" }}>
@@ -27,7 +27,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
             }}
           />
           <Button
-            title="Ver Solicitudes"
+            title="Mis Solicitudes"
             tintColor="#f89c1c"
             titleStyle={{ fontSize: 13 }}
             style={{
@@ -44,7 +44,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
           />
           {usuario.tipo ? (
             <Button
-              title="Ver Solicitudes Usuarios"
+              title="Solicitudes Usuarios"
               tintColor="#f89c1c"
               titleStyle={{ fontSize: 13 }}
               style={{
@@ -98,6 +98,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 }}
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
+                  navigation.navigate("Registros");
                   setVisible(false);
                 }}
               />
@@ -123,7 +124,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
           {modo === "equipo" ? (
             <View>
               <Button
-                title="VER EQUIPO"
+                title="VER EQUIPOS"
                 tintColor="#f89c1c"
                 titleStyle={{ fontSize: 13 }}
                 style={{
@@ -135,7 +136,8 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="send" {...props} />}
                 onPress={() => {
                   setVisible(false);
-                  navigation.navigate("Equipos")
+                  navigation.navigate("Equipos");
+
                 }}
               />
               <Button
@@ -150,7 +152,9 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 }}
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
-                  setVisible(false)
+                  setVisible(false);
+                  navigation.navigate('Crear Equipo')
+
                 }}
               />
             </View>
@@ -172,7 +176,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="send" {...props} />}
                 onPress={() => {
                   setVisible(false);
-                  navigation.navigate("Oficinas")
+                  navigation.navigate("Oficinas");
                 }}
               />
               <Button
@@ -188,7 +192,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
                   setVisible(false);
-                  navigation.navigate("CrearOficina")
+                  navigation.navigate("CrearOficina");
                 }}
               />
             </View>
