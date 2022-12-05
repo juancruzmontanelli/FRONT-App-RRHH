@@ -25,7 +25,6 @@ import {
 } from "../estados/usuarios";
 
 const SubMenu = ({ visible, children, modo }) => {
-
   const [showModal, setShowModal] = useState(visible);
   //const [modo, setModo] = useState(modo)
   useEffect(() => {
@@ -46,7 +45,7 @@ const SubMenu = ({ visible, children, modo }) => {
 };
 
 const Home = ({ navigation }) => {
- // USER STATES
+  // USER STATES
   const dispatch = useDispatch();
   const usuarioTipo = useSelector(
     (estado) => estado.usuarios.infoDeUsuario.tipo
@@ -56,11 +55,9 @@ const Home = ({ navigation }) => {
   const { ingresoDeUsuario } = useSelector((estado) => estado.usuarios);
   const { ultimoFichaje } = useSelector((estado) => estado.usuarios);
 
-
   // STATES SUBMENU
   const [visible, setVisible] = useState(false);
   const [modo, setModo] = useState("");
-
 
   const [fichaje, setFichaje] = useState(
     ingresoDeUsuario.fecha
@@ -147,7 +144,7 @@ const Home = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <View style={fichajeStyles.fichajeContainer}>
+        {usuario.tipo ? <View style={{marginTop:'15%', marginBottom:'10%', borderBottomWidth: 2, borderColor:"#f89c1c"}}><Text style={{fontSize:25, color:"#0072b7", fontWeight:'800'}}>Usuario RRHH {usuario.nombre}</Text></View> : <View style={fichajeStyles.fichajeContainer}>
           <View>
             <Button
               title={fichaje.horaDeIngreso ? "Fichar Salida" : "Fichar Ingreso"}
@@ -213,7 +210,8 @@ const Home = ({ navigation }) => {
               </Text>
             </View>
           </View>
-        </View>
+        </View> }
+        
         <View>
           <Button
             title="Mi Perfil"
@@ -230,10 +228,9 @@ const Home = ({ navigation }) => {
             onPress={() => {
               if (usuario.tipo) {
                 setVisible(true);
-              setModo("usuario");
-              }
-              else {
-              navigation.navigate("Usuario")
+                setModo("usuario");
+              } else {
+                navigation.navigate("Usuario");
               }
             }}
           />
@@ -252,10 +249,10 @@ const Home = ({ navigation }) => {
               />
             )}
             onPress={() => {
-              if (usuario.tipo){
+              if (usuario.tipo) {
                 setVisible(true);
                 setModo("Oficinas");
-              }else{
+              } else {
                 navigation.navigate("Oficinas");
               }
             }}
@@ -280,60 +277,13 @@ const Home = ({ navigation }) => {
           />
         </View>
 
+       
         <View>
-        
-          {fichaje.horaDeIngreso ? (
-            <Button
-              title="Fichar Salida"
-              tintColor="#f89c1c"
-              titleStyle={{ fontSize: 20 }}
-              style={{
-                backgroundColor: "#0072b7",
-                marginTop: 50,
-                width: "75%",
-              }}
-              trailing={(props) => <MaterialIcons name="work-off" {...props} />}
-              onPressIn={salidaHandler}
-              onPressOut={() => {
-                dispatch(
-                  crearAsistencia({
-                    usuarioId: usuarioId,
-                    datosAsistencia: fichaje,
-                  })
-                );
-                setFichaje(restablecerFechaActual);
-              }}
-            />
-          ) : (
-            <Button
-              title="Fichar Ingreso"
-              tintColor="#f89c1c"
-              titleStyle={{ fontSize: 20 }}
-              style={{
-                backgroundColor: "#0072b7",
-                marginTop: 50,
-                width: 300,
-              }}
-              trailing={(props) => <MaterialIcons name="work" {...props} />}
-              onPress={ingresoHandler}
-            /> 
-
-          )}
-        </View>
-        <View>
-        
           <Button
             title={usuarioTipo ? "Equipos" : "Mi Equipo"}
             tintColor="#f89c1c"
             titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            onPress={() => {
-              if (usuarioTipo) {
-                navigation.navigate("Equipos");
-              } else {
-                navigation.navigate("Mi Equipo");
-              }
-            }}
             trailing={(props) => (
               <Avatar
                 icon={(props) => <Icon name="account-group" {...props} />}
@@ -342,9 +292,11 @@ const Home = ({ navigation }) => {
               />
             )}
             onPress={() => {
-              if(usuario.tipo){
-              setVisible(true);
-              setModo("equipo");
+              if (usuarioTipo) {
+                setVisible(true);
+                setModo("equipo");
+              } else {
+                navigation.navigate("Mi Equipo");
               }
             }}
           />
@@ -361,27 +313,28 @@ const Home = ({ navigation }) => {
               if (usuario.tipo) {
                 setVisible(true);
                 setModo("asistencia");
+              } else {
+                navigation.navigate("HistorialAsistencias");
               }
-             else {
-              navigation.navigate("HistorialAsistencias");
-             }
             }}
           />
         </View>
 
-
-        <SubMenu visible={visible} >
-        <View style={{ width: "100%", alignItems: "flex-end" }}>
-        <TouchableOpacity onPress={() => setVisible(false)}>
-          <Image
-            source={require("../assets/cancel.png")}
-            style={styles.cancel}
+        <SubMenu visible={visible}>
+          <View style={{ width: "100%", alignItems: "flex-end" }}>
+            <TouchableOpacity onPress={() => setVisible(false)}>
+              <Image
+                source={require("../assets/cancel.png")}
+                style={styles.cancel}
+              />
+            </TouchableOpacity>
+          </View>
+          <SubMenuComponent
+            modo={modo}
+            setVisible={setVisible}
+            navigation={navigation}
           />
-        </TouchableOpacity>
-      </View>
-          <SubMenuComponent modo={modo} setVisible={setVisible} navigation={navigation}/>
         </SubMenu>
-
       </Box>
     </ScrollView>
   );
