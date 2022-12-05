@@ -276,6 +276,7 @@ const Home = ({ navigation }) => {
               style={styles.pressableIcons}
               name="form-select"
             />
+
             <Text style={styles.pressableIconText}>Novedades</Text>
           </Pressable>
           <Pressable
@@ -296,6 +297,7 @@ const Home = ({ navigation }) => {
           </Pressable>
           <Pressable
             style={styles.pressableIconContainer}
+
             onPress={() => {
               if (usuario.tipo) {
                 setVisible(true);

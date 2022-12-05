@@ -87,10 +87,8 @@ const StackScreen = (navigation) => {
       <Stack.Screen name="Miembro">
         {(props) => <MiembroScreen {...props} />}
       </Stack.Screen>
-      <Stack.Screen
-        name="HistorialAsistencias"
-        component={HistorialAsistencias}
-      />
+
+      <Stack.Screen name="HistorialAsistencias" component={HistorialAsistencias} />
 
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
