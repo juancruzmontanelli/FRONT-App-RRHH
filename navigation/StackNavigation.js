@@ -74,7 +74,6 @@ const StackScreen = (navigation) => {
         {(props) => <MiembroScreen {...props} />}
       </Stack.Screen>
       <Stack.Screen name="HistorialAsistencias" component={HistorialAsistencias} />
-      <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen name="SuperUsuarioNovedades" component={SuperUserSolicitudes} />

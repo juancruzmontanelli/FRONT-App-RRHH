@@ -327,13 +327,13 @@ const Home = ({ navigation }) => {
             tintColor="#f89c1c"
             titleStyle={{ fontSize: 20 }}
             style={{ backgroundColor: "#0072b7", marginTop: 50, width: 300 }}
-            onPress={() => {
-              if (usuarioTipo) {
-                navigation.navigate("Equipos");
-              } else {
-                navigation.navigate("Mi Equipo");
-              }
-            }}
+            // onPress={() => {
+            //   if (usuarioTipo) {
+            //     navigation.navigate("Equipos");
+            //   } else {
+            //     navigation.navigate("Mi Equipo");
+            //   }
+            // }}
             trailing={(props) => (
               <Avatar
                 icon={(props) => <Icon name="account-group" {...props} />}

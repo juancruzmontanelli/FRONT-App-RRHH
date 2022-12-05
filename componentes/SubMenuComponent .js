@@ -135,6 +135,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 trailing={(props) => <Icon name="send" {...props} />}
                 onPress={() => {
                   setVisible(false);
+                  navigation.navigate("Equipos")
                 }}
               />
               <Button
@@ -149,7 +150,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible}) => {
                 }}
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
-                  setVisible(false);
+                  setVisible(false)
                 }}
               />
             </View>
