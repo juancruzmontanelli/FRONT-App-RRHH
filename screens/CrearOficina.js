@@ -1,31 +1,37 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { useDispatch } from "react-redux";
 import { crearOficina } from "../estados/oficinas";
 import { SelectList } from "react-native-dropdown-select-list";
-import {paises, ciudades} from "../Utils/dataOficinas";
+import { paises, ciudades } from "../config/dataOficinas";
 
 function CrearOficina() {
   const dispatch = useDispatch();
-  const [pais, setPais] = useState(0)
-  const [ciudad, setCiudad] = useState(0)
-  const [direccion, setDireccion] = useState("")
+  const [pais, setPais] = useState(0);
+  const [ciudad, setCiudad] = useState(0);
+  const [direccion, setDireccion] = useState("");
 
   const oficina = () => {
-    let arrayPais = paises.filter((obj)=> obj.key === pais)
-    let arrayCiudad = ciudades.filter((obj)=> obj.key === ciudad)
+    let arrayPais = paises.filter((obj) => obj.key === pais);
+    let arrayCiudad = ciudades.filter((obj) => obj.key === ciudad);
     return {
       pais: arrayPais[0].value,
       ciudad: arrayCiudad[0].value,
-      direccion: direccion
-    }
+      direccion: direccion,
+    };
   };
 
   const SubmitHandler = () => {
     dispatch(crearOficina(oficina()));
   };
-  
+
   return (
     <KeyboardAvoidingView>
       <ScrollView>
@@ -34,14 +40,16 @@ function CrearOficina() {
           <View style={style.contenedor}>
             <Text style={style.text}>PAIS</Text>
             <SelectList
-              style={{marginBottom: 20}}
+              style={{ marginBottom: 20 }}
               data={paises}
-              setSelected={(e) => {setPais(e)}}
+              setSelected={(e) => {
+                setPais(e);
+              }}
             />
             <Text style={style.text}>CIUDAD</Text>
             <SelectList
-              style={{marginBottom: 20}}
-              data={ciudades.filter((obj)=> obj.key === pais)}
+              style={{ marginBottom: 20 }}
+              data={ciudades.filter((obj) => obj.key === pais)}
               setSelected={(e) => setCiudad(e)}
             />
             <Text style={style.text}>DIRECCION</Text>
