@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk, createReducer } from "@reduxjs/toolkit";
+import {createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { Alert } from "react-native";
 import axios from "axios";
+import { config } from "../config/config";
 
 const estadoInicial = {
   cargando: true,
@@ -12,7 +13,7 @@ const estadoInicial = {
 
 const urlBaseNovedad = axios.create({
 
-  baseURL: `http://192.168.20.28:8080/api/novedades`, //192.168.0.92//192.168.1.36
+  baseURL: `http://${config.localhost}:8080/api/novedades`, //192.168.0.92//192.168.1.36
 
 });
 
