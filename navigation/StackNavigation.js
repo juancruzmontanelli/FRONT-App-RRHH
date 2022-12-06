@@ -7,9 +7,16 @@ import VerSolicitudes from "../screens/UserSolicitudes";
 import { useDispatch } from "react-redux";
 import { cerrarSesion } from "../estados/usuarios";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
+
+import { useSelector } from "react-redux";
+import { Alert } from "react-native";
+import DatosUsuario from "../screens/BuscarDatosUsuario";
+import ActualizarDatosLaborales from "../screens/EditarDatosLaborales";
+import ActualizarUsuario from "../screens/EditarDatosUsuario";
 import MiembrosLista from "../screens/MiembrosLista";
 import EquiposLista from "../screens/EquiposLista";
 import MiembroScreen from "../screens/MiembroScreen";
+
 
 import Registro from "../screens/RegistroScreen";
 import { useEffect } from "react";
@@ -105,9 +112,18 @@ const StackScreen = (navigation) => {
         {(props) => <NovedadScreen {...props} novedad={novedad} />}
       </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
+
+      <Stack.Screen name="ActualizarUsuario" component={ActualizarUsuario} />
+      <Stack.Screen name="DatosUsuario" component={DatosUsuario} />
+      <Stack.Screen
+        name="ActualizarDatosLaborales"
+        component={ActualizarDatosLaborales}
+      />
+
       <Stack.Screen name="Oficinas" component={Oficinas} />
       <Stack.Screen name="CrearOficina" component={crearOficina} />
       <Stack.Screen name="Registros" component={Registro} />
+
     </Stack.Navigator>
   );
 };

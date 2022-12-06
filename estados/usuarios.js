@@ -18,7 +18,9 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
+
   baseURL: `http://${config.localhost}:8080/api/usuarios`, //192.168.0.92
+
 });
 
 export const urlBaseDatosLaborales = axios.create({
@@ -88,7 +90,59 @@ export const traerDatosUsuario = createAsyncThunk(
   "TRAER_INFO_DE_USUARIO",
   async (idUsuario) => {
     try {
-      const datosLaborales = await urlBaseUsuario.get(`/uno/${idUsuario}`);
+      const datos = await urlBaseUsuario.get(`/uno/${idUsuario}`);
+      return datos.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+/* export const traerUsuarios = createAsyncThunk(
+  "TRAER_TODOS_USUARIOS",
+  async () => {
+    try {
+      const datos = await urlBaseUsuario.get(`/`);
+      return datos.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+); */
+
+export const traerUsuarioXEmail = createAsyncThunk(
+  "TRAER_USUARIO_EMAIL",
+  async (eMail) => {
+    try {
+      const datos = await urlBaseUsuario.get(`/${eMail}`);
+      return datos.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+
+export const editarDatosUsuario = createAsyncThunk(
+  "EDITAR_INFO_DE_USUARIO",
+  async (usuario) => {
+    try {
+      const datosPersonales = await urlBaseUsuario.put(
+        `/${usuario.id}`,
+        usuario.Usuario
+      );
+      return datosPersonales.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+export const editarDatosLaborales = createAsyncThunk(
+  "EDITAR_DATOS_LABORALES",
+  async (usuario) => {
+    try {
+      const datosLaborales = await urlBaseDatosLaborales.put(
+        `/${usuario.id}`,
+        usuario.Usuario
+      );
       return datosLaborales.data;
     } catch (error) {
       throw new Error(error);
@@ -170,11 +224,42 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [traerDatosUsuario.fulfilled]: (estado, accion) => {
     estado.cargando = false;
-    estado.datosLaborales = accion.payload;
+    estado.datos = accion.payload;
   },
   [traerDatosUsuario.rejected]: (estado) => {
     throw new Error("Error de validación!");
   },
+  
+  [editarDatosUsuario.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [editarDatosUsuario.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.datosPersonales = accion.payload;
+  },
+  [editarDatosUsuario.rejected]: (estado) => {
+    throw new Error("Error de validación!");
+  },
+  [editarDatosLaborales.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [editarDatosLaborales.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.datosLaborales = accion.payload;
+  },
+  [editarDatosLaborales.rejected]: (estado) => {
+    throw new Error("Error de validación!");
+  },
+  [traerUsuarioXEmail.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [traerUsuarioXEmail.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.datos = accion.payload;
+  },
+  [traerUsuarioXEmail.rejected]: (estado) => {
+    throw new Error("Error de validación!");
+
   [modificarDatosUsuario.pending]: (estado) => {
     estado.cargando = true;
   },
@@ -210,6 +295,7 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [crearDatosLaborales.rejected]: () => {
     throw new Error("Credenciales incorrectas");
+
   },
 });
 

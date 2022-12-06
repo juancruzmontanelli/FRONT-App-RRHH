@@ -1,6 +1,6 @@
 {
   "expo": {
-    "localhost":"http://192.168.1.41",
+    "localhost":"http://192.168.0.80",
     "name": "FRONT-App-RRHH",
     "slug": "FRONT-App-RRHH",
     "version": "1.0.0",
