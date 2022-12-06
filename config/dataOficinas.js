@@ -7,6 +7,7 @@ const paises = [
   { key: 6, value: "Brasil" },
   { key: 7, value: "Panama" },
   { key: 8, value: "EEUU" },
+  {key: 9, value: 'Costa Rica'}
 ];
 
 const ciudades = [
@@ -20,6 +21,7 @@ const ciudades = [
   { key: 6, value: "Brasilia" },
   { key: 7, value: "Ciudad de Pananma" },
   { key: 8, value: "Miami" },
+  { key: 9, value: 'San Jose'},
 ];
 
 module.exports = { paises, ciudades };

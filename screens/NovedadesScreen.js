@@ -13,7 +13,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useSelector, useDispatch } from "react-redux";
 import { crearNovedad } from "../estados/novedades";
-
+import { data, tiempo } from "../config/dataNovedades"
 const Novedades = ({ navigation }) => {
   // DROPDOWN STATE
   const [tipo, setTipo] = useState("");
@@ -69,35 +69,6 @@ const Novedades = ({ navigation }) => {
    navigation.navigate('Inicio')
   };
 
-  // DROPDOWN DATA
-  const data = [
-    { key: "1", value: "Licencia Vacaciones" },
-    { key: "2", value: "Hora Extra" },
-    { key: "4", value: "Llegada Tarde" },
-    { key: "4", value: "Retiro Fuera de Horario" },
-    { key: "4", value: "Ingreso Fuera de Horario" },
-    { key: "1", value: "Ausencia con Aviso" },
-    { key: "4", value: "Ausencia sin Aviso" },
-    { key: "4", value: "Home Office" },
-    { key: "2", value: "Feriados" },
-    { key: "4", value: "Licencia justificada" },
-    { key: "5", value: "Licencia por enfermedad" },
-    { key: "4", value: "Guardia" },
-    { key: "4", value: "Licencia Estudio" },
-    { key: "2", value: "Horas Nocturnidad" },
-    { key: "3", value: "Otros" },
-  ];
-
-  const tiempo = [
-    {key: 1, value: '1'},
-    {key: 2, value: '2'},
-    {key: 3, value: '3'},
-    {key: 4, value: '4'},
-    {key: 5, value: '5'},
-    {key: 6, value: '6'},
-    {key: 7, value: '7'},
-    {key: 8, value: '8'},
-  ]
 
   // DATE HANDLERS
   const onChange = (event, fechaSeleccionada) => {
@@ -115,15 +86,6 @@ const Novedades = ({ navigation }) => {
         tempDate.getDate()
       button == 1 ? setInput(fDate) : setInput2(fDate);
     }
-    // if (modo === "time") {
-    //   let fTime =
-    //     tempDate.getHours() +
-    //     " : " +
-    //     (tempDate.getMinutes() < 10 ? "0" : "") +
-    //     tempDate.getMinutes();
-    //   setInput2(fTime);
-    //   setHoras(fTime);
-    // }
   };
 
   const showMode = (modoActual, displayActual) => {

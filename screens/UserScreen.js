@@ -23,7 +23,7 @@ const User = () => {
             textAlign: "center",
             fontSize: 30,
           }}
-          title="EDITA TU INFORMACION"
+          title="TU INFORMACION"
           color="#0072b7"
           tintColor="#f89c1c"
         />

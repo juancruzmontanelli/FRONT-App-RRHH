@@ -11,7 +11,7 @@ import {
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { crearDatosLaborales, registro } from "../estados/usuarios";
 import { SelectList } from "react-native-dropdown-select-list";
-
+import {turnos, puestos, diasLaborales } from "../config/dataLaboral"
 const Registro = ({ navigation }) => {
   const dispatch = useDispatch();
   const [equipo, setEquipo] = useState("");
@@ -51,6 +51,7 @@ const Registro = ({ navigation }) => {
     nombre: "",
   });
 
+
   const SubmitHandler = () => {
     dispatch(registro(Registro))
       .then(() => {
@@ -60,10 +61,12 @@ const Registro = ({ navigation }) => {
         Alert.alert(
           "Registrar usuario",
           "Registro exitoso!",
-          [{ text: "Entendido" }],
+          [{ text: "Entendido", onPress:() =>{ navigation.navigate('Inicio')}}],
           { cancelable: true }
         );
+        
       })
+    
       .catch((error) => {
         Alert.alert(
           "Registrar erroneo",
@@ -74,7 +77,9 @@ const Registro = ({ navigation }) => {
           }
         );
       });
+      
   };
+  console.log(Datos)
 
   const registroNombreHandler = (e) => {
     setRegistro({ ...Registro, nombre: e });
@@ -125,7 +130,7 @@ const Registro = ({ navigation }) => {
   };
 
   const datosHorariosLaboralesHandler = (e) => {
-    setDatos({ ...Datos, horariosLaborales: e });
+    setDatos({ ...Datos, horarioLaboral: e });
   };
 
   const datosObservacionesHandler = (e) => {
@@ -210,12 +215,13 @@ const Registro = ({ navigation }) => {
               style={style.textInput}
             ></TextInput>
           </View>
-          <View style={style.view}>
-            <TextInput
-              onChangeText={datosPuestoHandler}
+          <View style={style.select}>
+                    <SelectList
+              style={{ marginBottom: 20 }}
               placeholder="Puesto"
-              style={style.textInput}
-            ></TextInput>
+              data={puestos}
+              setSelected={datosPuestoHandler}
+            />
           </View>
           <View style={style.select}>
             <SelectList
@@ -239,19 +245,21 @@ const Registro = ({ navigation }) => {
               save="value"
             />
           </View>
-          <View style={style.view}>
-            <TextInput
-              onChangeText={datosTurnoHandler}
+          <View style={style.select}>
+                <SelectList
+              style={{ marginBottom: 20 }}
               placeholder="Turno"
-              style={style.textInput}
-            ></TextInput>
+              data={turnos}
+              setSelected={datosTurnoHandler}
+            />
           </View>
-          <View style={style.view}>
-            <TextInput
-              onChangeText={datosDiasLaboralesHandler}
-              placeholder="Dias laborales"
-              style={style.textInput}
-            ></TextInput>
+          <View style={style.select}>
+                  <SelectList
+              style={{ marginBottom: 20 }}
+              placeholder="Dias Laborales"
+              data={diasLaborales}
+              setSelected={datosDiasLaboralesHandler}
+            />
           </View>
           <View style={style.view}>
             <TextInput

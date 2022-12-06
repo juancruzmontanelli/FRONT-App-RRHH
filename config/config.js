@@ -1,5 +1,5 @@
 const config = {
-  localhost: "192.168.1.41",
+  localhost: "192.168.0.92",
   limiteAsistencias: 3,
 };
 

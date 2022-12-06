@@ -96,6 +96,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
                 style={styles.button}
                 trailing={(props) => <FontAwesome5 style={styles.Icon} name="user-edit" size={24} color="black" />}
                 onPress={() => {
+                  navigation.navigate('DatosUsuario')
                   setVisible(false);
                 }}
               />

@@ -12,7 +12,7 @@ import { crearOficina } from "../estados/oficinas";
 import { SelectList } from "react-native-dropdown-select-list";
 import { paises, ciudades } from "../config/dataOficinas";
 
-function CrearOficina() {
+function CrearOficina({navigation}) {
   const dispatch = useDispatch();
   const [pais, setPais] = useState(0);
   const [ciudad, setCiudad] = useState(0);
@@ -30,6 +30,7 @@ function CrearOficina() {
 
   const SubmitHandler = () => {
     dispatch(crearOficina(oficina()));
+    navigation.navigate("Oficinas");
   };
 
   return (

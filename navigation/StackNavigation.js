@@ -9,7 +9,6 @@ import { cerrarSesion } from "../estados/usuarios";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
 
 import { useSelector } from "react-redux";
-import { Alert } from "react-native";
 import DatosUsuario from "../screens/BuscarDatosUsuario";
 import ActualizarDatosLaborales from "../screens/EditarDatosLaborales";
 import ActualizarUsuario from "../screens/EditarDatosUsuario";

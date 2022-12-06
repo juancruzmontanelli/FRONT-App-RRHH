@@ -259,7 +259,7 @@ const usuarioReducer = createReducer(estadoInicial, {
   },
   [traerUsuarioXEmail.rejected]: (estado) => {
     throw new Error("Error de validación!");
-
+  },
   [modificarDatosUsuario.pending]: (estado) => {
     estado.cargando = true;
   },
