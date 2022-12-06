@@ -12,6 +12,9 @@ import HistorialNovedades from "../screens/HistorialNovedades";
 import HistorialAsistencias from "../screens/HistorialAsistencias";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
+import DatosUsuario from "../screens/BuscarDatosUsuario";
+import ActualizarDatosLaborales from "../screens/EditarDatosLaborales";
+import ActualizarUsuario from "../screens/EditarDatosUsuario";
 
 const StackScreen = (navigation) => {
   const dispatch = useDispatch();
@@ -66,13 +69,18 @@ const StackScreen = (navigation) => {
         component={HistorialAsistencias}
       />
       <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} />
-
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen name="Novedad">
         {(props) => <NovedadScreen {...props} novedad={novedad} />}
       </Stack.Screen>
       <Stack.Screen name="Usuario" component={User} />
+      <Stack.Screen name="ActualizarUsuario" component={ActualizarUsuario} />
+      <Stack.Screen name="DatosUsuario" component={DatosUsuario} />
+      <Stack.Screen
+        name="ActualizarDatosLaborales"
+        component={ActualizarDatosLaborales}
+      />
     </Stack.Navigator>
   );
 };

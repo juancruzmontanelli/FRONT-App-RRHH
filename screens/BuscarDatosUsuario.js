@@ -1,44 +1,78 @@
-import { useEffect } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  editarDatosLaborales,
-  editarDatosUsuario,
-  traerDatosUsuario,
-} from "../estados/usuarios";
-import Loader from "../componentes/Loader";
+import { traerUsuarioXEmail } from "../estados/usuarios";
 import * as React from "react";
 import { Searchbar } from "react-native-paper";
 
-const DatosUsuario = () => {
+const DatosUsuario = ({ navigation }) => {
   const dispatch = useDispatch();
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+  const [eMail, setEMail] = useState("");
+  const [usuarioEncontrado, setUsuarioEncontrado] = useState("");
+
+  const onChangeSearch = (query) => setEMail(query);
+  const usuario = useSelector((estado) => estado.usuarios.datos.perfil);
   const datosLaborales = useSelector(
-    (estado) => estado.usuarios.datosLaborales
+    (estado) => estado.usuarios.datos.datosLaborales
   );
-  const barraBusqueda = () => {
-    const [busqueda, setBusqueda] = useState("");
 
-    const onChangeBusqueda = (query) => setBusqueda(query);
-  };
-  useEffect(() => {
-    dispatch(traerDatosUsuario(usuario.id));
-  }, []);
-  useEffect(() => {
-    dispatch(editarDatosUsuario(usuario.id));
-  }, []);
-  useEffect(() => {
-    dispatch(editarDatosLaborales(datosLaborales.id));
-  }, []);
-
-  return datosLaborales.perfil && usuario.nombre ? (
+  return !usuarioEncontrado ? (
     <SafeAreaView>
       <ScrollView>
         <Searchbar
-          placeholder="Buscar por Email "
-          onChangeText={onChangeBusqueda}
-          value={busqueda}
+          placeholder="Buscar Usuario por Email"
+          onChangeText={onChangeSearch}
+          value={eMail}
+        />
+        <Button
+          style={{
+            textAlign: "center",
+            color: "#0072b7",
+            tintColor: "#f89c1c",
+            fontSize: 30,
+          }}
+          title="Buscar"
+          onPress={() => {
+            dispatch(traerUsuarioXEmail(eMail))
+              .then((usuario) => {
+                Alert.alert("Usuario Encontrado!");
+                setUsuarioEncontrado(usuario);
+              })
+              .catch((error) => {
+                Alert.alert("No se pudo encontrar Usuario", error.message);
+              });
+          }}
+        />
+      </ScrollView>
+    </SafeAreaView>
+  ) : (
+    <SafeAreaView>
+      <ScrollView>
+        <Searchbar
+          placeholder="Buscar Usuario por Email"
+          onChangeText={onChangeSearch}
+          value={eMail}
+        />
+        <Button
+          style={{
+            textAlign: "center",
+            color: "#0072b2",
+            tintColor: "#f89c1c",
+            fontSize: 30,
+            margin: 2,
+          }}
+          title="Buscar"
+          onPress={() => {
+            dispatch(traerUsuarioXEmail(eMail))
+              .then((usuario) => {
+                Alert.alert("Usuario Encontrado!");
+                setUsuarioEncontrado(usuario);
+              })
+              .catch((error) => {
+                Alert.alert("No se pudo encontrar Usuario", error.message);
+              });
+          }}
         />
         <Button
           style={{
@@ -49,32 +83,22 @@ const DatosUsuario = () => {
           }}
           title="EDITAR INFORMACION"
           onPress={() => {
-            navigation.navigate("");
+            navigation.navigate("ActualizarUsuario");
           }}
         />
-
         <Box>
           <ListItem
             title="Nombre y Apellido"
             meta={`${usuario.nombre} ${usuario.apellido}`}
           />
-          <ListItem
-            title="Domicilio"
-            meta={`${datosLaborales.perfil.domicilio}`}
-          />
-          <ListItem
-            title="Documento"
-            meta={`${datosLaborales.perfil.documento}`}
-          />
-          <ListItem
-            title="Telefono"
-            meta={`${datosLaborales.perfil.telefono}`}
-          />
+          <ListItem title="Domicilio" meta={`${usuario.domicilio}`} />
+          <ListItem title="Documento" meta={`${usuario.documento}`} />
+          <ListItem title="Telefono" meta={`${usuario.telefono}`} />
           <ListItem
             title="Fecha de nacimiento"
-            meta={`${datosLaborales.perfil.fechaDeNacimiento}`}
+            meta={`${usuario.fechaDeNacimiento}`}
           />
-          <ListItem title="Email" meta={`${datosLaborales.perfil.eMail}`} />
+          <ListItem title="Email" meta={`${usuario.eMail}`} />
           <Text
             style={{
               fontSize: 20,
@@ -83,48 +107,45 @@ const DatosUsuario = () => {
               color: "#f89c1c",
             }}
           >
-            DATOS LABORALES
+            <Button
+              style={{
+                textAlign: "center",
+                color: "#0072b7",
+                tintColor: "#f89c1c",
+                fontSize: 30,
+              }}
+              title="EDITAR DATOS LABORALES"
+              onPress={() => {
+                navigation.navigate("ActualizarDatosLaborales");
+              }}
+            />
           </Text>
           <ListItem
             title="Fecha Ingreso"
-            meta={`${datosLaborales.datosLaborales.fechaDeIngreso}`}
+            meta={`${datosLaborales.fechaDeIngreso}`}
           />
 
-          <ListItem
-            title="Puesto"
-            meta={`${datosLaborales.datosLaborales.puesto}`}
-          />
-          <ListItem
-            title="Equipo"
-            meta={`${datosLaborales.datosLaborales.equipo}`}
-          />
-          <ListItem
-            title="Turno"
-            meta={`${datosLaborales.datosLaborales.turno}`}
-          />
-          <ListItem
-            title="Oficina"
-            meta={`${datosLaborales.datosLaborales.oficina}`}
-          />
+          <ListItem title="Puesto" meta={`${datosLaborales.puesto}`} />
+          <ListItem title="Equipo" meta={`${datosLaborales.equipo}`} />
+          <ListItem title="Turno" meta={`${datosLaborales.turno}`} />
+          <ListItem title="Oficina" meta={`${datosLaborales.oficina}`} />
           <ListItem
             title="Dias Laborales"
-            meta={`${datosLaborales.datosLaborales.diasLaborales}`}
+            meta={`${datosLaborales.diasLaborales}`}
           />
 
           <ListItem
             title="Horarios Laborales"
-            meta={`${datosLaborales.datosLaborales.horarioLaboral}`}
+            meta={`${datosLaborales.horarioLaboral}`}
           />
 
           <ListItem
             title="Observaciones"
-            meta={`${datosLaborales.datosLaborales.observaciones}`}
+            meta={`${datosLaborales.observaciones}`}
           />
         </Box>
       </ScrollView>
     </SafeAreaView>
-  ) : (
-    <Loader />
   );
 };
 export default DatosUsuario;

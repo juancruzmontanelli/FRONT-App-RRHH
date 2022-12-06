@@ -62,11 +62,38 @@ export const traerDatosUsuario = createAsyncThunk(
     }
   }
 );
+/* export const traerUsuarios = createAsyncThunk(
+  "TRAER_TODOS_USUARIOS",
+  async () => {
+    try {
+      const datos = await urlBaseUsuario.get(`/`);
+      return datos.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+); */
+
+export const traerUsuarioXEmail = createAsyncThunk(
+  "TRAER_USUARIO_EMAIL",
+  async (eMail) => {
+    try {
+      const datos = await urlBaseUsuario.get(`/${eMail}`);
+      return datos.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
+
 export const editarDatosUsuario = createAsyncThunk(
   "EDITAR_INFO_DE_USUARIO",
-  async (idUsuario) => {
+  async (usuario) => {
     try {
-      const datosPersonales = await urlBaseUsuario.put(`/${idUsuario}`);
+      const datosPersonales = await urlBaseUsuario.put(
+        `/${usuario.id}`,
+        usuario.Usuario
+      );
       return datosPersonales.data;
     } catch (error) {
       throw new Error(error);
@@ -75,10 +102,11 @@ export const editarDatosUsuario = createAsyncThunk(
 );
 export const editarDatosLaborales = createAsyncThunk(
   "EDITAR_DATOS_LABORALES",
-  async (idDatosLaborales) => {
+  async (usuario) => {
     try {
       const datosLaborales = await urlBaseDatosLaborales.put(
-        `/${idDatosLaborales}`
+        `/${usuario.id}`,
+        usuario.Usuario
       );
       return datosLaborales.data;
     } catch (error) {
@@ -146,6 +174,16 @@ const usuarioReducer = createReducer(estadoInicial, {
     estado.datosLaborales = accion.payload;
   },
   [editarDatosLaborales.rejected]: (estado) => {
+    throw new Error("Error de validación!");
+  },
+  [traerUsuarioXEmail.pending]: (estado) => {
+    estado.cargando = true;
+  },
+  [traerUsuarioXEmail.fulfilled]: (estado, accion) => {
+    estado.cargando = false;
+    estado.datos = accion.payload;
+  },
+  [traerUsuarioXEmail.rejected]: (estado) => {
     throw new Error("Error de validación!");
   },
 });
