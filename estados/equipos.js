@@ -11,7 +11,7 @@ const estadoInicial = {
 };
 
 export const urlBaseEquipo = axios.create({
-  baseURL: `http://192.168.1.36:8080/api/equipos`,
+  baseURL: `http:/192.168.0.92:8080/api/equipos`,
 });
 
 export const crearEquipo = createAsyncThunk(

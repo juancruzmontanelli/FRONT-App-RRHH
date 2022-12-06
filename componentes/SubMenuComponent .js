@@ -3,6 +3,12 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Button } from "@react-native-material/core";
 import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  FontAwesome5,
+  MaterialIcons,
+  FontAwesome,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const SubMenuComponent = ({ modo, navigation, setVisible }) => {
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
@@ -13,14 +19,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
           <Button
             title="Nueva novedad"
             tintColor="#f89c1c"
-            titleStyle={{ fontSize: 13 }}
-            style={{
-              backgroundColor: "#0072b7",
-              marginTop: 50,
-              width: "48%",
-              marginHorizontal: 4 / 2,
-            }}
-            trailing={(props) => <Icon name="send" {...props} />}
+            disableElevation={true}
+            titleStyle={styles.textButton}  
+            style={styles.button}
+            trailing={(props) => <Icon name="send"  style={styles.Icon} {...props} />}
             onPress={() => {
               setVisible(false);
               navigation.navigate("Novedades");
@@ -29,14 +31,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
           <Button
             title="Mis Solicitudes"
             tintColor="#f89c1c"
-            titleStyle={{ fontSize: 13 }}
-            style={{
-              backgroundColor: "#0072b7",
-              marginTop: 50,
-              width: "48%",
-              marginHorizontal: 4 / 2,
-            }}
-            trailing={(props) => <Icon name="history" {...props} />}
+            disableElevation={true}
+            titleStyle={styles.textButton}
+            style={styles.button}
+            trailing={(props) => <Icon name="history"  style={styles.Icon} {...props} />}
             onPress={() => {
               setVisible(false);
               navigation.navigate("VerSolicitudes");
@@ -46,14 +44,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
             <Button
               title="Solicitudes Usuarios"
               tintColor="#f89c1c"
-              titleStyle={{ fontSize: 13 }}
-              style={{
-                backgroundColor: "#0072b7",
-                marginTop: 50,
-                width: "48%",
-                marginHorizontal: 4 / 2,
-              }}
-              trailing={(props) => <Icon name="history" {...props} />}
+              disableElevation={true}
+              titleStyle={styles.textButton}
+              style={styles.button}
+              trailing={(props) => <Icon name="history"  style={styles.Icon} {...props} />}
               onPress={() => {
                 setVisible(false);
                 navigation.navigate("SuperUsuarioNovedades");
@@ -73,14 +67,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="VER PERFIL"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="send" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) => <FontAwesome5 style={styles.Icon} name="user-alt" />}
                 onPress={() => {
                   setVisible(false);
                   navigation.navigate("Usuario");
@@ -89,14 +79,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="CREAR USUARIO"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="history" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) => <FontAwesome5 style={styles.Icon} name="user-plus" size={24} color="black" />}
                 onPress={() => {
                   navigation.navigate("Registros");
                   setVisible(false);
@@ -105,14 +91,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="EDITAR USUARIO"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="history" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) => <FontAwesome5 style={styles.Icon} name="user-edit" size={24} color="black" />}
                 onPress={() => {
                   setVisible(false);
                 }}
@@ -126,35 +108,25 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="VER EQUIPOS"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="send" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) => <FontAwesome5 style={styles.Icon} name="users" size={24} color="black" />}
                 onPress={() => {
                   setVisible(false);
                   navigation.navigate("Equipos");
-
                 }}
               />
               <Button
                 title="CREAR EQUIPO"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="history" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) => <MaterialIcons style={styles.Icon} name="create" size={24} color="black" />}
                 onPress={() => {
                   setVisible(false);
-                  navigation.navigate('Crear Equipo')
-
+                  navigation.navigate("Crear Equipo");
                 }}
               />
             </View>
@@ -166,14 +138,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="VER OFICINAS"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="send" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) =><FontAwesome style={styles.Icon} name="building" size={24} color="black" />}
                 onPress={() => {
                   setVisible(false);
                   navigation.navigate("Oficinas");
@@ -182,14 +150,10 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="CREAR OFICINA"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="history" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) => <MaterialIcons style={styles.Icon} name="create" size={24} color="black" />}
                 onPress={() => {
                   setVisible(false);
                   navigation.navigate("CrearOficina");
@@ -204,29 +168,32 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
               <Button
                 title="VER ASISTENCIA"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="send" {...props} />}
+                disableElevation={true}
+                titleStyle={styles.textButton}
+                style={styles.button}
+                trailing={(props) =>   <Icon
+                  name="history"
+                  style={styles.Icon}
+                  {...props}
+                />}
                 onPress={() => {
                   setVisible(false);
                 }}
               />
               <Button
-                title="ASISTEMCIA USUARIO"
+                title="ASISTENCIA 
+                  USUARIO"
                 tintColor="#f89c1c"
-                titleStyle={{ fontSize: 13 }}
-                style={{
-                  backgroundColor: "#0072b7",
-                  marginTop: 50,
-                  width: "48%",
-                  marginHorizontal: 4 / 2,
-                }}
-                trailing={(props) => <Icon name="history" {...props} />}
+                titleStyle={styles.textButton}
+                disableElevation={true}
+                style={styles.button}
+                trailing={(props) => (
+                  <Icon
+                    name="history"
+                    style={styles.Icon}
+                    {...props}
+                  />
+                )}
                 onPress={() => {
                   setVisible(false);
                 }}
@@ -247,6 +214,16 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
+  button: {
+    backgroundColor: "rgba(0, 114, 183, 0.6)",
+    marginTop: 10,
+    marginBottom: 20,
+    minWidth: 190,
+    width: "50%",
+    marginHorizontal: 4 / 2,
+    borderWidth: 0.5,
+  },
+  textButton: { color: "#000000",fontSize:14, textAlign: 'center', fontWeight: "300", marginRight: 10},
   cancel: { height: 20, width: 20 },
   modalBackGround: {
     flex: 1,
@@ -262,6 +239,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 20,
   },
+  Icon: {
+    fontSize: 15,
+    color: "#000000",
+    marginLeft: 5
+  }
 });
 
 export default SubMenuComponent;
