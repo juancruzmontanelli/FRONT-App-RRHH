@@ -2,6 +2,7 @@ import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Alert } from "react-native";
 import { urlBaseUsuario } from "./usuarios";
+import { config } from "../config/config";
 
 const estadoInicial = {
   cargando: true,
@@ -11,7 +12,8 @@ const estadoInicial = {
 };
 
 export const urlBaseEquipo = axios.create({
-  baseURL: `http:/192.168.0.92:8080/api/equipos`,
+  baseURL: `http://${config.localhost}:8080/api/equipos`,
+
 });
 
 export const crearEquipo = createAsyncThunk(
@@ -83,7 +85,6 @@ const equiposReducer = createReducer(estadoInicial, {
   },
   [crearEquipo.fulfilled]: (estado, accion) => {
     estado.cargando = false;
-    
   },
   [crearEquipo.rejected]: (estado) => {
     estado.cargando = false;

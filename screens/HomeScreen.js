@@ -297,7 +297,6 @@ const Home = ({ navigation }) => {
           </Pressable>
           <Pressable
             style={styles.pressableIconContainer}
-
             onPress={() => {
               if (usuario.tipo) {
                 setVisible(true);

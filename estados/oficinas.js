@@ -1,6 +1,7 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { Alert } from "react-native";
 import axios from "axios";
+import { config } from "../config/config";
 
 const estadoInicial = {
   cargando: true,
@@ -10,8 +11,7 @@ const estadoInicial = {
 };
 
 const urlBaseOficina = axios.create({
-
-  baseURL: `http://192.168.0.92:8080/api/oficinas`, //192.168.0.92
+  baseURL: `http://${config.localhost}:8080/api/oficinas`, //192.168.0.92
 
 });
 

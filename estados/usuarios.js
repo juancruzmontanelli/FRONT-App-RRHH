@@ -1,3 +1,4 @@
+import { config } from "../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createAction,
@@ -17,13 +18,7 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-
-  baseURL: `http://192.168.0.92:8080/api/usuarios`, //192.168.0.92
-
-
-  
-
-
+  baseURL: `http://${config.localhost}:8080/api/usuarios`, //192.168.0.92
 });
 
 export const urlBaseDatosLaborales = axios.create({
@@ -39,12 +34,13 @@ export const ficharIngreso = createAsyncThunk(
   async (fechaHoraIdUsuario) => {
     const { fecha } = fechaHoraIdUsuario;
     const { idUsuario } = fechaHoraIdUsuario;
-
+    const limiteAsistencias = config.limiteAsistencias;
     const validacionIngreso = await urlBaseAsistencia.post(
       `/validaringreso/${idUsuario}`,
       {
         fecha: fecha,
         usuarioId: idUsuario,
+        limite: limiteAsistencias,
       }
     );
     if (validacionIngreso) {

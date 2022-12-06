@@ -22,10 +22,8 @@ import { traerOficinas } from "../estados/oficinas";
 
 import { Alert, Pressable, Text } from "react-native";
 
-
 import CrearEquipo from "../screens/CrearEquipo";
 import { Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
-
 
 const StackScreen = (navigation) => {
   const Stack = createNativeStackNavigator();
@@ -47,14 +45,20 @@ const StackScreen = (navigation) => {
         headerTintColor: "#f89c1c",
       }}
     >
-      <Stack.Screen name="GLOBALNEWS" component={Login} />
+      <Stack.Screen
+        name="GLOBALNEWS"
+        options={{ title: "GlobalNews", headerTitleAlign: "center" }}
+        component={Login}
+      />
       <Stack.Screen
         name="Inicio"
-        component={Home}
+        component={Home}  
+        
         options={({ navigation, route }) => ({
           headerBackVisible: false,
           headerTitle: "GlobalNews",
           headerTitleAlign: "center",
+          
           headerRight: () => (
             <Pressable
               onPress={() => {
@@ -87,9 +91,10 @@ const StackScreen = (navigation) => {
       <Stack.Screen name="Miembro">
         {(props) => <MiembroScreen {...props} />}
       </Stack.Screen>
-
-      <Stack.Screen name="HistorialAsistencias" component={HistorialAsistencias} />
-
+      <Stack.Screen
+        name="HistorialAsistencias"
+        component={HistorialAsistencias}
+      />
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen
