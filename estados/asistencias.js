@@ -2,6 +2,7 @@ import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Alert } from "react-native";
 
+
 const estadoInicial = {
   cargando: true,
   asistencias: [],
@@ -9,7 +10,9 @@ const estadoInicial = {
 
 export const urlBaseAsistencia = axios.create({
 
+
   baseURL: `http://192.168.20.28:8080/api/asistencias`, //192.168.0.92//192.168.1.36
+
 
 });
 

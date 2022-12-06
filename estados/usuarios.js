@@ -1,3 +1,4 @@
+import { config } from "../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createAction,
@@ -33,12 +34,13 @@ export const ficharIngreso = createAsyncThunk(
   async (fechaHoraIdUsuario) => {
     const { fecha } = fechaHoraIdUsuario;
     const { idUsuario } = fechaHoraIdUsuario;
-
+    const limiteAsistencias = config.limiteAsistencias;
     const validacionIngreso = await urlBaseAsistencia.post(
       `/validaringreso/${idUsuario}`,
       {
         fecha: fecha,
         usuarioId: idUsuario,
+        limite: limiteAsistencias,
       }
     );
     if (validacionIngreso) {
