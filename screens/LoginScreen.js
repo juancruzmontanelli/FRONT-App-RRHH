@@ -44,6 +44,7 @@ const Login = ({ navigation }) => {
           [{ text: "Entendido" }],
           { cancelable: true }
         );
+        setLogin({ eMail: "", contrasena: "" });
       })
       .catch((error) => {
         Alert.alert(
@@ -79,6 +80,7 @@ const Login = ({ navigation }) => {
             onChangeText={LoginEmailHandler}
             placeholder="Mail"
             style={{ flex: 1, paddingVertical: 0 }}
+            value={Login.eMail}
           ></TextInput>
         </View>
         <View
@@ -96,6 +98,7 @@ const Login = ({ navigation }) => {
             placeholder="Contrasena"
             style={{ flex: 1, paddingVertical: 0 }}
             secureTextEntry={true}
+            value={Login.contrasena}
           ></TextInput>
         </View>
         <TouchableOpacity onPress={() => {}}>
