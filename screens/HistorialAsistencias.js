@@ -11,14 +11,15 @@ function HistorialAsistencias() {
   const dispatch = useDispatch();
   const asistencias = useSelector((estado) => estado.asistencias.asistencias);
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
-
   useEffect(() => {
     dispatch(traerAsistencias(usuario.id));
   }, []);
+
   return asistencias.length ? (
     <ScrollView>
       {asistencias.map((asistencia, indice) => (
         <ItemDeLista
+          asistencia={true}
           key={indice}
           title={`${asistencia.fecha}`}
           secondaryText={`Hora de Ingreso: ${asistencia.horaDeIngreso}\nHora de salida: ${asistencia.horaDeSalida}`}

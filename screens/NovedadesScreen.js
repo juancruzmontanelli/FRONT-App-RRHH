@@ -47,22 +47,25 @@ const Novedades = ({ navigation }) => {
     let fecha = () => {
       let date = new Date();
       const year = date.getFullYear();
-      const month = date.getMonth();
+      const month = date.getMonth() + 1;
       const day = date.getDate();
       return `${year}-${month}-${day}`;
     };
     const addNovedad = {
       tipoDeNovedad: tipo,
-      fechaDeInicio: input != "SELECT" ? input : 0,
-      fechaDeFin: input2 != "SELECT" ? input2 : 0,
+      fechaDeInicio: input != "SELECT" ? input : fecha(),
+      fechaDeFin: input2 != "SELECT" ? input2 : input,
       fecha: fecha(),
       cantidadDias: cantidad() || 0,
       cantidadHoras: horas || 0,
       certificado: null,
       observacion: observaciones || "n/a",
       eMail: usuario.eMail,
+      estado: 'pendiente'
     };
-    dispatch(crearNovedad(addNovedad))
+      if (id === '5' )  addNovedad.estado = 'aprobado';
+
+   dispatch(crearNovedad(addNovedad))
    navigation.navigate('Inicio')
   };
 
@@ -78,7 +81,7 @@ const Novedades = ({ navigation }) => {
     { key: "4", value: "Home Office" },
     { key: "2", value: "Feriados" },
     { key: "4", value: "Licencia justificada" },
-    { key: "4", value: "Licencia por enfermedad" },
+    { key: "5", value: "Licencia por enfermedad" },
     { key: "4", value: "Guardia" },
     { key: "4", value: "Licencia Estudio" },
     { key: "2", value: "Horas Nocturnidad" },
