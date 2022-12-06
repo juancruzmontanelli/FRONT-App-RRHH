@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, SafeAreaView, ScrollView, Alert, View } from "react-native";
-import { Box, TextInput, Button, select } from "@react-native-material/core";
+import {
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Alert,
+  View,
+  StyleSheet,
+} from "react-native";
+import { Box, TextInput, Button } from "@react-native-material/core";
 import { crearDatosLaborales, registro } from "../estados/usuarios";
 import { SelectList } from "react-native-dropdown-select-list";
 
@@ -68,8 +75,7 @@ const Registro = ({ navigation }) => {
         );
       });
   };
-  console.log(setData, "DATA");
-  console.log(oficina);
+
   const registroNombreHandler = (e) => {
     setRegistro({ ...Registro, nombre: e });
   };
@@ -127,7 +133,7 @@ const Registro = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView>
         <Box
           style={{
@@ -135,181 +141,83 @@ const Registro = ({ navigation }) => {
           }}
         >
           <Text style={{ fontSize: 30, marginBottom: 10 }}>
-            Datos del usuario
+            DATOS DEL USUARIO
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               placeholder="Nombre"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
               onChangeText={registroNombreHandler}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroApellidoHandler}
               placeholder="Apellido"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
 
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroDomicilioHandler}
               placeholder="Domicilio"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroDocumentoHandler}
               placeholder="Documento"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroTelefonoHandler}
               placeholder="Telefono"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroFechaDeNacimientoHandler}
               placeholder="Fecha de nacimiento"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroEmailHandler}
               placeholder="Email"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={registroContrasenalHandler}
               placeholder="Contraseña"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
           <Text style={{ fontSize: 30, marginBottom: 10 }}>
             Datos Laborales
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={datosFechaDeIngresoHandler}
               placeholder="Fecha de ingreso"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={datosPuestoHandler}
               placeholder="Puesto"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-
-              width: "70%",
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.select}>
             <SelectList
               placeholder="Equipo"
               setSelected={(e) => {
@@ -320,16 +228,7 @@ const Registro = ({ navigation }) => {
               save="value"
             />
           </View>
-          <View
-            style={{
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              alignContent: "center",
-              marginBottom: 25,
-
-              width: "70%",
-            }}
-          >
+          <View style={style.select}>
             <SelectList
               placeholder="Oficina"
               setSelected={(e) => {
@@ -340,75 +239,39 @@ const Registro = ({ navigation }) => {
               save="value"
             />
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={datosTurnoHandler}
               placeholder="Turno"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={datosDiasLaboralesHandler}
               placeholder="Dias laborales"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={datosHorariosLaboralesHandler}
               placeholder="Horarios laborales"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#f89c1c",
-              borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginBottom: 25,
-            }}
-          >
+          <View style={style.view}>
             <TextInput
               onChangeText={datosObservacionesHandler}
               placeholder="Observaciones"
-              style={{ flex: 1, paddingVertical: 0 }}
+              style={style.textInput}
             ></TextInput>
           </View>
 
           <View>
             <Button
               title="Registrar"
-              style={{ backgroundColor: "#0072b7", margin: 10, width: 130 }}
+              style={style.button}
               onPress={SubmitHandler}
             ></Button>
           </View>
@@ -417,5 +280,24 @@ const Registro = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+const style = StyleSheet.create({
+  view: {
+    flexDirection: "row",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginBottom: 25,
+  },
+  select: {
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    marginBottom: 25,
+    width: "70%",
+  },
+  textInput: { flex: 1, paddingVertical: 0 },
+  button: { backgroundColor: "#0072b7", margin: 10, width: 130 },
+});
 
 export default Registro;
