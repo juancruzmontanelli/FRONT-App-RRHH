@@ -75,7 +75,6 @@ const StackScreen = (navigation) => {
         name="HistorialAsistencias"
         component={HistorialAsistencias}
       />
-      {/*       <Stack.Screen name="HistorialNovedades" component={HistorialNovedades} /> */}
       <Stack.Screen name="Novedades" component={Novedades} />
       <Stack.Screen name="VerSolicitudes" component={VerSolicitudes} />
       <Stack.Screen

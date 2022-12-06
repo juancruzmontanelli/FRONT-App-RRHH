@@ -1,3 +1,4 @@
+import { config } from "../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createAction,
@@ -17,9 +18,7 @@ const estadoInicial = {
 };
 
 export const urlBaseUsuario = axios.create({
-
   baseURL: `http://192.168.1.41:8080/api/usuarios`, //192.168.0.92
-
 });
 
 export const urlBaseDatosLaborales = axios.create({
@@ -35,12 +34,13 @@ export const ficharIngreso = createAsyncThunk(
   async (fechaHoraIdUsuario) => {
     const { fecha } = fechaHoraIdUsuario;
     const { idUsuario } = fechaHoraIdUsuario;
-
+    const limiteAsistencias = config.limiteAsistencias;
     const validacionIngreso = await urlBaseAsistencia.post(
       `/validaringreso/${idUsuario}`,
       {
         fecha: fecha,
         usuarioId: idUsuario,
+        limite: limiteAsistencias,
       }
     );
     if (validacionIngreso) {
@@ -96,7 +96,6 @@ export const traerDatosUsuario = createAsyncThunk(
   }
 );
 
-
 export const modificarDatosUsuario = createAsyncThunk(
   "MODIFICAR_INFO_DE_USUARIO",
   async (idUsuario, infoAModificar) => {
@@ -115,12 +114,12 @@ export const modificarEstadoUsuario = createAsyncThunk(
     const { activo } = usuarioIdYEstadoDeUsuario;
     try {
       await urlBaseUsuario.post(`/activo/${usuarioId}`, { activo });
-       } catch (error) {
+    } catch (error) {
       throw new Error(error);
     }
   }
 );
-  
+
 export const crearDatosLaborales = createAsyncThunk(
   "CREEAR_DATOS_LABORALES",
   async (datosLaborales) => {
