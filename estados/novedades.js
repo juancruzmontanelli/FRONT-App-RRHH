@@ -13,6 +13,7 @@ const estadoInicial = {
 
 const urlBaseNovedad = axios.create({
 
+
   baseURL: `http://${config.localhost}:8080/api/novedades`, //192.168.0.92//192.168.1.36
 
 });

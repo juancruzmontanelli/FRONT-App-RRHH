@@ -12,6 +12,7 @@ const estadoInicial = {
 
 const urlBaseOficina = axios.create({
   baseURL: `http://${config.localhost}:8080/api/oficinas`, //192.168.0.92
+
 });
 
 export const crearOficina = createAsyncThunk(
