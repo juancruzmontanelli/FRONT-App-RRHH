@@ -25,6 +25,7 @@ import {
   resetearIngreso,
   setearUltimoFichaje,
   modificarEstadoUsuario,
+  cerrarSesion,
 } from "../estados/usuarios";
 
 const SubMenu = ({ visible, children, modo }) => {
@@ -48,6 +49,12 @@ const SubMenu = ({ visible, children, modo }) => {
 };
 
 const Home = ({ navigation }) => {
+  useEffect(() => {
+    //ESTO PREVIENE QUE SE PUEDA VOLVER A LA PANTALLA DE LOGIN CON EL BOTÓN DE RETROCESO EN EL CELULAR
+    navigation.addListener("beforeRemove", function (e) {
+      e.preventDefault();
+    });
+  }, [navigation]);
   // USER STATES
   const dispatch = useDispatch();
   const usuarioTipo = useSelector(
