@@ -49,12 +49,6 @@ const SubMenu = ({ visible, children, modo }) => {
 };
 
 const Home = ({ navigation }) => {
-  useEffect(() => {
-    //ESTO PREVIENE QUE SE PUEDA VOLVER A LA PANTALLA DE LOGIN CON EL BOTÓN DE RETROCESO EN EL CELULAR
-    navigation.addListener("beforeRemove", function (e) {
-      e.preventDefault();
-    });
-  }, [navigation]);
   // USER STATES
   const dispatch = useDispatch();
   const usuarioTipo = useSelector(
@@ -302,20 +296,27 @@ const Home = ({ navigation }) => {
               {usuarioTipo ? "Equipos" : "Mi Equipo"}
             </Text>
           </Pressable>
-          <Pressable
-            style={styles.pressableIconContainer}
-            onPress={() => {
-              if (usuario.tipo) {
-                setVisible(true);
-                setModo("asistencia");
-              } else {
-                navigation.navigate("HistorialAsistencias");
-              }
-            }}
-          >
-            <FontAwesome5 style={styles.pressableIcons} name="calendar-check" />
-            <Text style={styles.pressableIconText}>Asistencia</Text>
-          </Pressable>
+          {usuario.tipo ? (
+            <></>
+          ) : (
+            <Pressable
+              style={styles.pressableIconContainer}
+              onPress={() => {
+                if (usuario.tipo) {
+                  setVisible(true);
+                  setModo("asistencia");
+                } else {
+                  navigation.navigate("HistorialAsistencias");
+                }
+              }}
+            >
+              <FontAwesome5
+                style={styles.pressableIcons}
+                name="calendar-check"
+              />
+              <Text style={styles.pressableIconText}>Asistencia</Text>
+            </Pressable>
+          )}
         </View>
 
         <SubMenu visible={visible}>
