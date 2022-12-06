@@ -61,8 +61,10 @@ const Novedades = ({ navigation }) => {
       certificado: null,
       observacion: observaciones || "n/a",
       eMail: usuario.eMail,
+      estado: 'pendiente'
     };
-    console.log(addNovedad)
+      if (id === '5' )  addNovedad.estado = 'aprobado';
+
    dispatch(crearNovedad(addNovedad))
    navigation.navigate('Inicio')
   };
@@ -79,7 +81,7 @@ const Novedades = ({ navigation }) => {
     { key: "4", value: "Home Office" },
     { key: "2", value: "Feriados" },
     { key: "4", value: "Licencia justificada" },
-    { key: "4", value: "Licencia por enfermedad" },
+    { key: "5", value: "Licencia por enfermedad" },
     { key: "4", value: "Guardia" },
     { key: "4", value: "Licencia Estudio" },
     { key: "2", value: "Horas Nocturnidad" },
