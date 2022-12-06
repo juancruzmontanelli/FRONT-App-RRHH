@@ -1,15 +1,26 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, SafeAreaView, ScrollView, Alert, View } from "react-native";
-
-import { Box, TextInput, Button } from "@react-native-material/core";
+import { Box, TextInput, Button, select } from "@react-native-material/core";
 import { crearDatosLaborales, registro } from "../estados/usuarios";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const Registro = ({ navigation }) => {
   const dispatch = useDispatch();
   const [equipo, setEquipo] = useState("");
+  const [data, setData] = useState([]);
   const [oficina, setOficina] = useState("");
+  const [dataDos, setDataDos] = useState([]);
+  const equipos = useSelector((estado) => estado.equipos.equipos);
+  const oficinas = useSelector((estado) => estado.oficinas.oficinas);
+
+  const newArrayDos = equipos.map((item) => {
+    return { key: item.id, value: item.nombre };
+  });
+
+  const newArrayUno = oficinas.map((item) => {
+    return { key: item.id, value: item.pais };
+  });
 
   const [Registro, setRegistro] = useState({
     nombre: "",
@@ -26,8 +37,11 @@ const Registro = ({ navigation }) => {
     puesto: "",
     turno: "",
     diasLaborales: "",
-    horariosLaborales: "",
+    horarioLaboral: "",
     observaciones: "",
+    pais: "",
+    eMail: "",
+    nombre: "",
   });
 
   const SubmitHandler = () => {
@@ -45,7 +59,7 @@ const Registro = ({ navigation }) => {
       })
       .catch((error) => {
         Alert.alert(
-          "Registrar usuario",
+          "Registrar erroneo",
           error.message,
           [{ text: "Entendido" }],
           {
@@ -54,7 +68,8 @@ const Registro = ({ navigation }) => {
         );
       });
   };
-
+  console.log(setData, "DATA");
+  console.log(oficina);
   const registroNombreHandler = (e) => {
     setRegistro({ ...Registro, nombre: e });
   };
@@ -81,24 +96,18 @@ const Registro = ({ navigation }) => {
 
   const registroEmailHandler = (e) => {
     setRegistro({ ...Registro, eMail: e });
+    setDatos({ ...Datos, eMail: e });
   };
   const registroContrasenalHandler = (e) => {
     setRegistro({ ...Registro, contrasena: e });
   };
+
   const datosFechaDeIngresoHandler = (e) => {
     setDatos({ ...Datos, fechaDeIngreso: e });
   };
 
   const datosPuestoHandler = (e) => {
     setDatos({ ...Datos, puesto: e });
-  };
-
-  const datosEquipoHandler = (e) => {
-    setDatos({ ...Datos, equipo: e });
-  };
-
-  const datosOficinaHandler = (e) => {
-    setDatos({ ...Datos, oficina: e });
   };
 
   const datosTurnoHandler = (e) => {
@@ -160,6 +169,7 @@ const Registro = ({ navigation }) => {
               style={{ flex: 1, paddingVertical: 0 }}
             ></TextInput>
           </View>
+
           <View
             style={{
               flexDirection: "row",
@@ -293,35 +303,42 @@ const Registro = ({ navigation }) => {
           </View>
           <View
             style={{
-              flexDirection: "row",
               borderBottomColor: "#f89c1c",
               borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
+
+              width: "70%",
               marginBottom: 25,
             }}
           >
-            <TextInput
-              onChangeText={datosEquipoHandler}
+            <SelectList
               placeholder="Equipo"
-              style={{ flex: 1, paddingVertical: 0 }}
-            ></TextInput>
+              setSelected={(e) => {
+                setEquipo(e);
+                setDatos({ ...Datos, nombre: e });
+              }}
+              data={newArrayDos}
+              save="value"
+            />
           </View>
           <View
             style={{
-              flexDirection: "row",
               borderBottomColor: "#f89c1c",
               borderBottomWidth: 1,
-              paddingLeft: 15,
-              paddingRight: 15,
+              alignContent: "center",
               marginBottom: 25,
+
+              width: "70%",
             }}
           >
-            <TextInput
-              onChangeText={datosOficinaHandler}
+            <SelectList
               placeholder="Oficina"
-              style={{ flex: 1, paddingVertical: 0 }}
-            ></TextInput>
+              setSelected={(e) => {
+                setOficina(e);
+                setDatos({ ...Datos, pais: e });
+              }}
+              data={newArrayUno}
+              save="value"
+            />
           </View>
           <View
             style={{

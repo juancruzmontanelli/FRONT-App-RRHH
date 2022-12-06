@@ -98,6 +98,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
                 }}
                 trailing={(props) => <Icon name="history" {...props} />}
                 onPress={() => {
+                  navigation.navigate("Registros");
                   setVisible(false);
                 }}
               />
@@ -136,6 +137,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
                 onPress={() => {
                   setVisible(false);
                   navigation.navigate("Equipos");
+
                 }}
               />
               <Button
@@ -152,6 +154,7 @@ const SubMenuComponent = ({ modo, navigation, setVisible }) => {
                 onPress={() => {
                   setVisible(false);
                   navigation.navigate('Crear Equipo')
+
                 }}
               />
             </View>
