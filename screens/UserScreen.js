@@ -1,43 +1,57 @@
-import react from "react";
+import { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Box, ListItem, Text, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { traerDatosUsuario } from "../estados/usuarios";
+import Loader from "../componentes/Loader";
 
 const User = () => {
+  const dispatch = useDispatch();
   const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
-  console.log(usuario);
-  const [fontLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
-  });
-  return (
+  const datosLaborales = useSelector(
+    (estado) => estado.usuarios.datosLaborales
+  );
+  useEffect(() => {
+    dispatch(traerDatosUsuario(usuario.id));
+  }, []);
+
+  return datosLaborales.perfil && usuario.nombre ? (
     <SafeAreaView>
-      <Button
-        style={{
-          textAlign: "center",
-          fontFamily: "Arimo",
-          fontSize: 30,
-        }}
-        title="EDITA TU INFORMACION"
-        color="#0072b7"
-        tintColor="#f89c1c"
-      />
       <ScrollView>
+        <Button
+          style={{
+            textAlign: "center",
+            fontSize: 30,
+          }}
+          title="TU INFORMACION"
+          color="#0072b7"
+          tintColor="#f89c1c"
+        />
+
         <Box>
           <ListItem
             title="Nombre y Apellido"
             meta={`${usuario.nombre} ${usuario.apellido}`}
           />
-          <ListItem title="Domicilio" meta={`${usuario.domicilio}`} />
-          <ListItem title="Documento" meta={`${usuario.documento}`} />
-          <ListItem title="Telefono" meta={`${usuario.telefono}`} />
+          <ListItem
+            title="Domicilio"
+            meta={`${datosLaborales.perfil.domicilio}`}
+          />
+          <ListItem
+            title="Documento"
+            meta={`${datosLaborales.perfil.documento}`}
+          />
+          <ListItem
+            title="Telefono"
+            meta={`${datosLaborales.perfil.telefono}`}
+          />
           <ListItem
             title="Fecha de nacimiento"
-            meta={`${usuario.fechaDeNacimiento}`}
+            meta={`${datosLaborales.perfil.fechaDeNacimiento}`}
           />
+          <ListItem title="Email" meta={`${datosLaborales.perfil.eMail}`} />
           <Text
             style={{
-              fontFamily: "Arimo",
               fontSize: 20,
               textAlign: "center",
               backgroundColor: "#0072b7",
@@ -46,22 +60,46 @@ const User = () => {
           >
             DATOS LABORALES
           </Text>
-          <ListItem title="Fecha Ingreso" meta={`${usuario.fechaDeIngreso}`} />
-          <ListItem title="Puesto" meta={`${usuario.puesto}`} />
-          <ListItem title="Equipo" meta={`${usuario.equipo}`} />
-          <ListItem title="Turno" meta={`${usuario.turno}`} />
           <ListItem
-            title="Horarios Laborales"
-            meta={`${usuario.diasLaborales}`}
+            title="Fecha Ingreso"
+            meta={`${datosLaborales.datosLaborales.fechaDeIngreso}`}
+          />
+
+          <ListItem
+            title="Puesto"
+            meta={`${datosLaborales.datosLaborales.puesto}`}
+          />
+          <ListItem
+            title="Equipo"
+            meta={`${datosLaborales.datosLaborales.equipo}`}
+          />
+          <ListItem
+            title="Turno"
+            meta={`${datosLaborales.datosLaborales.turno}`}
+          />
+          <ListItem
+            title="Oficina"
+            meta={`${datosLaborales.datosLaborales.oficina}`}
           />
           <ListItem
             title="Dias Laborales"
-            meta={`${usuario.horariosLaborales}`}
+            meta={`${datosLaborales.datosLaborales.diasLaborales}`}
           />
-          <ListItem title="Observaciones" meta={`${usuario.observaciones}`} />
+
+          <ListItem
+            title="Horarios Laborales"
+            meta={`${datosLaborales.datosLaborales.horarioLaboral}`}
+          />
+
+          <ListItem
+            title="Observaciones"
+            meta={`${datosLaborales.datosLaborales.observaciones}`}
+          />
         </Box>
       </ScrollView>
     </SafeAreaView>
+  ) : (
+    <Loader />
   );
 };
 

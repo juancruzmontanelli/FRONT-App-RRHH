@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { iniciarSesion } from "../estados/usuarios";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 import { Box, TextInput, Button } from "@react-native-material/core";
-import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create({
   logo: {
@@ -21,9 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 const Login = ({ navigation }) => {
-  const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
   const dispatch = useDispatch();
-  const usuario = useSelector((estado) => estado.usuarios.infoDeUsuario);
+  const usuario = useSelector((estado) => estado.usuarios);
+  const [Login, setLogin] = useState({ eMail: "", contrasena: "" });
+
+  useEffect(() => {
+    if (usuario.infoDeUsuario.id) navigation.navigate("Inicio");
+  }, [usuario.infoDeUsuario]);
 
   const LoginEmailHandler = (e) => {
     setLogin({ ...Login, eMail: e });
@@ -41,7 +44,7 @@ const Login = ({ navigation }) => {
           [{ text: "Entendido" }],
           { cancelable: true }
         );
-        navigation.navigate("Inicio");
+        setLogin({ eMail: "", contrasena: "" });
       })
       .catch((error) => {
         Alert.alert(
@@ -53,9 +56,6 @@ const Login = ({ navigation }) => {
       });
   };
 
-  const [fontLoaded] = useFonts({
-    Arimo: require("../assets/fonts/Arimo.ttf"),
-  });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f89c1c" }}>
       <Box
@@ -65,9 +65,7 @@ const Login = ({ navigation }) => {
         }}
       >
         <Image style={styles.logo} source={require("../assets/globlal.png")} />
-        <Text style={{ fontFamily: "Arimo", fontSize: 30, marginBottom: 10 }}>
-          INICIAR SESIÓN
-        </Text>
+        <Text style={{ fontSize: 30, marginBottom: 10 }}>INICIAR SESIÓN</Text>
         <View
           style={{
             flexDirection: "row",
@@ -82,6 +80,7 @@ const Login = ({ navigation }) => {
             onChangeText={LoginEmailHandler}
             placeholder="Mail"
             style={{ flex: 1, paddingVertical: 0 }}
+            value={Login.eMail}
           ></TextInput>
         </View>
         <View
@@ -99,6 +98,7 @@ const Login = ({ navigation }) => {
             placeholder="Contrasena"
             style={{ flex: 1, paddingVertical: 0 }}
             secureTextEntry={true}
+            value={Login.contrasena}
           ></TextInput>
         </View>
         <TouchableOpacity onPress={() => {}}>
@@ -108,7 +108,7 @@ const Login = ({ navigation }) => {
           <Button
             title="ENTRAR"
             style={{ backgroundColor: "#0072b7", marginTop: 30, width: 130 }}
-            onPress={SubmitHandler}
+            onPress={SubmitHandler} //  navigation.navigate("Home");
           ></Button>
         </View>
       </Box>

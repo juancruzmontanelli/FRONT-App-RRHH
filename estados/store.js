@@ -1,14 +1,29 @@
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
-import usuarios from "./usuarios";
-import novedades from "./novedades";
+import usuarioReducer from "./usuarios";
+import novedadReducer from "./novedades";
+import asistenciasReducer from "./asistencias";
+import equiposReducer from "./equipos";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistStore, persistReducer } from "redux-persist";
+import thunk from "redux-thunk";
+import oficinasReducer from "./oficinas";
+
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+};
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(thunk),
   reducer: {
-    usuarios,
-    novedades,
+    usuarios: persistReducer(persistConfig, usuarioReducer),
+    novedades: novedadReducer,
+    asistencias: asistenciasReducer,
+    equipos: equiposReducer,
+    oficinas: oficinasReducer,
   },
 });
 
+export const persistor = persistStore(store);
 export default store;
